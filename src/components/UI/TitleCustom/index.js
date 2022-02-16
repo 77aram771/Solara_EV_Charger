@@ -1,0 +1,29 @@
+import React from "react"
+import {Text} from "react-native"
+
+export const TitleCustom = ({
+                          text,
+                          color,
+                          marginBottom,
+                          marginTop,
+                          marginLeft,
+                          marginRight,
+                          fontSize = 16,
+                          textDecorationLine
+                      }) => {
+
+    return (
+        <Text style={{
+            color,
+            fontFamily: 'Roboto_700Bold',
+            fontSize,
+            marginBottom,
+            marginTop,
+            marginLeft,
+            marginRight,
+            textDecorationLine
+        }}>
+            {text}
+        </Text>
+    )
+}
