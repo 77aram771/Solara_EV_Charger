@@ -1,25 +1,24 @@
 import React, {useContext} from "react"
 import {NavigationContainer} from '@react-navigation/native'
 import Context from "../../Context"
-// import {TabNavigator} from "./TabNavigator"
 import {AppearanceProvider} from 'react-native-appearance'
 import {StatusBar} from "expo-status-bar"
-import {Welcome} from "../screens/WelcomeScreen"
+import {WelcomeScreen} from "../screens/WelcomeScreen"
+import {TabNavigator} from "./TabNavigator"
 
 function RootNavigation() {
 
-    const {logIn} = useContext(Context)
+    const {check} = useContext(Context)
 
     return (
         <AppearanceProvider>
-            <StatusBar/>
+            <StatusBar style="dark" backgroundColor={'transparent'} animated={true}/>
             <NavigationContainer>
-                {/*{*/}
-                {/*    !logIn*/}
-                {/*        ? <TabNavigator/>*/}
-                {/*        : <LogInStackScreen/>*/}
-                {/*}*/}
-                <Welcome/>
+                {
+                    !check
+                        ? <TabNavigator/>
+                        : <WelcomeScreen/>
+                }
             </NavigationContainer>
         </AppearanceProvider>
 

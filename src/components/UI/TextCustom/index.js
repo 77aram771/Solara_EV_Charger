@@ -10,10 +10,21 @@ export const TextCustom = ({
                                marginLeft,
                                marginRight,
                                textAlign = 'left',
-                               fontFamily = 'Roboto_400Regular'
+                               fontFamily,
+                               fontWeight
                            }) => {
     return (
-        <Text style={{fontSize, color, marginTop, marginBottom, marginLeft, marginRight, textAlign, fontFamily}}>
+        <Text style={{
+            fontSize,
+            color,
+            marginTop,
+            marginBottom,
+            marginLeft,
+            marginRight,
+            textAlign,
+            fontFamily,
+            fontWeight
+        }}>
             {text}
         </Text>
     )

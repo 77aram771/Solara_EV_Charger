@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react'
-import {Platform} from "react-native"
+import {ImageBackground, Platform} from "react-native"
 import Constants from "expo-constants"
 import * as Location from "expo-location"
 import Geocoder from 'react-native-geocoding'
 import AppLoading from 'expo-app-loading'
 import {useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold} from '@expo-google-fonts/roboto'
 import {setCustomText} from 'react-native-global-props'
+// import * as SplashScreen from 'expo-splash-screen'
 import Context from "./Context"
 import {SafeAreaView} from 'react-native-safe-area-context'
 import RootNavigation from "./src/navigation"
 import {Provider} from 'react-redux'
 import {store} from './src/store'
 import {Google_Key} from "./src/shared/Const"
+import ImgSplashScreenArm from './src/assets/images/img-splashscreen-arm.png'
+import ImgSplashScreenRu from './src/assets/images/img-splashscreen-ru.png'
+import ImgSplashScreenEn from './src/assets/images/img-splashscreen-en.png'
 
 Geocoder.init(Google_Key, {language: "ru"})
 
@@ -22,11 +26,14 @@ export default function App() {
         Roboto_500Medium,
         Roboto_700Bold
     })
-    const [logIn, setLogIn] = useState(false)
+
+    const customTextProps = {style: {fontFamily: 'Roboto_400Regular'}}
+
+    const [check, setCheck] = useState(false)
     const [location, setLocation] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null)
 
-    const customTextProps = {style: {fontFamily: 'Roboto_400Regular'}}
+    const handleCheck = () => setCheck(true)
 
     setCustomText(customTextProps)
 
@@ -44,10 +51,11 @@ export default function App() {
             }
             let location = await Location.getCurrentPositionAsync({})
             setLocation(location)
+            // console.log('location', location)
             Geocoder.from(location.coords.latitude, location.coords.longitude)
                 .then((json) => {
                     let addressComponent = `${json.results[0].address_components[1].long_name} ${json.results[0].address_components[0].long_name}`
-                    console.log(addressComponent)
+                    // console.log(addressComponent)
                 })
                 .catch((error) => console.warn(error))
         })()
@@ -56,14 +64,27 @@ export default function App() {
     if (!fontsLoaded) {
         return <AppLoading/>
     } else {
-        return (
-            <Context.Provider value={{logIn: logIn}}>
-                <Provider store={store}>
-                    <SafeAreaView style={{flex: 1}} edges={['top']}>
-                        <RootNavigation/>
-                    </SafeAreaView>
-                </Provider>
-            </Context.Provider>
-        )
+        if (location === null) {
+            return (
+                <ImageBackground source={ImgSplashScreenArm} style={{width: '100%', height: '100%'}}/>
+            )
+        } else {
+            return (
+                <Context.Provider
+                    value={{
+                        check: check,
+                        location: location,
+                        handleCheck: () => handleCheck()
+                    }}
+                >
+                    <Provider store={store}>
+                        <SafeAreaView style={{flex: 1}} edges={['top']}>
+                            <RootNavigation/>
+                        </SafeAreaView>
+                    </Provider>
+                </Context.Provider>
+            )
+        }
+
     }
 }

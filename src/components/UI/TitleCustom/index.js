@@ -2,15 +2,16 @@ import React from "react"
 import {Text} from "react-native"
 
 export const TitleCustom = ({
-                          text,
-                          color,
-                          marginBottom,
-                          marginTop,
-                          marginLeft,
-                          marginRight,
-                          fontSize = 16,
-                          textDecorationLine
-                      }) => {
+                                text,
+                                color,
+                                marginBottom,
+                                marginTop,
+                                marginLeft,
+                                marginRight,
+                                fontSize = 16,
+                                textDecorationLine,
+                                textAlign
+                            }) => {
 
     return (
         <Text style={{
@@ -21,7 +22,8 @@ export const TitleCustom = ({
             marginTop,
             marginLeft,
             marginRight,
-            textDecorationLine
+            textDecorationLine,
+            textAlign
         }}>
             {text}
         </Text>
