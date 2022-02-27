@@ -5,7 +5,7 @@ const initialState = {
     loading: false,
     data: null,
     error: '',
-};
+}
 
 const AuthReducer = (state = initialState, action) => {
     // console.log('action-', action)
@@ -33,6 +33,6 @@ const AuthReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
 
 export default AuthReducer

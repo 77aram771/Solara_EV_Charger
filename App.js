@@ -32,8 +32,12 @@ export default function App() {
     const [check, setCheck] = useState(false)
     const [location, setLocation] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null)
+    const [userAddress, setUserAddress] = useState('')
+    const [showTabBar, setShowTabBar] = useState(false)
 
     const handleCheck = () => setCheck(true)
+
+    const handleHideTabBar = (bool) => setShowTabBar(bool)
 
     setCustomText(customTextProps)
 
@@ -55,7 +59,8 @@ export default function App() {
             Geocoder.from(location.coords.latitude, location.coords.longitude)
                 .then((json) => {
                     let addressComponent = `${json.results[0].address_components[1].long_name} ${json.results[0].address_components[0].long_name}`
-                    // console.log(addressComponent)
+                    console.log(addressComponent)
+                    setUserAddress(addressComponent)
                 })
                 .catch((error) => console.warn(error))
         })()
@@ -74,7 +79,10 @@ export default function App() {
                     value={{
                         check: check,
                         location: location,
-                        handleCheck: () => handleCheck()
+                        userAddress: userAddress,
+                        showTabBar: showTabBar,
+                        handleCheck: () => handleCheck(),
+                        handleHideTabBar: (bool) => handleHideTabBar(bool),
                     }}
                 >
                     <Provider store={store}>

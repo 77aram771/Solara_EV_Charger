@@ -4,7 +4,7 @@ import {SwiperFlatList} from 'react-native-swiper-flatlist'
 import {styles} from './style'
 import IconArrow from '../../assets/icon/arrow1.png'
 import {TextCustom} from "../../components/UI/TextCustom"
-import {Fiord, Gray, MySin} from "../../shared/Colors"
+import {Fiord, Gray, MineShaft, MySin} from "../../shared/Colors"
 import {windowHeight, windowWidth} from "../../shared/Const"
 import {ButtonCustom} from "../../components/UI/ButtonCustom"
 import {lang} from "../../shared/Lang"
@@ -94,7 +94,7 @@ export const WelcomeScreen = () => {
                                 <TextCustom
                                     text={item.text}
                                     fontSize={16}
-                                    color={'#333333'}
+                                    color={MineShaft}
                                     textAlign={'center'}
                                     fontWeight={'400'}
                                 />

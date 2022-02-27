@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {fetchData, fetchSuccess, fetchError} from '../actions/AuthApiAction'
-import {AsyncStorage} from "react-native";
+import {AsyncStorage} from "react-native"
 
 export const AuthSignIn = (url, body) => (dispatch) => {
     dispatch(fetchData())
@@ -17,7 +17,7 @@ export const AuthSignIn = (url, body) => (dispatch) => {
 }
 
 export const AuthLogOut = (url) => async (dispatch) => {
-    // const token = await AsyncStorage.getItem("Token");
+    // const token = await AsyncStorage.getItem("Token")
     dispatch(fetchData())
     dispatch(null)
     // return new Promise(() => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, TouchableOpacity} from "react-native"
+import {Image, TouchableOpacity} from "react-native"
 import {TextCustom} from "../TextCustom"
 import {styles} from "./style"
 
@@ -17,7 +17,13 @@ export const ButtonCustom = ({
                                  fontSize,
                                  fontWeight,
                                  fontFamily,
-                                 click
+                                 click,
+                                 borderWidth,
+                                 borderColor,
+                                 icon,
+                                 iconWidth,
+                                 iconHeight,
+                                 iconPositionLeft = false
                              }) => {
     return (
         <TouchableOpacity
@@ -31,8 +37,16 @@ export const ButtonCustom = ({
                 marginRight,
                 marginTop,
                 marginBottom,
+                borderWidth,
+                borderColor,
+                flexDirection: iconPositionLeft ? 'row-reverse' : 'row'
             }]}
         >
+            {
+                icon
+                    ? <Image source={icon} style={{width: iconWidth, height: iconHeight, marginRight: 10}} resizeMode={"contain"}/>
+                    : null
+            }
             <TextCustom text={text} color={color} fontSize={fontSize} fontFamily={fontFamily} fontWeight={fontWeight}/>
         </TouchableOpacity>
     )

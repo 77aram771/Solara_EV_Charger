@@ -10,7 +10,14 @@ export const lang = {
         sliderText3: 'Լիցքավորման ավարտին վճարումը կկատարվի ինքնաբերաբար՝ հավելվածի միջոցով',
         sliderTitle4: 'Դիտեք էլ. մեքենայի լիցքը սմարթֆոնում',
         sliderText4: 'Դուք ցանկացած պահի կարող եք վերահսկել ձեր էլ. մեքենայի լիցքը անմիջապես ձեր սմարթֆոնի հավելվածից, և երբ լիցքավորումը ավարտվի, դուք կստանաք ծանուցում',
-        filter: 'Ֆիլտեր'
+        filter: 'Ֆիլտեր',
+        book: 'Ամրագրել',
+        direction: 'Ուղղություն',
+        km: 'կմ',
+        busy: 'Զբաղված է',
+        freedom: 'Ազատ է',
+        min: 'րպ.',
+        cancel: 'Չեղարկել',
     },
     ru: {
         start: 'Начинать',
@@ -23,7 +30,14 @@ export const lang = {
         sliderText3: 'Оплата по окончании начисления будет производиться автоматически через приложение',
         sliderTitle4: 'Просмотр электронной почты зарядка автомобиля на смартфоне',
         sliderText4: 'Вы можете контролировать свою электронную почту в любое время. Заряжайте автомобиль прямо из приложения для смартфона и Когда зарядка будет завершена, вы получите уведомление',
-        filter: 'Филтер'
+        filter: 'Филтер',
+        book: 'Бронировать',
+        direction: 'Направление',
+        km: 'км',
+        busy: 'Занято',
+        freedom: 'Доступно',
+        min: 'мн.',
+        cancel: 'Отменить',
     },
     en: {
         start: 'Start',
@@ -36,6 +50,13 @@ export const lang = {
         sliderText3: 'Payment at the end of accrual will be made automatically through the application',
         sliderTitle4: 'View car charging email on smartphone',
         sliderText4: 'You can control your email at any time. Charge your car directly from your smartphone app and you will be notified when charging is complete',
-        filter: 'Filter'
+        filter: 'Filter',
+        book: 'Book',
+        direction: 'Direction',
+        km: 'km',
+        busy: 'Busy',
+        freedom: 'Freedom',
+        min: 'min.',
+        cancel: 'Cancel',
     }
 }
