@@ -6,20 +6,20 @@ import IconPin1 from '../assets/icon/pin1.png'
 import IconPin2 from '../assets/icon/pin2.png'
 import IconPin3 from '../assets/icon/pin3.png'
 import IconPin4 from '../assets/icon/pin4.png'
-// import IconPin5 from '../assets/icon/pin5.png'
-// import IconPin6 from '../assets/icon/pin6.png'
-// import IconPin7 from '../assets/icon/pin7.png'
-// import IconPin8 from '../assets/icon/pin8.png'
-// import IconPin9 from '../assets/icon/pin9.png'
-// import IconPin10 from '../assets/icon/pin10.png'
-// import IconPin11 from '../assets/icon/pin11.png'
-// import IconPin12 from '../assets/icon/pin12.png'
-// import IconPin13 from '../assets/icon/pin13.png'
-// import IconPin14 from '../assets/icon/pin14.png'
-// import IconPin15 from '../assets/icon/pin15.png'
-// import IconPin16 from '../assets/icon/pin16.png'
-// import IconPin17 from '../assets/icon/pin17.png'
-// import IconPin18 from '../assets/icon/pin18.png'
+import IconPin5 from '../assets/icon/pin5.png'
+import IconPin6 from '../assets/icon/pin6.png'
+import IconPin7 from '../assets/icon/pin7.png'
+import IconPin8 from '../assets/icon/pin8.png'
+import IconPin9 from '../assets/icon/pin9.png'
+import IconPin10 from '../assets/icon/pin10.png'
+import IconPin11 from '../assets/icon/pin11.png'
+import IconPin12 from '../assets/icon/pin12.png'
+import IconPin13 from '../assets/icon/pin13.png'
+import IconPin14 from '../assets/icon/pin14.png'
+import IconPin15 from '../assets/icon/pin15.png'
+import IconPin16 from '../assets/icon/pin16.png'
+import IconPin17 from '../assets/icon/pin17.png'
+import IconPin18 from '../assets/icon/pin18.png'
 import IconPort1 from '../assets/icon/port1.png'
 import IconPort2 from '../assets/icon/port2.png'
 import IconPort3 from '../assets/icon/port3.png'
@@ -265,5 +265,69 @@ export const CordinateClusterData = [
                 icon: IconPort8
             },
         ]
+    },
+]
+
+export const FilterPortsData = [
+    {
+        id: 1,
+        name: 'Type 1',
+        icon: IconPort1,
+        active: false,
+    },
+    {
+        id: 2,
+        name: 'Type 2',
+        icon: IconPort2,
+        active: false,
+    },
+    {
+        id: 3,
+        name: 'Type 3',
+        icon: IconPort3,
+        active: false,
+    },
+    {
+        id: 4,
+        name: 'Type 4',
+        icon: IconPort4,
+        active: false,
+    },
+    {
+        id: 5,
+        name: 'Type 5',
+        icon: IconPort5,
+        active: false,
+    },
+    {
+        id: 6,
+        name: 'Type 6',
+        icon: IconPort6,
+        active: false,
+    },
+    {
+        id: 7,
+        name: 'Type 7',
+        icon: IconPort7,
+        active: false,
+    },
+    {
+        id: 8,
+        name: 'Type 8',
+        icon: IconPort8,
+        active: false,
+    },
+]
+
+export const FilterCheckItems = [
+    {
+        id: 1,
+        text: lang['arm'].filterCheckText1,
+        active: false
+    },
+    {
+        id: 2,
+        text: lang['arm'].filterCheckText2,
+        active: false
     },
 ]

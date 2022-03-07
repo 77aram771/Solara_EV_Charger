@@ -2,7 +2,7 @@ import React from "react"
 import {createStackNavigator} from "@react-navigation/stack"
 import {HomeScreen} from "../../screens/HomeScreen"
 import {QRScannerScreen} from "../../screens/HomeScreen/QRScannerScreen"
-import {FilterScreen} from "../../screens/HomeScreen/FilterScreen";
+import {FilterScreen} from "../../screens/HomeScreen/FilterScreen"
 
 export const HomeStack = () => {
 

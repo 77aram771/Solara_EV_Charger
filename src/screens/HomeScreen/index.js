@@ -147,7 +147,7 @@ export const HomeScreen = ({navigation}) => {
                     )
                     : (
                         <>
-                            <TouchableOpacity onPress={() => navigation.navigate('Filter')} style={styles.filterBox}>
+                            <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.filterBox}>
                                 <Image source={IconFilter} style={{width: 22, height: 22, marginRight: 10}}/>
                                 <TextCustom text={lang['arm'].filter} color={Fiord} fontSize={20} fontWeight={'700'}/>
                             </TouchableOpacity>

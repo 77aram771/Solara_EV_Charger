@@ -18,6 +18,11 @@ export const lang = {
         freedom: 'Ազատ է',
         min: 'րպ.',
         cancel: 'Չեղարկել',
+        portTypeTitle: 'Պորտի տեսակը',
+        powerTitle: 'հզորություն',
+        availability: 'Հասանելիություն',
+        filterCheckText1: 'Բոլոր անվճար լիցքավորիչները',
+        filterCheckText2: 'Իմ մեքենայի type-երը',
     },
     ru: {
         start: 'Начинать',
@@ -38,6 +43,11 @@ export const lang = {
         freedom: 'Доступно',
         min: 'мн.',
         cancel: 'Отменить',
+        portTypeTitle: 'Тип порта',
+        powerTitle: 'Мощность',
+        availability: 'Доступность',
+        filterCheckText1: 'Все свободные устройства зарядки',
+        filterCheckText2: 'Типы моей машины',
     },
     en: {
         start: 'Start',
@@ -58,5 +68,10 @@ export const lang = {
         freedom: 'Freedom',
         min: 'min.',
         cancel: 'Cancel',
+        portTypeTitle: 'Port Type',
+        powerTitle: 'Power',
+        availability: 'Availability',
+        filterCheckText1: 'All free chargers',
+        filterCheckText2: 'My car types',
     }
 }

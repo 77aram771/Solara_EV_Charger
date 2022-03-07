@@ -4,7 +4,8 @@ import Context from "../../Context"
 import {AppearanceProvider} from 'react-native-appearance'
 import {StatusBar} from "expo-status-bar"
 import {WelcomeScreen} from "../screens/WelcomeScreen"
-import {TabNavigator} from "./TabNavigator"
+import {MyDrawer} from "./DrawerStack"
+import {MySin} from "../shared/Colors"
 
 function RootNavigation() {
 
@@ -12,11 +13,11 @@ function RootNavigation() {
 
     return (
         <AppearanceProvider>
-            <StatusBar style="dark" backgroundColor={'transparent'} animated={true}/>
+            <StatusBar style="light" backgroundColor={MySin} animated={true}/>
             <NavigationContainer>
                 {
                     !check
-                        ? <TabNavigator/>
+                        ? <MyDrawer/>
                         : <WelcomeScreen/>
                 }
             </NavigationContainer>

@@ -1,6 +1,7 @@
 import {StyleSheet} from "react-native"
 import {windowHeight, windowWidth} from "../../shared/Const"
 import {Dandelion, Silver} from "../../shared/Colors"
+import {paddingHorizontal} from "../../shared/GlobalStyle"
 
 let SliderBottomWidth = windowWidth / 3
 
@@ -59,6 +60,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         position: 'absolute',
         bottom: windowHeight / 20,
-        paddingHorizontal: windowWidth / 15
+        paddingHorizontal
     }
 })
