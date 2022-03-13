@@ -52,29 +52,6 @@ export const styles = StyleSheet.create({
         bottom: 15,
         zIndex: 10,
     },
-    infoBox: {
-        width: windowWidth / 1.2,
-        // height: windowHeight / 6,
-        backgroundColor: White,
-        borderRadius: 10,
-        marginBottom: 20,
-        paddingTop: 15,
-        paddingBottom: 20,
-        paddingLeft: 25,
-        paddingRight: 25,
-    },
-    infoBoxTop: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 5
-    },
-    topTitleBox: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     kmBox: {
         paddingTop: 5,
         paddingBottom: 5,
@@ -84,12 +61,6 @@ export const styles = StyleSheet.create({
         backgroundColor: WildSand,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    infoBottomBox: {
-        width: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        flexDirection: 'row',
     },
     buttonsBox: {
         width: windowWidth / 1.2,

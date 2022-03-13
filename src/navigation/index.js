@@ -1,8 +1,9 @@
 import React, {useContext} from "react"
 import {NavigationContainer} from '@react-navigation/native'
-import Context from "../../Context"
-import {AppearanceProvider} from 'react-native-appearance'
+import {Platform} from "react-native"
 import {StatusBar} from "expo-status-bar"
+import {AppearanceProvider} from 'react-native-appearance'
+import Context from "../../Context"
 import {WelcomeScreen} from "../screens/WelcomeScreen"
 import {MyDrawer} from "./DrawerStack"
 import {MySin} from "../shared/Colors"
@@ -13,7 +14,14 @@ function RootNavigation() {
 
     return (
         <AppearanceProvider>
-            <StatusBar style="light" backgroundColor={MySin} animated={true}/>
+            <StatusBar
+                style={Platform.OS === 'ios' ? 'dark' : 'light'}
+                backgroundColor={MySin}
+                animated={true}
+                translucent={true}
+                networkActivityIndicatorVisible={true}
+                hideTransitionAnimation={'slide'}
+            />
             <NavigationContainer>
                 {
                     !check

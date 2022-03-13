@@ -10,7 +10,7 @@
     ],
     "name": "Solara_EV_Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -31,10 +31,6 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       }
-    },
-    "androidStatusBar": {
-      "barStyle": "light-content",
-      "backgroundColor": "#fcb82e"
     },
     "web": {
       "favicon": "./assets/favicon.png"

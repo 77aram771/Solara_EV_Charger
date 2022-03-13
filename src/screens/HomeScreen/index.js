@@ -4,7 +4,7 @@ import {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import MapView from "react-native-map-clustering"
 import MapViewDirections from "react-native-maps-directions"
 import Geocoder from 'react-native-geocoding'
-import {showLocation} from 'react-native-map-link'
+import {Popup, showLocation} from 'react-native-map-link'
 import {styles} from "./style"
 import {Google_Key, windowHeight, windowWidth} from "../../shared/Const"
 import {MapStyle} from "../../shared/MapStyle"
@@ -15,20 +15,15 @@ import IconDirection3 from '../../assets/icon/direction3.png'
 import IconFilter from '../../assets/icon/filtr1.png'
 import IconQr from '../../assets/icon/icon-qr.png'
 import IconBook from '../../assets/icon/reserve.png'
-import IconFree from '../../assets/icon/free.png'
-import IconFreeNot from '../../assets/icon/free-not.png'
 import IconLocation from '../../assets/icon/location.png'
 import IconMenuMap from '../../assets/icon/menu-map1.png'
 import IconClock from '../../assets/icon/clock.png'
-import {Dandelion, Fiord, MineShaft, MySin, SunsetOrange, White} from "../../shared/Colors"
+import {Dandelion, Fiord, MineShaft, MySin, White} from "../../shared/Colors"
 import {TextCustom} from "../../components/UI/TextCustom"
 import {lang} from "../../shared/Lang"
-import {CordinateClusterData} from "../../shared/MockData"
+import {CordinateClusterData, LATITUDE_DELTA, LONGITUDE_DELTA} from "../../shared/MockData"
 import {ButtonCustom} from "../../components/UI/ButtonCustom"
-
-const ASPECT_RATIO = windowWidth / windowHeight
-const LATITUDE_DELTA = 0.0922
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
+import {InfoBoxCustom} from "../../components/UI/InfoBoxCustom"
 
 export const HomeScreen = ({navigation}) => {
 
@@ -41,14 +36,14 @@ export const HomeScreen = ({navigation}) => {
     const [min, setMin] = useState('')
     const [start, setStart] = useState(false)
     const [checkAddress, setCheckAddress] = useState('')
-    // const [modalRedirect, setModalRedirect] = useState(false)
+    const [modalRedirect, setModalRedirect] = useState(false)
 
     const options = {
         latitude: CordinateClusterData[0].latitude,
         longitude: CordinateClusterData[0].longitude,
         googleForceLatLon: false,
         alwaysIncludeGoogle: true,
-        appsWhiteList: ['google-maps'],
+        appsWhiteList: ['google-maps', 'apple-maps', 'waze', 'yandex', 'yandex-maps'],
         naverCallerName: 'com.example.myapp',
         directionsMode: 'car'
     }
@@ -91,20 +86,20 @@ export const HomeScreen = ({navigation}) => {
     const handleStart = () => setStart(!start)
 
     const handleRedirect = async () => {
-        await showLocation(options)
-        // setModalRedirect(!modalRedirect)
+        // await showLocation(options)
+        setModalRedirect(!modalRedirect)
     }
 
     return (
         <View style={styles.container}>
-            {/*<Popup*/}
-            {/*    isVisible={modalRedirect}*/}
-            {/*    onCancelPressed={() => handleRedirect()}*/}
-            {/*    onAppPressed={() => handleRedirect()}*/}
-            {/*    onBackButtonPressed={() => handleRedirect()}*/}
-            {/*    options={options}*/}
-            {/*    appsWhiteList={['Waze', 'waze']}*/}
-            {/*/>*/}
+            <Popup
+                isVisible={modalRedirect}
+                onCancelPressed={() => handleRedirect()}
+                onAppPressed={() => handleRedirect()}
+                onBackButtonPressed={() => handleRedirect()}
+                options={options}
+                appsWhiteList={['google-maps', 'apple-maps', 'waze', 'yandex', 'yandex-maps']}
+            />
             {
                 start
                     ? (
@@ -253,15 +248,15 @@ export const HomeScreen = ({navigation}) => {
                                 </Marker>
                                 <MapViewDirections
                                     origin={cordinate}
-                                    // waypoints={
-                                    //     [
-                                    //         {
-                                    //             latitude: CordinateClusterData[itemId].latitude,
-                                    //             longitude: CordinateClusterData[itemId].longitude
-                                    //         },
-                                    //         cordinate,
-                                    //     ]
-                                    // }
+                                    waypoints={
+                                        [
+                                            {
+                                                latitude: CordinateClusterData[itemId].latitude,
+                                                longitude: CordinateClusterData[itemId].longitude
+                                            },
+                                            cordinate,
+                                        ]
+                                    }
                                     destination={
                                         {
                                             latitude: CordinateClusterData[itemId].latitude,
@@ -277,23 +272,22 @@ export const HomeScreen = ({navigation}) => {
                                         console.log('params', params)
                                     }}
                                     onReady={result => {
-                                        console.log('result', result)
-                                        console.log("Distance: ${result.distance} km", result.distance)
-                                        console.log("Duration: ${result.duration} min.", result.duration)
-                                        setKm(result.distance)
-                                        setMin(result.duration)
-                                        _mapView.current.fitToCoordinates(result.coordinates, {
-                                            edgePadding: {
-                                                right: windowWidth / 20,
-                                                bottom: windowHeight / 20,
-                                                left: windowWidth / 20,
-                                                top: windowHeight / 20
-                                            }
-                                        })
+                                        if(result !== null) {
+                                            setKm(result.distance)
+                                            setMin(result.duration)
+                                            // _mapView.current.fitToCoordinates(result.coordinates, {
+                                            //     edgePadding: {
+                                            //         right: windowWidth / 20,
+                                            //         bottom: windowHeight / 20,
+                                            //         left: windowWidth / 20,
+                                            //         top: windowHeight / 20
+                                            //     }
+                                            // })
+                                        }
                                     }}
-                                    // onError={errorMessage => {
-                                    //     // console.log('GOT AN ERROR')
-                                    // }}
+                                    onError={errorMessage => {
+                                        console.log('GOT AN ERROR', errorMessage)
+                                    }}
                                 />
                             </>
                         )
@@ -303,7 +297,7 @@ export const HomeScreen = ({navigation}) => {
             <TouchableOpacity
                 style={[styles.myLocationButton, {
                     bottom: start
-                        ? windowHeight / 20
+                        ? windowHeight / 12
                         : itemId !== null
                             ? Platform.OS === 'android'
                                 ? windowHeight / 3.2 : windowHeight / 3.8 : Platform.OS === 'android'
@@ -322,81 +316,7 @@ export const HomeScreen = ({navigation}) => {
                                 start
                                     ? null
                                     : (
-                                        <View style={styles.infoBox}>
-                                            <View style={styles.infoBoxTop}>
-                                                <View style={styles.topTitleBox}>
-                                                    {
-                                                        CordinateClusterData[itemId].active
-                                                            ? (
-                                                                <>
-                                                                    <Image
-                                                                        source={IconFreeNot}
-                                                                        style={{width: 20, height: 20, marginRight: 7}}
-                                                                    />
-                                                                    <TextCustom
-                                                                        text={lang['arm'].busy}
-                                                                        color={SunsetOrange}
-                                                                        fontSize={14}
-                                                                        fontWeight={'400'}
-                                                                    />
-                                                                </>
-
-                                                            )
-                                                            : (
-                                                                <>
-                                                                    <Image
-                                                                        source={IconFree}
-                                                                        style={{width: 20, height: 20, marginRight: 7}}
-                                                                    />
-                                                                    <TextCustom
-                                                                        text={lang['arm'].freedom}
-                                                                        color={Fiord}
-                                                                        fontSize={14}
-                                                                        fontWeight={'400'}
-                                                                    />
-                                                                </>
-                                                            )
-                                                    }
-                                                </View>
-                                                {/*<View style={styles.kmBox}>*/}
-                                                {/*    <TextCustom*/}
-                                                {/*        text={`${km} ${lang['arm'].km}`}*/}
-                                                {/*        color={MineShaft}*/}
-                                                {/*        fontSize={16}*/}
-                                                {/*        fontWeight={'400'}*/}
-                                                {/*    />*/}
-                                                {/*</View>*/}
-                                            </View>
-                                            <View>
-                                                <TextCustom
-                                                    text={CordinateClusterData[itemId].title}
-                                                    color={Fiord}
-                                                    fontWeight={'700'}
-                                                    fontSize={18}
-                                                    marginBottom={5}
-                                                />
-                                                <TextCustom
-                                                    text={CordinateClusterData[itemId].address}
-                                                    color={Fiord}
-                                                    fontWeight={'400'}
-                                                    fontSize={16}
-                                                    marginBottom={10}
-                                                />
-                                            </View>
-                                            <View style={styles.infoBottomBox}>
-                                                {
-                                                    CordinateClusterData[itemId].ports.map(item => {
-                                                        return (
-                                                            <Image
-                                                                source={item.icon}
-                                                                style={{width: 20, height: 20, marginRight: 10}}
-                                                                key={item.id}
-                                                            />
-                                                        )
-                                                    })
-                                                }
-                                            </View>
-                                        </View>
+                                        <InfoBoxCustom itemId={itemId}/>
                                     )
                             }
                             {
@@ -459,7 +379,11 @@ export const HomeScreen = ({navigation}) => {
                                                 iconWidth={15}
                                                 iconHeight={15}
                                                 iconPositionLeft={false}
-                                                click={() => alert('asd')}
+                                                click={() => navigation.navigate('Book', {
+                                                    itemId,
+                                                    isBook: true,
+                                                    handleStart: () => handleStart()
+                                                })}
                                             />
                                             <ButtonCustom
                                                 width={windowWidth / 2.5}

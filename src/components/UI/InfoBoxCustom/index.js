@@ -1,0 +1,113 @@
+import React from "react"
+import {Image, View} from "react-native"
+import {styles} from "./style"
+import {CordinateClusterData} from "../../../shared/MockData"
+import IconFreeNot from "../../../assets/icon/free-not.png"
+import {TextCustom} from "../TextCustom"
+import {lang} from "../../../shared/Lang"
+import {Fiord, SunsetOrange} from "../../../shared/Colors"
+import IconFree from "../../../assets/icon/free.png"
+import IconPhone from '../../../assets/icon/phone1.png'
+import IconMapMarker from '../../../assets/icon/mapmarket.png'
+
+export const InfoBoxCustom = ({itemId, isBook}) => {
+    return (
+        <View style={styles.infoBox}>
+            <View style={styles.infoBoxTop}>
+                <View style={styles.topTitleBox}>
+                    {
+                        CordinateClusterData[itemId].active
+                            ? (
+                                <>
+                                    <Image
+                                        source={IconFreeNot}
+                                        style={{width: 20, height: 20, marginRight: 7}}
+                                    />
+                                    <TextCustom
+                                        text={lang['arm'].busy}
+                                        color={SunsetOrange}
+                                        fontSize={14}
+                                        fontWeight={'400'}
+                                    />
+                                </>
+
+                            )
+                            : (
+                                <>
+                                    <Image
+                                        source={IconFree}
+                                        style={{width: 20, height: 20, marginRight: 7}}
+                                    />
+                                    <TextCustom
+                                        text={lang['arm'].freedom}
+                                        color={Fiord}
+                                        fontSize={14}
+                                        fontWeight={'400'}
+                                    />
+                                </>
+                            )
+                    }
+                </View>
+            </View>
+            <View>
+                <TextCustom
+                    text={CordinateClusterData[itemId].title}
+                    color={Fiord}
+                    fontWeight={'700'}
+                    fontSize={18}
+                    marginBottom={isBook ? 15 : 5}
+                />
+                <View style={{flexDirection: 'row'}}>
+                    {
+                        isBook
+                            ? <Image source={IconMapMarker} style={{width: 20, height: 20, marginRight: 10}}/>
+                            : null
+                    }
+                    <TextCustom
+                        text={CordinateClusterData[itemId].address}
+                        color={Fiord}
+                        fontWeight={'400'}
+                        fontSize={16}
+                        marginBottom={10}
+                    />
+                </View>
+                {
+                    isBook
+                        ? (
+                            <View style={{flexDirection: 'row'}}>
+                                <Image source={IconPhone} style={{width: 20, height: 20, marginRight: 10}}/>
+                                <TextCustom
+                                    text={CordinateClusterData[itemId].phone}
+                                    color={Fiord}
+                                    fontWeight={'400'}
+                                    fontSize={16}
+                                    marginBottom={10}
+                                />
+                            </View>
+                        )
+                        : null
+                }
+            </View>
+            {
+                !isBook
+                    ? (
+                        <View style={styles.infoBottomBox}>
+                            {
+                                CordinateClusterData[itemId].ports.map(item => {
+                                    return (
+                                        <Image
+                                            source={item.icon}
+                                            style={{width: 20, height: 20, marginRight: 10}}
+                                            key={item.id}
+                                        />
+                                    )
+                                })
+                            }
+                        </View>
+                    )
+                    : null
+            }
+
+        </View>
+    )
+}

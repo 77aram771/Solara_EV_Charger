@@ -82,7 +82,7 @@ export const FilterScreen = ({navigation}) => {
                 {
                     FilterCheckItems.map(item => {
                         return (
-                            <CheckItem text={item.text} bool={item.active} handle={() => handleCheckItem(item.id)}/>
+                            <CheckItem key={item.id} text={item.text} bool={item.active} handle={() => handleCheckItem(item.id)}/>
                         )
                     })
                 }

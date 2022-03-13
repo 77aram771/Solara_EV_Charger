@@ -122,7 +122,7 @@ export const WelcomeScreen = () => {
                     )
                     : (
                         <View style={styles.bottomBox}>
-                            <TouchableOpacity onPress={() => alert('test')}>
+                            <TouchableOpacity onPress={() => handleCheck()}>
                                 <TextCustom text={lang['arm'].skip} fontSize={14} color={Gray}/>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => goToSecondIndex()}>

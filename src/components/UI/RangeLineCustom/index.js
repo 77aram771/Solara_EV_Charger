@@ -4,7 +4,7 @@ import {View} from "react-native"
 import {Fiord, Manatee, MySin} from "../../../shared/Colors"
 import {TextCustom} from "../TextCustom"
 
-export const RangeLineCustom = () => {
+export const RangeLineCustom = ({percent}) => {
     const [fromValue, setFromValue] = useState(0)
     const [toValue, setToValue] = useState(0)
     return (
@@ -19,8 +19,8 @@ export const RangeLineCustom = () => {
                     paddingHorizontal: 10,
                 }}
             >
-                <TextCustom text={fromValue}/>
-                <TextCustom text={toValue}/>
+                <TextCustom text={percent ? `${fromValue}%` : fromValue}/>
+                <TextCustom text={percent ? `${toValue}%` : toValue}/>
             </View>
             <RangeSlider
                 styleSize={"medium"}

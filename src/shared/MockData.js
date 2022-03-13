@@ -29,6 +29,11 @@ import IconPort6 from '../assets/icon/port6.png'
 import IconPort7 from '../assets/icon/port7.png'
 import IconPort8 from '../assets/icon/port8.png'
 import {lang} from "./Lang"
+import {windowHeight, windowWidth} from "./Const"
+
+export const ASPECT_RATIO = windowWidth / windowHeight
+export const LATITUDE_DELTA = 0.0922
+export const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 export const WelcomeSlider = [
     {
@@ -67,46 +72,71 @@ export const CordinateClusterData = [
         longitude: 44.50059413909912,
         active: false,
         charging: false,
+        phone: '+374 99 00 00 00',
         ports: [
             {
                 id: 1,
                 port: '1',
-                icon: IconPort1
+                icon: IconPort1,
+                text: 'Type 1',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 2,
                 port: '2',
-                icon: IconPort2
+                icon: IconPort2,
+                text: 'Type 2',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 3,
                 port: '3',
-                icon: IconPort3
+                icon: IconPort3,
+                text: 'Type 3',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 4,
                 port: '4',
-                icon: IconPort4
+                icon: IconPort4,
+                text: 'Type 4',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 5,
                 port: '5',
-                icon: IconPort5
+                icon: IconPort5,
+                text: 'Type 5',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 6,
                 port: '6',
-                icon: IconPort6
+                icon: IconPort6,
+                text: 'Type 6',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 7,
                 port: '7',
-                icon: IconPort7
+                icon: IconPort7,
+                text: 'Type 7',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 8,
                 port: '8',
-                icon: IconPort8
+                icon: IconPort8,
+                text: 'Type 8',
+                rate: '22',
+                price: '4,00'
             },
         ]
     },
@@ -119,46 +149,71 @@ export const CordinateClusterData = [
         longitude: 44.511966705322266,
         active: false,
         charging: true,
+        phone: '+374 99 00 00 00',
         ports: [
             {
                 id: 1,
                 port: '1',
-                icon: IconPort1
+                icon: IconPort1,
+                text: 'Type 1',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 2,
                 port: '2',
-                icon: IconPort2
+                icon: IconPort2,
+                text: 'Type 2',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 3,
                 port: '3',
-                icon: IconPort3
+                icon: IconPort3,
+                text: 'Type 3',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 4,
                 port: '4',
-                icon: IconPort4
+                icon: IconPort4,
+                text: 'Type 4',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 5,
                 port: '5',
-                icon: IconPort5
+                icon: IconPort5,
+                text: 'Type 5',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 6,
                 port: '6',
-                icon: IconPort6
+                icon: IconPort6,
+                text: 'Type 6',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 7,
                 port: '7',
-                icon: IconPort7
+                icon: IconPort7,
+                text: 'Type 7',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 8,
                 port: '8',
-                icon: IconPort8
+                icon: IconPort8,
+                text: 'Type 8',
+                rate: '22',
+                price: '4,00'
             },
         ]
     },
@@ -171,46 +226,71 @@ export const CordinateClusterData = [
         longitude: 44.51977729797364,
         active: false,
         charging: false,
+        phone: '+374 99 00 00 00',
         ports: [
             {
                 id: 1,
                 port: '1',
-                icon: IconPort1
+                icon: IconPort1,
+                text: 'Type 1',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 2,
                 port: '2',
-                icon: IconPort2
+                icon: IconPort2,
+                text: 'Type 2',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 3,
                 port: '3',
-                icon: IconPort3
+                icon: IconPort3,
+                text: 'Type 3',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 4,
                 port: '4',
-                icon: IconPort4
+                icon: IconPort4,
+                text: 'Type 4',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 5,
                 port: '5',
-                icon: IconPort5
+                icon: IconPort5,
+                text: 'Type 5',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 6,
                 port: '6',
-                icon: IconPort6
+                icon: IconPort6,
+                text: 'Type 6',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 7,
                 port: '7',
-                icon: IconPort7
+                icon: IconPort7,
+                text: 'Type 7',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 8,
                 port: '8',
-                icon: IconPort8
+                icon: IconPort8,
+                text: 'Type 8',
+                rate: '22',
+                price: '4,00'
             },
         ]
     },
@@ -223,46 +303,71 @@ export const CordinateClusterData = [
         longitude: 44.50531482696533,
         active: false,
         charging: true,
+        phone: '+374 99 00 00 00',
         ports: [
             {
                 id: 1,
                 port: '1',
-                icon: IconPort1
+                icon: IconPort1,
+                text: 'Type 1',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 2,
                 port: '2',
-                icon: IconPort2
+                icon: IconPort2,
+                text: 'Type 2',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 3,
                 port: '3',
-                icon: IconPort3
+                icon: IconPort3,
+                text: 'Type 3',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 4,
                 port: '4',
-                icon: IconPort4
+                icon: IconPort4,
+                text: 'Type 4',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 5,
                 port: '5',
-                icon: IconPort5
+                icon: IconPort5,
+                text: 'Type 5',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 6,
                 port: '6',
-                icon: IconPort6
+                icon: IconPort6,
+                text: 'Type 6',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 7,
                 port: '7',
-                icon: IconPort7
+                icon: IconPort7,
+                text: 'Type 7',
+                rate: '22',
+                price: '4,00'
             },
             {
                 id: 8,
                 port: '8',
-                icon: IconPort8
+                icon: IconPort8,
+                text: 'Type 8',
+                rate: '22',
+                price: '4,00'
             },
         ]
     },
