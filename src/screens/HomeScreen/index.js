@@ -1,10 +1,11 @@
 import React, {createRef, useContext, useEffect, useState} from 'react'
-import {Image, Platform, TouchableOpacity, View} from "react-native"
+import {Image, LayoutAnimation, Platform, TouchableOpacity, View} from "react-native"
 import {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import MapView from "react-native-map-clustering"
 import MapViewDirections from "react-native-maps-directions"
 import Geocoder from 'react-native-geocoding'
-import {Popup, showLocation} from 'react-native-map-link'
+import {Popup} from 'react-native-map-link'
+// import {showLocation} from 'react-native-map-link'
 import {styles} from "./style"
 import {Google_Key, windowHeight, windowWidth} from "../../shared/Const"
 import {MapStyle} from "../../shared/MapStyle"
@@ -76,7 +77,7 @@ export const HomeScreen = ({navigation}) => {
     //     // setCordinate(region)
     // }
 
-    const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 1000)
+    const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 2000)
 
     const handleItemId = (e, id) => {
         e.stopPropagation()
@@ -153,6 +154,7 @@ export const HomeScreen = ({navigation}) => {
                     )
             }
             <MapView
+                layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
                 initialRegion={cordinate}
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
@@ -188,7 +190,7 @@ export const HomeScreen = ({navigation}) => {
                 spiralEnabled={true}
                 rotateEnabled={false}
                 focusable={false}
-                tracksViewChanges={false}
+                tracksViewChanges={true}
                 renderToHardwareTextureAndroid={false}
                 // onUserLocationChange={() => {
                 //
@@ -198,15 +200,30 @@ export const HomeScreen = ({navigation}) => {
                 spiderLineColor={'#000'}
                 tintColor={'red'}
                 accessibilityIgnoresInvertColors={false}
-                // renderCluster={() => {
+                // renderCluster={(cluster) => {
+                //     // console.log('cluster', cluster)
+                //     console.log('cluster', cluster)
                 //     return (
-                //         <Image source={IconPin4} style={{width: 50, height: 70}} resizeMode={'contain'}/>
+                //         <Marker
+                //             onPress={() => cluster.onPress()}
+                //             coordinate={{
+                //                 latitude: cluster.geometry.coordinates[0],
+                //                 longitude: cluster.geometry.coordinates[1]
+                //             }}
+                //             style={{
+                //                 backgroundColor: cluster.clusterColor,
+                //                 width: 40,
+                //                 height: 50
+                //             }}
+                //             key={cluster.id}
+                //         >
+                //         </Marker>
                 //     )
                 // }}
-                // onClusterPress={(cluster, markers) => {
-                //     console.log('cluster', cluster)
-                //     console.log('markers', markers)
-                // }}
+                onClusterPress={(cluster, markers) => {
+                    console.log('cluster', cluster)
+                    console.log('markers', markers)
+                }}
             >
                 {
                     !start

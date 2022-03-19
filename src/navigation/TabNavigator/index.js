@@ -47,13 +47,13 @@ export const TabNavigator = () => {
                 }}
             />
             <Tab.Screen
-                name="WalletStack"
-                component={WalletStack}
+                name="ProfileStack"
+                component={ProfileStack}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <Image
-                            source={focused ? IconWalletActive : IconWallet}
+                            source={focused ? IconProfileActive : IconProfile}
                             style={{width: 35, height: 35, marginTop: 10}}
                             resizeMode={'contain'}
                         />
@@ -63,13 +63,13 @@ export const TabNavigator = () => {
                 }}
             />
             <Tab.Screen
-                name="ProfileStack"
-                component={ProfileStack}
+                name="WalletStack"
+                component={WalletStack}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({focused}) => (
                         <Image
-                            source={focused ? IconProfileActive : IconProfile}
+                            source={focused ? IconWalletActive : IconWallet}
                             style={{width: 35, height: 35, marginTop: 10}}
                             resizeMode={'contain'}
                         />

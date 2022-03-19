@@ -8,7 +8,7 @@ import {styles} from "./style"
 export const HeaderCustom = ({text, backgroundColor, handleBack}) => {
     return (
         <View style={[styles.container, {backgroundColor}]}>
-            <TouchableOpacity style={{width: 20, height: 20}} onPress={() => handleBack()}>
+            <TouchableOpacity style={{width: 50, height: 50, borderWidth: 1, borderColor: 'red'}} onPress={() => handleBack()}>
                 <Image source={IconArrowBack} style={{width: 20, height: 20}}/>
             </TouchableOpacity>
             <TextCustom text={text} color={White} fontSize={20}/>

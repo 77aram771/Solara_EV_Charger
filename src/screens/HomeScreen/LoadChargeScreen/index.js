@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Alert, ImageBackground, Modal, Pressable, ScrollView, Text, View} from "react-native"
+import {ImageBackground, Modal, ScrollView, View} from "react-native"
 import Context from "../../../../Context"
 import {HeaderCustom} from "../../../components/UI/HeaderCustom"
 import {Fiord, MySin, White} from "../../../shared/Colors"

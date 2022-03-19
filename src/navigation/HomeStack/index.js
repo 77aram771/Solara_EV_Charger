@@ -28,10 +28,10 @@ export const HomeStack = () => {
             initialRouteName="Home"
             screenOptions={{
                 headerShown: false,
-                gestureDirection: 'horizontal',
-                gestureEnabled: true,
-                animationEnabled: true,
-                animationTypeForReplace: 'push',
+                // gestureDirection: 'horizontal',
+                // gestureEnabled: true,
+                // animationEnabled: true,
+                // animationTypeForReplace: 'push',
             }}
         >
             <Home.Screen
