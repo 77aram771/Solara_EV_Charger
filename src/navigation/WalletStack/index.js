@@ -1,6 +1,7 @@
 import React from "react"
 import {createStackNavigator} from "@react-navigation/stack"
 import {WalletScreen} from "../../screens/WalletScreen"
+import {horizontalAnimation} from "../../shared/MockData"
 
 export const WalletStack = () => {
 
@@ -9,7 +10,7 @@ export const WalletStack = () => {
     return (
         <Wallet.Navigator
             initialRouteName="Wallet"
-            screenOptions={{headerShown: false}}
+            screenOptions={horizontalAnimation}
         >
             <Wallet.Screen
                 name="Wallet"

@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useContext} from "react"
 import {Image, View} from "react-native"
 import {styles} from "./style"
 import {CordinateClusterData} from "../../../shared/MockData"
@@ -9,8 +9,12 @@ import {Fiord, SunsetOrange} from "../../../shared/Colors"
 import IconFree from "../../../assets/icon/free.png"
 import IconPhone from '../../../assets/icon/phone1.png'
 import IconMapMarker from '../../../assets/icon/mapmarket.png'
+import Context from "../../../../Context"
 
 export const InfoBoxCustom = ({itemId, isBook}) => {
+
+    const {countryCode} = useContext(Context)
+
     return (
         <View style={styles.infoBox}>
             <View style={styles.infoBoxTop}>
@@ -24,7 +28,7 @@ export const InfoBoxCustom = ({itemId, isBook}) => {
                                         style={{width: 20, height: 20, marginRight: 7}}
                                     />
                                     <TextCustom
-                                        text={lang['arm'].busy}
+                                        text={lang[countryCode].busy}
                                         color={SunsetOrange}
                                         fontSize={14}
                                         fontWeight={'400'}
@@ -39,7 +43,7 @@ export const InfoBoxCustom = ({itemId, isBook}) => {
                                         style={{width: 20, height: 20, marginRight: 7}}
                                     />
                                     <TextCustom
-                                        text={lang['arm'].freedom}
+                                        text={lang[countryCode].freedom}
                                         color={Fiord}
                                         fontSize={14}
                                         fontWeight={'400'}

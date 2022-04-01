@@ -1,6 +1,8 @@
 import {StyleSheet} from "react-native"
 import {MySin, White} from "../../shared/Colors"
 import {windowHeight, windowWidth} from "../../shared/Const"
+import {paddingHorizontal} from "../../shared/GlobalStyle"
+import Constants from "expo-constants";
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,38 +10,42 @@ export const styles = StyleSheet.create({
         backgroundColor: White,
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderWidth: 1,
-        borderColor: 'red'
+        paddingHorizontal
     },
     headerBox: {
         width: windowWidth,
-        height: windowHeight / 4,
+        height: Constants.statusBarHeight + windowHeight / 6,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: MySin,
         borderBottomEndRadius: 15,
         borderBottomStartRadius: 15,
         position: 'relative',
-        borderWidth: 1,
-        borderColor: 'red'
     },
     mineBox: {
-
+        width: windowWidth,
+        alignSelf: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        paddingHorizontal,
     },
     titleBox: {
         width: windowWidth,
         alignSelf: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        borderWidth: 1,
-        borderColor: 'red'
     },
     footerBox: {
         width: windowWidth,
         alignSelf: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        borderWidth: 1,
-        borderColor: 'red'
+    },
+    headerBoxUser: {
+        width: windowWidth,
+        height: Constants.statusBarHeight + windowHeight / 2.5,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingBottom: windowHeight / 30
     }
 })

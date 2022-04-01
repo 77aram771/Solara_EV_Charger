@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     },
     filterBox: {
         position: 'absolute',
-        top: windowHeight / 20,
+        top: windowHeight / 10,
         left: 20,
         zIndex: 10,
         flexDirection: 'row',
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     },
     qrBox: {
         position: 'absolute',
-        top: windowHeight / 24,
+        top: windowHeight / 11,
         right: 20,
         zIndex: 10,
         backgroundColor: White,
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         position: 'absolute',
         bottom: 15,
-        zIndex: 10,
+        zIndex: 10
     },
     kmBox: {
         paddingTop: 5,
@@ -63,14 +63,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonsBox: {
-        width: windowWidth / 1.2,
+        width: windowWidth / 1.1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     addressesBox: {
         position: 'absolute',
-        top: windowHeight / 20,
+        top: windowHeight / 10,
         zIndex: 10,
         width: windowWidth / 1.2,
         backgroundColor: White,
@@ -105,7 +105,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        height: '100%'
+        height: '100%',
     },
     clockBox: {
         flexDirection: 'row',
@@ -117,13 +117,13 @@ export const styles = StyleSheet.create({
         backgroundColor: White,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 10
+        marginRight: 10,
     },
     somethingBox: {
         flexDirection: 'row',
         position: 'absolute',
-        top: Platform.OS === 'ios' ? windowHeight /  4.5 : windowHeight /  4.1,
+        top: Platform.OS === 'ios' ? windowHeight /  4 : windowHeight /  3.4,
         zIndex: 10,
-        width: windowWidth / 1.2,
+        width: windowWidth / 1.2
     }
 })

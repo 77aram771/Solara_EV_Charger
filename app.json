@@ -1,5 +1,21 @@
 {
   "expo": {
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    },
     "plugins": [
       [
         "expo-image-picker",
@@ -10,7 +26,7 @@
     ],
     "name": "Solara_EV_Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",

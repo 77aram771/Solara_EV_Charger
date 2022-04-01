@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
         width: windowWidth,
         alignSelf: 'center',
         alignItems: 'center',
-        marginBottom: 10,
         marginTop: windowHeight / 6
     },
     infoBox: {
@@ -36,5 +35,9 @@ export const styles = StyleSheet.create({
         paddingHorizontal,
         width: windowWidth,
         alignSelf: 'flex-end'
+    },
+    lottie: {
+        width: 300,
+        height: 300,
     },
 })

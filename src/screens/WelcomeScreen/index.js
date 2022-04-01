@@ -8,13 +8,43 @@ import {Fiord, Gray, MineShaft, MySin} from "../../shared/Colors"
 import {windowHeight, windowWidth} from "../../shared/Const"
 import {ButtonCustom} from "../../components/UI/ButtonCustom"
 import {lang} from "../../shared/Lang"
-import {WelcomeSlider} from "../../shared/MockData"
 import {TitleCustom} from "../../components/UI/TitleCustom"
 import Context from "../../../Context"
+import ImgSlider1 from "../../assets/images/img-slider-1.png"
+import ImgSlider2 from "../../assets/images/img-slider-2.png"
+import ImgSlider3 from "../../assets/images/img-slider-3.png"
+import ImgSlider4 from "../../assets/images/img-slider-4.png"
 
 export const WelcomeScreen = () => {
 
-    const {handleCheck} = useContext(Context)
+    const {handleCheck, countryCode} = useContext(Context)
+
+    const WelcomeSlider = [
+        {
+            id: 1,
+            img: ImgSlider1,
+            title: lang[countryCode].sliderTitle1,
+            text: lang[countryCode].sliderText1
+        },
+        {
+            id: 2,
+            img: ImgSlider2,
+            title: lang[countryCode].sliderTitle2,
+            text: lang[countryCode].sliderText2
+        },
+        {
+            id: 3,
+            img: ImgSlider3,
+            title: lang[countryCode].sliderTitle3,
+            text: lang[countryCode].sliderText3
+        },
+        {
+            id: 4,
+            img: ImgSlider4,
+            title: lang[countryCode].sliderTitle4,
+            text: lang[countryCode].sliderText4
+        },
+    ]
 
     const scrollRef = useRef(null)
     const [activeId, setActiveId] = useState(0)
@@ -112,7 +142,7 @@ export const WelcomeScreen = () => {
                                 height={windowHeight / 13}
                                 backgroundColor={MySin}
                                 borderRadius={15}
-                                text={lang['arm'].start}
+                                text={lang[countryCode].start}
                                 color={Fiord}
                                 fontSize={22}
                                 click={() => handleCheck()}
@@ -123,7 +153,7 @@ export const WelcomeScreen = () => {
                     : (
                         <View style={styles.bottomBox}>
                             <TouchableOpacity onPress={() => handleCheck()}>
-                                <TextCustom text={lang['arm'].skip} fontSize={14} color={Gray}/>
+                                <TextCustom text={lang[countryCode].skip} fontSize={14} color={Gray}/>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => goToSecondIndex()}>
                                 <Image source={IconArrow} style={{width: 30, height: 30}}/>

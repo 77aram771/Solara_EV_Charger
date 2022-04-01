@@ -1,7 +1,3 @@
-import ImgSlider1 from '../assets/images/img-slider-1.png'
-import ImgSlider2 from '../assets/images/img-slider-2.png'
-import ImgSlider3 from '../assets/images/img-slider-3.png'
-import ImgSlider4 from '../assets/images/img-slider-4.png'
 import IconPin1 from '../assets/icon/pin1.png'
 import IconPin2 from '../assets/icon/pin2.png'
 import IconPin3 from '../assets/icon/pin3.png'
@@ -28,37 +24,54 @@ import IconPort5 from '../assets/icon/port5.png'
 import IconPort6 from '../assets/icon/port6.png'
 import IconPort7 from '../assets/icon/port7.png'
 import IconPort8 from '../assets/icon/port8.png'
-import {lang} from "./Lang"
 import {windowHeight, windowWidth} from "./Const"
+import IconEnglish from "../assets/icon/en.png"
+import IconArmenia from "../assets/icon/hy.png"
+import IconRussian from "../assets/icon/ru.png"
 
 export const ASPECT_RATIO = windowWidth / windowHeight
 export const LATITUDE_DELTA = 0.0922
 export const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
-export const WelcomeSlider = [
+export const horizontalAnimation = {
+    headerShown: false,
+    cardStyleInterpolator: ({ current, layouts }) => {
+        return {
+            cardStyle: {
+                transform: [
+                    {
+                        translateX: current.progress.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [layouts.screen.width, 0],
+                        }),
+                    },
+                ],
+            },
+        }
+    },
+}
+
+export const langData = [
     {
         id: 1,
-        img: ImgSlider1,
-        title: lang["arm"].sliderTitle1,
-        text: lang["arm"].sliderText1
+        title: 'English',
+        active: true,
+        icon: IconEnglish,
+        countryCode: 'en'
     },
     {
         id: 2,
-        img: ImgSlider2,
-        title: lang["arm"].sliderTitle2,
-        text: lang["arm"].sliderText2
+        title: 'հայերեն',
+        active: false,
+        icon: IconArmenia,
+        countryCode: 'arm'
     },
     {
         id: 3,
-        img: ImgSlider3,
-        title: lang["arm"].sliderTitle3,
-        text: lang["arm"].sliderText3
-    },
-    {
-        id: 4,
-        img: ImgSlider4,
-        title: lang["arm"].sliderTitle4,
-        text: lang["arm"].sliderText4
+        title: 'Русский',
+        active: false,
+        icon: IconRussian,
+        countryCode: 'ru'
     },
 ]
 
@@ -68,8 +81,8 @@ export const CordinateClusterData = [
         address: 'Address 1',
         title: 'Title 1',
         icon: IconPin1,
-        latitude: 40.154834881312134,
-        longitude: 44.50059413909912,
+        latitude: 40.154,
+        longitude: 44.50,
         active: false,
         charging: false,
         phone: '+374 99 00 00 00',
@@ -424,15 +437,48 @@ export const FilterPortsData = [
     },
 ]
 
-export const FilterCheckItems = [
+export const options = {
+    latitude: CordinateClusterData[0].latitude,
+    longitude: CordinateClusterData[0].longitude,
+    googleForceLatLon: false,
+    alwaysIncludeGoogle: true,
+    appsWhiteList: ['google-maps', 'apple-maps', 'waze', 'yandex', 'yandex-maps'],
+    naverCallerName: 'com.example.myapp',
+    directionsMode: 'car'
+}
+
+export const dataInputs = [
     {
         id: 1,
-        text: lang['arm'].filterCheckText1,
-        active: false
+        price: '12.500',
+        date: '25.03.2021',
+        cardType: 'Visa',
+        cardNumber: '****4569'
     },
     {
         id: 2,
-        text: lang['arm'].filterCheckText2,
-        active: false
+        price: '10.000',
+        date: '25.03.2021',
+        cardType: 'Visa',
+        cardNumber: '****4569'
+    },
+]
+
+export const dataOutputs = [
+    {
+        id: 1,
+        kw: '10.000',
+        price: '12.500',
+        date: '25.03.2021',
+        time: '14:00 - 15:00',
+        title: 'Solara #79 Parallel'
+    },
+    {
+        id: 2,
+        kw: '10.000',
+        price: '12.500',
+        date: '25.03.2021',
+        time: '14:00 - 15:00',
+        title: 'Solara #79 Parallel'
     },
 ]

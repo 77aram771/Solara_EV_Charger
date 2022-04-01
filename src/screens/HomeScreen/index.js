@@ -22,13 +22,14 @@ import IconClock from '../../assets/icon/clock.png'
 import {Dandelion, Fiord, MineShaft, MySin, White} from "../../shared/Colors"
 import {TextCustom} from "../../components/UI/TextCustom"
 import {lang} from "../../shared/Lang"
-import {CordinateClusterData, LATITUDE_DELTA, LONGITUDE_DELTA} from "../../shared/MockData"
+import {CordinateClusterData, options, LATITUDE_DELTA, LONGITUDE_DELTA} from "../../shared/MockData"
 import {ButtonCustom} from "../../components/UI/ButtonCustom"
 import {InfoBoxCustom} from "../../components/UI/InfoBoxCustom"
+import {RenderCluster} from "../../components/UI/RenderCluster"
 
 export const HomeScreen = ({navigation}) => {
 
-    const {location, userAddress, handleHideTabBar} = useContext(Context)
+    const {location, userAddress, handleHideTabBar, countryCode} = useContext(Context)
 
     const _mapView = createRef()
 
@@ -39,19 +40,9 @@ export const HomeScreen = ({navigation}) => {
     const [checkAddress, setCheckAddress] = useState('')
     const [modalRedirect, setModalRedirect] = useState(false)
 
-    const options = {
-        latitude: CordinateClusterData[0].latitude,
-        longitude: CordinateClusterData[0].longitude,
-        googleForceLatLon: false,
-        alwaysIncludeGoogle: true,
-        appsWhiteList: ['google-maps', 'apple-maps', 'waze', 'yandex', 'yandex-maps'],
-        naverCallerName: 'com.example.myapp',
-        directionsMode: 'car'
-    }
-
-    const [cordinate] = useState({
-        latitude: location?.coords?.latitude,
-        longitude: location?.coords?.longitude,
+    const [cordinate, setCordinate] = useState({
+        latitude: location !== null ? location?.coords?.latitude : 40.177200,
+        longitude: location !== null ? location?.coords?.longitude : 44.503490,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
     })
@@ -66,18 +57,27 @@ export const HomeScreen = ({navigation}) => {
         Geocoder.from(CordinateClusterData[0].latitude, CordinateClusterData[0].longitude)
             .then((json) => {
                 let addressComponent = `${json.results[0].address_components[1].long_name} ${json.results[0].address_components[0].long_name}`
-                // console.log(addressComponent)
                 setCheckAddress(addressComponent)
             })
             .catch((error) => console.warn(error))
     }, [itemId])
 
+    useEffect(() => {
+        if (location !== null) {
+            setCordinate({
+                latitude: location?.coords?.latitude,
+                longitude: location?.coords?.longitude,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA,
+            })
+        }
+    }, [location])
+
     // const onRegionChange = (region) => {
-    //     // console.log('region', region)
-    //     // setCordinate(region)
+    //     console.log('region', region)
     // }
 
-    const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 2000)
+    const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 10000)
 
     const handleItemId = (e, id) => {
         e.stopPropagation()
@@ -123,7 +123,7 @@ export const HomeScreen = ({navigation}) => {
                                 <View style={styles.clockBox}>
                                     <Image source={IconClock} style={{width: 22, height: 22, marginRight: 10}}/>
                                     <TextCustom
-                                        text={`${Math.floor(parseInt(min))} ${lang['arm'].min}`}
+                                        text={`${Math.floor(parseInt(min))} ${lang[countryCode].min}`}
                                         color={MineShaft}
                                         fontSize={18}
                                         fontWeight={'700'}
@@ -132,7 +132,7 @@ export const HomeScreen = ({navigation}) => {
                                 <View style={styles.clockBox}>
                                     <Image source={IconDirection3} style={{width: 22, height: 22, marginRight: 10}}/>
                                     <TextCustom
-                                        text={`${Math.floor(km)} ${lang['arm'].km}`}
+                                        text={`${Math.floor(km)} ${lang[countryCode].km}`}
                                         color={MineShaft}
                                         fontSize={18}
                                         fontWeight={'700'}
@@ -145,7 +145,7 @@ export const HomeScreen = ({navigation}) => {
                         <>
                             <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.filterBox}>
                                 <Image source={IconFilter} style={{width: 22, height: 22, marginRight: 10}}/>
-                                <TextCustom text={lang['arm'].filter} color={Fiord} fontSize={20} fontWeight={'700'}/>
+                                <TextCustom text={lang[countryCode].filter} color={Fiord} fontSize={20} fontWeight={'700'}/>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => navigation.navigate('QRScanner')} style={styles.qrBox}>
                                 <Image source={IconQr} style={{width: 40, height: 40}}/>
@@ -159,10 +159,6 @@ export const HomeScreen = ({navigation}) => {
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 // onRegionChange={onRegionChange}
-                // ref={(ref) => {
-                //     console.log('ref', ref)
-                //     // updateMapRef(ref)
-                // }}
                 onPress={(e) => {
                     e.stopPropagation()
                     if (!start) {
@@ -172,7 +168,7 @@ export const HomeScreen = ({navigation}) => {
                 ref={_mapView}
                 showsScale={true}
                 showsPointsOfInterest={true}
-                // onMapReady={() => getBoundaries()}
+                onMapReady={getCurrentPosition}
                 followUserLocation={true}
                 zoomEnabled={true}
                 pitchEnabled={true}
@@ -180,7 +176,7 @@ export const HomeScreen = ({navigation}) => {
                 showsBuildings={true}
                 showsTraffic={false}
                 showsIndoors={true}
-                showsUserLocation={true}
+                showsUserLocation={location !== null}
                 showsMyLocationButton={false}
                 customMapStyle={MapStyle}
                 minZoomLevel={1}
@@ -192,38 +188,12 @@ export const HomeScreen = ({navigation}) => {
                 focusable={false}
                 tracksViewChanges={true}
                 renderToHardwareTextureAndroid={false}
-                // onUserLocationChange={() => {
-                //
-                // }}
                 clusterColor={MySin}
                 clusterTextColor={White}
                 spiderLineColor={'#000'}
                 tintColor={'red'}
                 accessibilityIgnoresInvertColors={false}
-                // renderCluster={(cluster) => {
-                //     // console.log('cluster', cluster)
-                //     console.log('cluster', cluster)
-                //     return (
-                //         <Marker
-                //             onPress={() => cluster.onPress()}
-                //             coordinate={{
-                //                 latitude: cluster.geometry.coordinates[0],
-                //                 longitude: cluster.geometry.coordinates[1]
-                //             }}
-                //             style={{
-                //                 backgroundColor: cluster.clusterColor,
-                //                 width: 40,
-                //                 height: 50
-                //             }}
-                //             key={cluster.id}
-                //         >
-                //         </Marker>
-                //     )
-                // }}
-                onClusterPress={(cluster, markers) => {
-                    console.log('cluster', cluster)
-                    console.log('markers', markers)
-                }}
+                renderCluster={RenderCluster}
             >
                 {
                     !start
@@ -237,12 +207,16 @@ export const HomeScreen = ({navigation}) => {
                                             longitude: item.longitude
                                         }}
                                         key={item.id}
+                                        // image={item.icon}
+                                        stopPropagation={false}
+                                        // centerOffset={{ x: -18, y: -60 }}
+                                        // anchor={{ x: 0.69, y: 1 }}
                                     >
-                                        <Image
-                                            source={item.icon}
-                                            style={{width: 35, height: 55}}
-                                            resizeMode={'contain'}
-                                        />
+                                        {/*<Image*/}
+                                        {/*    source={item.icon}*/}
+                                        {/*    style={{width: 35, height: 55}}*/}
+                                        {/*    resizeMode={'contain'}*/}
+                                        {/*/>*/}
                                     </Marker>
                                 )
                             })
@@ -260,8 +234,11 @@ export const HomeScreen = ({navigation}) => {
                                         longitude: CordinateClusterData[itemId].longitude
                                     }}
                                 >
-                                    <Image source={CordinateClusterData[itemId].icon} style={{width: 35, height: 55}}
-                                           resizeMode={'contain'}/>
+                                    <Image
+                                        source={CordinateClusterData[itemId].icon}
+                                        style={{width: 35, height: 55}}
+                                        resizeMode={'contain'}
+                                    />
                                 </Marker>
                                 <MapViewDirections
                                     origin={cordinate}
@@ -289,17 +266,20 @@ export const HomeScreen = ({navigation}) => {
                                         console.log('params', params)
                                     }}
                                     onReady={result => {
-                                        if(result !== null) {
+                                        if (result !== null) {
                                             setKm(result.distance)
                                             setMin(result.duration)
-                                            // _mapView.current.fitToCoordinates(result.coordinates, {
-                                            //     edgePadding: {
-                                            //         right: windowWidth / 20,
-                                            //         bottom: windowHeight / 20,
-                                            //         left: windowWidth / 20,
-                                            //         top: windowHeight / 20
-                                            //     }
-                                            // })
+                                            console.log('_mapView', _mapView)
+                                            if (_mapView.current !== null) {
+                                                _mapView.current.fitToCoordinates(result.coordinates, {
+                                                    edgePadding: {
+                                                        right: windowWidth / 3,
+                                                        bottom: windowHeight / 3,
+                                                        left: windowWidth / 3,
+                                                        top: windowHeight / 3
+                                                    }
+                                                })
+                                            }
                                         }
                                     }}
                                     onError={errorMessage => {
@@ -311,20 +291,26 @@ export const HomeScreen = ({navigation}) => {
                         : null
                 }
             </MapView>
-            <TouchableOpacity
-                style={[styles.myLocationButton, {
-                    bottom: start
-                        ? windowHeight / 12
-                        : itemId !== null
-                            ? Platform.OS === 'android'
-                                ? windowHeight / 3.2 : windowHeight / 3.8 : Platform.OS === 'android'
-                                ? windowHeight / 17
-                                : windowHeight / 20
-                }]}
-                onPress={() => getCurrentPosition()}
-            >
-                <Image source={IconDirection} style={{width: 25, height: 25}}/>
-            </TouchableOpacity>
+            {
+                location !== null
+                    ? (
+                        <TouchableOpacity
+                            style={[styles.myLocationButton, {
+                                bottom: start
+                                    ? windowHeight / 12
+                                    : itemId !== null
+                                        ? Platform.OS === 'android'
+                                            ? windowHeight / 3.2 : windowHeight / 3.8 : Platform.OS === 'android'
+                                            ? windowHeight / 17
+                                            : windowHeight / 20
+                            }]}
+                            onPress={getCurrentPosition}
+                        >
+                            <Image source={IconDirection} style={{width: 25, height: 25}}/>
+                        </TouchableOpacity>
+                    )
+                    : null
+            }
             {
                 itemId !== null
                     ? (
@@ -344,7 +330,7 @@ export const HomeScreen = ({navigation}) => {
                                                 width={windowWidth / 2.5}
                                                 height={35}
                                                 backgroundColor={White}
-                                                text={lang['arm'].cancel}
+                                                text={lang[countryCode].cancel}
                                                 fontSize={18}
                                                 // fontFamily={}
                                                 // fontWeight={}
@@ -362,7 +348,7 @@ export const HomeScreen = ({navigation}) => {
                                                 width={windowWidth / 2.5}
                                                 height={35}
                                                 backgroundColor={Fiord}
-                                                text={lang['arm'].start}
+                                                text={lang[countryCode].start}
                                                 fontSize={18}
                                                 // fontFamily={}
                                                 // fontWeight={}
@@ -384,7 +370,7 @@ export const HomeScreen = ({navigation}) => {
                                                 width={windowWidth / 2.5}
                                                 height={35}
                                                 backgroundColor={White}
-                                                text={lang['arm'].book}
+                                                text={lang[countryCode].book}
                                                 fontSize={18}
                                                 // fontFamily={}
                                                 // fontWeight={}
@@ -402,24 +388,30 @@ export const HomeScreen = ({navigation}) => {
                                                     handleStart: () => handleStart()
                                                 })}
                                             />
-                                            <ButtonCustom
-                                                width={windowWidth / 2.5}
-                                                height={35}
-                                                backgroundColor={Fiord}
-                                                text={lang['arm'].direction}
-                                                fontSize={18}
-                                                // fontFamily={}
-                                                // fontWeight={}
-                                                color={MySin}
-                                                borderRadius={5}
-                                                borderColor={Fiord}
-                                                borderWidth={2}
-                                                icon={IconDirection2}
-                                                iconWidth={15}
-                                                iconHeight={15}
-                                                iconPositionLeft={false}
-                                                click={() => handleStart()}
-                                            />
+                                            {
+                                                location !== null
+                                                    ? (
+                                                        <ButtonCustom
+                                                            width={windowWidth / 2.5}
+                                                            height={35}
+                                                            backgroundColor={Fiord}
+                                                            text={lang[countryCode].direction}
+                                                            fontSize={18}
+                                                            // fontFamily={}
+                                                            // fontWeight={}
+                                                            color={MySin}
+                                                            borderRadius={5}
+                                                            borderColor={Fiord}
+                                                            borderWidth={2}
+                                                            icon={IconDirection2}
+                                                            iconWidth={15}
+                                                            iconHeight={15}
+                                                            iconPositionLeft={false}
+                                                            click={() => handleStart()}
+                                                        />
+                                                    )
+                                                    : null
+                                            }
                                         </View>
                                     )
                             }

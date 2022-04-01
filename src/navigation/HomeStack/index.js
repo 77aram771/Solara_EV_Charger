@@ -6,18 +6,7 @@ import {FilterScreen} from "../../screens/HomeScreen/FilterScreen"
 import {BookScreen} from "../../screens/HomeScreen/BookScreen"
 import {BookTypeScreen} from "../../screens/HomeScreen/BookTypeScreen"
 import {LoadChargeScreen} from "../../screens/HomeScreen/LoadChargeScreen"
-
-const config = {
-    animation: 'timing',
-    config: {
-        stiffness: 1000,
-        damping: 500,
-        mass: 3,
-        overshootClamping: true,
-        restDisplacementThreshold: 0.01,
-        restSpeedThreshold: 0.01,
-    },
-};
+import {horizontalAnimation} from "../../shared/MockData"
 
 export const HomeStack = () => {
 
@@ -26,13 +15,7 @@ export const HomeStack = () => {
     return (
         <Home.Navigator
             initialRouteName="Home"
-            screenOptions={{
-                headerShown: false,
-                // gestureDirection: 'horizontal',
-                // gestureEnabled: true,
-                // animationEnabled: true,
-                // animationTypeForReplace: 'push',
-            }}
+            screenOptions={horizontalAnimation}
         >
             <Home.Screen
                 name="Home"

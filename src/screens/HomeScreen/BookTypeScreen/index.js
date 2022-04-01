@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import {Image, ScrollView, View} from "react-native"
+import {Image, Platform, ScrollView, View} from "react-native"
 import Context from "../../../../Context"
 import {HeaderCustom} from "../../../components/UI/HeaderCustom"
 import {Fiord, MineShaft, MySin, White} from "../../../shared/Colors"
@@ -14,7 +14,7 @@ import {RangeLineCustom} from "../../../components/UI/RangeLineCustom"
 
 export const BookTypeScreen = ({navigation, route}) => {
 
-    const {handleHideTabBar} = useContext(Context)
+    const {handleHideTabBar, countryCode} = useContext(Context)
 
     useEffect(() => {
         return navigation.addListener('focus', () => {
@@ -29,7 +29,11 @@ export const BookTypeScreen = ({navigation, route}) => {
                 backgroundColor={MySin}
                 text={''}
             />
-            <ScrollView style={{marginBottom: 60, top: -10}}>
+            <ScrollView
+                style={{marginBottom: 60, top: -10}}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+            >
                 <View style={styles.sliderBox}>
                     <Image
                         source={CordinateClusterData[route.params.itemId].ports[route.params.portsId].icon}
@@ -50,7 +54,7 @@ export const BookTypeScreen = ({navigation, route}) => {
                     />
                     <View style={styles.bookInfoBox}>
                         <TextCustom
-                            text={`${lang['arm'].port} 98564`}
+                            text={`${lang[countryCode].port} 98564`}
                             fontSize={14}
                             color={MineShaft}
                             fontWeight={'400'}
@@ -59,7 +63,7 @@ export const BookTypeScreen = ({navigation, route}) => {
                 </View>
                 <View style={styles.typeBox}>
                     <View style={[styles.typeItem, {borderTopWidth: 0}]}>
-                        <TextCustom text={lang['arm'].Tariff} color={Fiord} fontSize={16} fontWeight={'700'}/>
+                        <TextCustom text={lang[countryCode].Tariff} color={Fiord} fontSize={16} fontWeight={'700'}/>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <TextCustom
                                 text={`${CordinateClusterData[route.params.itemId].ports[route.params.portsId].price}$/`}
@@ -71,16 +75,16 @@ export const BookTypeScreen = ({navigation, route}) => {
                         </View>
                     </View>
                     <View style={styles.typeItem}>
-                        <TextCustom text={lang['arm'].maxPower} color={MineShaft} fontSize={14} fontWeight={'400'}/>
+                        <TextCustom text={lang[countryCode].maxPower} color={MineShaft} fontSize={14} fontWeight={'400'}/>
                         <TextCustom
-                            text={`${CordinateClusterData[route.params.itemId].ports[route.params.portsId].rate} ${lang['arm'].kw}`}
+                            text={`${CordinateClusterData[route.params.itemId].ports[route.params.portsId].rate} ${lang[countryCode].kw}`}
                             color={MineShaft}
                             fontSize={14}
                             fontWeight={'400'}
                         />
                     </View>
                     <View style={styles.typeItem}>
-                        <TextCustom text={lang['arm'].yourCar} color={MineShaft} fontSize={14} fontWeight={'400'}/>
+                        <TextCustom text={lang[countryCode].yourCar} color={MineShaft} fontSize={14} fontWeight={'400'}/>
                         <TextCustom
                             text={`Nissan Leaf`}
                             color={MineShaft}
@@ -89,7 +93,7 @@ export const BookTypeScreen = ({navigation, route}) => {
                         />
                     </View>
                     <View style={styles.typeItem}>
-                        <TextCustom text={lang['arm'].approximatePrice} color={MineShaft} fontSize={14}
+                        <TextCustom text={lang[countryCode].approximatePrice} color={MineShaft} fontSize={14}
                                     fontWeight={'400'}/>
                         <TextCustom
                             text={`0$`}
@@ -99,29 +103,29 @@ export const BookTypeScreen = ({navigation, route}) => {
                         />
                     </View>
                     <View style={styles.typeItem}>
-                        <TextCustom text={lang['arm'].fillingTime} color={MineShaft} fontSize={14} fontWeight={'400'}/>
+                        <TextCustom text={lang[countryCode].fillingTime} color={MineShaft} fontSize={14} fontWeight={'400'}/>
                         <TextCustom
-                            text={`2${lang['arm'].H} 45${lang["arm"].M}`}
+                            text={`2${lang[countryCode].H} 45${lang[countryCode].M}`}
                             color={MineShaft}
                             fontSize={14}
                             fontWeight={'400'}
                         />
                     </View>
                     <View style={styles.typeItem}>
-                        <TextCustom text={lang['arm'].mileageIncrease} color={MineShaft} fontSize={14}
+                        <TextCustom text={lang[countryCode].mileageIncrease} color={MineShaft} fontSize={14}
                                     fontWeight={'400'}/>
                         <TextCustom
-                            text={`0${lang["arm"].km}`}
+                            text={`0${lang[countryCode].km}`}
                             color={MineShaft}
                             fontSize={14}
                             fontWeight={'400'}
                         />
                     </View>
                     <View style={styles.typeItem}>
-                        <TextCustom text={lang['arm'].chargingLimit} color={MineShaft} fontSize={14}
+                        <TextCustom text={lang[countryCode].chargingLimit} color={MineShaft} fontSize={14}
                                     fontWeight={'400'}/>
                         <TextCustom
-                            text={`1200${lang["arm"].kw}`}
+                            text={`1200${lang[countryCode].kw}`}
                             color={MineShaft}
                             fontSize={14}
                             fontWeight={'400'}
@@ -130,7 +134,7 @@ export const BookTypeScreen = ({navigation, route}) => {
                 </View>
                 <View style={styles.titleBox}>
                     <TextCustom
-                        text={lang["arm"].selectChargingPercent}
+                        text={lang[countryCode].selectChargingPercent}
                         color={MineShaft}
                         fontSize={14}
                         fontWeight={'400'}
@@ -142,11 +146,10 @@ export const BookTypeScreen = ({navigation, route}) => {
             </ScrollView>
             <View style={styles.buttonContainer}>
                 <ButtonCustom
-                    text={lang['arm'].charge.toUpperCase()}
+                    text={lang[countryCode].charge.toUpperCase()}
                     backgroundColor={Fiord}
                     color={MySin}
                     width={'100%'}
-                    height={50}
                     click={() => {navigation.navigate('LoadCharge')}}
                     fontSize={18}
                     fontWeight={'700'}
@@ -154,6 +157,9 @@ export const BookTypeScreen = ({navigation, route}) => {
                     iconWidth={18}
                     iconHeight={18}
                     iconPositionLeft={false}
+                    marginBottom={20}
+                    paddingTop={Platform.OS === 'ios' ? 14 : 8}
+                    paddingBottom={Platform.OS === 'ios' ? 14 : 8}
                     borderRadius={10}
                 />
             </View>

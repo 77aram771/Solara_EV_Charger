@@ -10,21 +10,24 @@ export const TitleCustom = ({
                                 marginRight,
                                 fontSize = 16,
                                 textDecorationLine,
-                                textAlign
+                                textAlign = 'center'
                             }) => {
 
     return (
-        <Text style={{
-            color,
-            fontFamily: 'Roboto_700Bold',
-            fontSize,
-            marginBottom,
-            marginTop,
-            marginLeft,
-            marginRight,
-            textDecorationLine,
-            textAlign
-        }}>
+        <Text
+            style={{
+                width: '100%',
+                color,
+                fontFamily: 'Roboto_700Bold',
+                fontSize,
+                marginBottom,
+                marginTop,
+                marginLeft,
+                marginRight,
+                textDecorationLine,
+                textAlign,
+            }}
+        >
             {text}
         </Text>
     )

@@ -1,5 +1,5 @@
-import React from 'react'
-import {ScrollView, View} from "react-native"
+import React, {useContext} from 'react'
+import {Platform, ScrollView, View} from "react-native"
 import CircularProgress from 'react-native-circular-progress-indicator'
 import {Fiord, MySin, White} from "../../shared/Colors"
 import {styles} from "./style"
@@ -8,14 +8,21 @@ import {lang} from "../../shared/Lang"
 import {TextCustom} from "../../components/UI/TextCustom"
 import {windowWidth} from "../../shared/Const"
 import IconDirection from '../../assets/icon/direction4.png'
+import Context from "../../../Context"
 
 export const FullChargeModal = ({navigation, handleModal}) => {
 
+    const {countryCode} = useContext(Context)
+
     return (
         <View style={styles.container}>
-            <ScrollView style={{marginBottom: 60}}>
+            <ScrollView
+                style={{marginBottom: 60}}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+            >
                 <View style={styles.titleBox}>
-                    <TextCustom text={lang['arm'].yourCarCharged} color={White} fontSize={20} fontWeight={'400'}/>
+                    <TextCustom text={lang[countryCode].yourCarCharged} color={White} fontSize={20} fontWeight={'400'}/>
                 </View>
                 <View style={styles.sliderBox}>
                     <CircularProgress
@@ -24,7 +31,7 @@ export const FullChargeModal = ({navigation, handleModal}) => {
                         duration={3000}
                         textColor={White}
                         maxValue={100}
-                        title={`${lang["arm"].charge}`}
+                        title={`${lang[countryCode].charge}`}
                         titleStyle={{fontSize: 16, color: White, fontWeight: '400'}}
                         activeStrokeColor={White}
                         inActiveStrokeColor={White}
@@ -38,7 +45,7 @@ export const FullChargeModal = ({navigation, handleModal}) => {
                 <View style={styles.infoBox}>
                     <View style={styles.infoItem}>
                         <TextCustom
-                            text={`${lang["arm"].cost}: 45,000${lang["arm"].dram}`}
+                            text={`${lang[countryCode].cost}: 45,000${lang[countryCode].dram}`}
                             color={White}
                             fontSize={24}
                             fontWeight={'400'}
@@ -46,7 +53,7 @@ export const FullChargeModal = ({navigation, handleModal}) => {
                     </View>
                     <View style={styles.infoItem}>
                         <TextCustom
-                            text={`${lang["arm"].total}: 125${lang["arm"].kw}`}
+                            text={`${lang[countryCode].total}: 125${lang[countryCode].kw}`}
                             color={White}
                             fontSize={24}
                             fontWeight={'400'}
@@ -56,11 +63,10 @@ export const FullChargeModal = ({navigation, handleModal}) => {
             </ScrollView>
             <View style={styles.buttonContainer}>
                 <ButtonCustom
-                    text={lang['arm'].goToHomeScreen.toUpperCase()}
+                    text={lang[countryCode].goToHomeScreen.toUpperCase()}
                     backgroundColor={MySin}
                     color={Fiord}
                     width={'100%'}
-                    height={35}
                     click={() => {
                         navigation.navigate('Home')
                         handleModal()
@@ -70,6 +76,9 @@ export const FullChargeModal = ({navigation, handleModal}) => {
                     icon={IconDirection}
                     iconWidth={18}
                     iconHeight={18}
+                    paddingTop={Platform.OS === 'ios' ? 14 : 8}
+                    paddingBottom={Platform.OS === 'ios' ? 14 : 8}
+                    marginBottom={20}
                     iconPositionLeft={false}
                     borderRadius={10}
                     borderColor={White}

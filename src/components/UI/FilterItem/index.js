@@ -2,7 +2,7 @@ import React from 'react'
 import {styles} from "./style"
 import {Image, View} from "react-native"
 import {TextCustom} from "../TextCustom"
-import {MineShaft, MySin, White} from "../../../shared/Colors"
+import {Manatee, Mercurysolid, MineShaft, MySin, White} from "../../../shared/Colors"
 import ToggleSwitch from 'toggle-switch-react-native'
 
 export const FilterItem = ({text, active, handleSwitch, icon, borderShow = true}) => {
@@ -24,8 +24,8 @@ export const FilterItem = ({text, active, handleSwitch, icon, borderShow = true}
             </View>
             <ToggleSwitch
                 isOn={active}
-                onColor="#979798"
-                offColor="#e5e5e5"
+                onColor={Manatee}
+                offColor={Mercurysolid}
                 size="small"
                 animationSpeed={200}
                 thumbOnStyle={{backgroundColor: MySin}}

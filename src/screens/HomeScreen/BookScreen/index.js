@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import {Image, ScrollView, TouchableOpacity, View} from "react-native"
+import {Image, Platform, ScrollView, TouchableOpacity, View} from "react-native"
 import {SwiperFlatList} from 'react-native-swiper-flatlist'
 import Context from "../../../../Context"
 import {HeaderCustom} from "../../../components/UI/HeaderCustom"
@@ -18,7 +18,7 @@ import IconDirection2 from '../../../assets/icon/direction2.png'
 
 export const BookScreen = ({navigation, route}) => {
 
-    const {handleHideTabBar} = useContext(Context)
+    const {handleHideTabBar, location, countryCode} = useContext(Context)
 
     useEffect(() => {
         return navigation.addListener('focus', () => {
@@ -33,7 +33,11 @@ export const BookScreen = ({navigation, route}) => {
                 backgroundColor={MySin}
                 text={CordinateClusterData[route.params.itemId].title}
             />
-            <ScrollView style={{marginBottom: 60, top: -10}}>
+            <ScrollView
+                style={{marginBottom: 60, top: -10}}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+            >
                 <View style={styles.sliderBox}>
                     <SwiperFlatList
                         showPagination={true}
@@ -60,7 +64,7 @@ export const BookScreen = ({navigation, route}) => {
                     <View style={[styles.typeItem, {paddingLeft: 20, borderTopWidth: 0}]}>
                         <View style={{flexDirection: 'row'}}>
                             <TextCustom
-                                text={`${lang['arm'].type}`}
+                                text={`${lang[countryCode].type}`}
                                 marginRight={5}
                                 fontWeight={'400'}
                                 color={MineShaft}
@@ -69,7 +73,7 @@ export const BookScreen = ({navigation, route}) => {
                         </View>
                         <View>
                             <TextCustom
-                                text={`${lang['arm'].Tariff}`}
+                                text={`${lang[countryCode].Tariff}`}
                                 marginRight={5}
                                 fontWeight={'400'}
                                 color={MineShaft}
@@ -78,7 +82,7 @@ export const BookScreen = ({navigation, route}) => {
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <TextCustom
-                                text={`${lang['arm'].price}`}
+                                text={`${lang[countryCode].price}`}
                                 fontWeight={'400'}
                                 color={MineShaft}
                                 fontSize={16}
@@ -116,7 +120,7 @@ export const BookScreen = ({navigation, route}) => {
                                     </View>
                                     <View>
                                         <TextCustom
-                                            text={`${item.rate} ${lang['arm'].kw}`}
+                                            text={`${item.rate} ${lang[countryCode].kw}`}
                                             marginRight={5}
                                             fontWeight={'400'}
                                             color={MineShaft}
@@ -140,24 +144,32 @@ export const BookScreen = ({navigation, route}) => {
                 </View>
             </ScrollView>
             <View style={styles.buttonContainer}>
-                <ButtonCustom
-                    text={lang['arm'].direction.toUpperCase()}
-                    backgroundColor={Fiord}
-                    color={MySin}
-                    width={'100%'}
-                    height={50}
-                    click={() => {
-                        route.params.handleStart()
-                        navigation.goBack()
-                    }}
-                    fontSize={18}
-                    fontWeight={'700'}
-                    icon={IconDirection2}
-                    iconWidth={18}
-                    iconHeight={18}
-                    iconPositionLeft={false}
-                    borderRadius={10}
-                />
+                {
+                    location !== null
+                        ? (
+                            <ButtonCustom
+                                text={lang[countryCode].direction.toUpperCase()}
+                                backgroundColor={Fiord}
+                                color={MySin}
+                                width={'100%'}
+                                click={() => {
+                                    route.params.handleStart()
+                                    navigation.goBack()
+                                }}
+                                fontSize={18}
+                                fontWeight={'700'}
+                                icon={IconDirection2}
+                                iconWidth={18}
+                                iconHeight={18}
+                                iconPositionLeft={false}
+                                borderRadius={10}
+                                marginBottom={20}
+                                paddingTop={Platform.OS === 'ios' ? 14 : 8}
+                                paddingBottom={Platform.OS === 'ios' ? 14 : 8}
+                            />
+                        )
+                        : null
+                }
             </View>
         </View>
     )
