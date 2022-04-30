@@ -14,7 +14,7 @@ export const CheckItem = ({text, bool = true, handle}) => {
                     ? <Image source={IconCheckActive} style={{width: 25, height: 25, marginRight: 20}}/>
                     : <Image source={IconCheck} style={{width: 25, height: 25, marginRight: 20}}/>
             }
-            <TextCustom text={text} color={MineShaft} fontSize={16} fontWeight={'400'}/>
+            <TextCustom text={text} color={MineShaft} fontSize={15} fontWeight={'400'}/>
         </TouchableOpacity>
     )
 }

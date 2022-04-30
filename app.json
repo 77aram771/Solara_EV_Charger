@@ -41,12 +41,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "y"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.solara_ev_charger.Solara_EV_Charger"
     },
     "web": {
       "favicon": "./assets/favicon.png"

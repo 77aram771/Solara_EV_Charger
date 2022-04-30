@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         zIndex: 1,
     },
-    myLocationButton: {
+    myLocationButtonOut: {
         position: 'absolute',
         right: 20,
         zIndex: 10,
@@ -44,6 +44,15 @@ export const styles = StyleSheet.create({
         padding: 10,
         elevation: 3,
         borderRadius: 50,
+    },
+    myLocationButton: {
+        backgroundColor: White,
+        padding: 10,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 50,
+        height: 50
     },
     infoContainer: {
         justifyContent: 'center',
@@ -106,6 +115,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         height: '100%',
+        borderWidth: 1,
+        borderColor: White
     },
     clockBox: {
         flexDirection: 'row',

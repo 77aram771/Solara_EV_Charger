@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
         backgroundColor: White,
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal
     },
     mineBox: {
         flex: 1,

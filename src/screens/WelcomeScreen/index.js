@@ -94,7 +94,6 @@ export const WelcomeScreen = () => {
                     } else {
                         setActiveId(index)
                     }
-                    console.log('activeId', activeId)
                 }}
             >
                 {

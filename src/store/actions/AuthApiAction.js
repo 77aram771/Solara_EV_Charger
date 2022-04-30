@@ -1,15 +1,15 @@
-import {AUTH_ACTION_TYPES} from '../actionsType/AuthActionTypes.js'
+import { AUTH_ACTION_TYPES } from "../actionsType/AuthActionTypes.js"
 
 export const fetchData = () => ({
-    type: AUTH_ACTION_TYPES.API_PENDING,
+  type: AUTH_ACTION_TYPES.API_PENDING
 })
 
 export const fetchSuccess = (data) => ({
-    type: AUTH_ACTION_TYPES.API_SUCCESS,
-    payload: data,
+  type: AUTH_ACTION_TYPES.API_SUCCESS,
+  payload: data
 })
 
 export const fetchError = (error) => ({
-    type: AUTH_ACTION_TYPES.API_ERROR,
-    payload: error,
+  type: AUTH_ACTION_TYPES.API_ERROR,
+  payload: error
 })
