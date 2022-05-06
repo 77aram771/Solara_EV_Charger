@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, Image, Platform, ScrollView, View } from "react-native"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import moment from "moment"
 import Context from "../../../../Context"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { RangeLineCustom } from "../../../components/UI/RangeLineCustom"
@@ -66,7 +67,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLimit(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1)
     setKm(Math.ceil(user?.car_power_reserve / 100 * (checkMax - num)), 1)
     setPrice(Math.floor(limit * sumKW))
-    setTime(user?.car_max_kw > route?.params?.item?.power ? limit / user?.car_max_kw : limit / route?.params?.item?.power)
+    setTime(user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power))
   }
 
   const handleMax = (num) => {
@@ -74,10 +75,8 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLimit(Math.ceil(user?.car_capacity / 100 * (num - checkMin)), 1)
     setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)), 1)
     setPrice(Math.floor(limit * sumKW))
-    setTime(user?.car_max_kw > route?.params?.item?.power ? limit / user?.car_max_kw : limit / route?.params?.item?.power)
+    setTime(user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power))
   }
-
-
 
   const handleChanger = async () => {
     setShowErrorText(false)

@@ -241,9 +241,9 @@ export const HomeScreen = ({ navigation }) => {
       <MapView
         // layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
         initialRegion={cordinate}
-        onMarkersChange={(props) => {
-          console.log("props", props)
-        }}
+        // onMarkersChange={(props) => {
+        //   // console.log("props", props)
+        // }}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         // onRegionChange={onRegionChange}
@@ -308,8 +308,8 @@ export const HomeScreen = ({ navigation }) => {
                     <Image
                       source={{ uri: item?.pin }}
                       style={{
-                        width: Platform.OS === "ios" ? 60 : 40,
-                        height: Platform.OS === "ios" ? 60 : 40
+                        width: Platform.OS === "ios" ? 50 : 40,
+                        height: Platform.OS === "ios" ? 50 : 40
                       }}
                     />
                   </Marker>

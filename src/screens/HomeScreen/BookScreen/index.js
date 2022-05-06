@@ -220,7 +220,6 @@ export const BookScreen = ({ navigation, route }) => {
             </View>
             {
               route.params?.data[route.params?.itemId]?.connectors.map((item, index) => {
-                console.log("item", item?.status)
                 return (
                   <TouchableOpacity
                     onPress={() => {

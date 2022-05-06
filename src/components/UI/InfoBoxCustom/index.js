@@ -11,6 +11,7 @@ import IconMapMarker from "../../../assets/icon/mapmarket.png"
 import Context from "../../../../Context"
 
 export const InfoBoxCustom = ({ itemId, isBook, data }) => {
+
   const { countryCode } = useContext(Context)
 
   return (
@@ -98,7 +99,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
                 data[itemId]?.connectors.map(item => {
                   return (
                     <Image
-                      source={{ uri: item?.type?.image }}
+                      source={{ uri: item?.status_image }}
                       style={{ width: 20, height: 20, marginRight: 10 }}
                       key={item.id}
                     />
