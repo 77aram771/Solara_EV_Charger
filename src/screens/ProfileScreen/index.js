@@ -41,10 +41,11 @@ export const ProfileScreen = ({ navigation }) => {
     return navigation.addListener("focus", async () => {
       await getUserProfile()
     })
-  }, [navigation, userData])
+  }, [navigation])
 
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
+    console.log("Token", Token)
     if (Token !== null) {
       setLogin(true)
       await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
@@ -56,7 +57,12 @@ export const ProfileScreen = ({ navigation }) => {
           setUser(res.data)
           console.log("getUserProfile", res.data)
         })
-        .catch(e => console.log("e", e))
+        .catch(e => {
+          console.log("e123123123", e?.response?.data?.status)
+          if (e?.response?.data?.status === 401) {
+            handleLogOut()
+          }
+        })
     } else {
       setLogin(false)
     }

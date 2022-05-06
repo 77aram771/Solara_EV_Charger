@@ -1,8 +1,8 @@
 import {StyleSheet} from "react-native"
+import Constants from "expo-constants"
 import {MySin, White} from "../../shared/Colors"
 import {windowHeight, windowWidth} from "../../shared/Const"
 import {paddingHorizontal} from "../../shared/GlobalStyle"
-import Constants from "expo-constants";
 
 export const styles = StyleSheet.create({
     container: {

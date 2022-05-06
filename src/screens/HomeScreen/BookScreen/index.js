@@ -1,27 +1,29 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Image, Platform, ScrollView, TouchableOpacity, View } from "react-native"
+import { Image, Modal, Platform, ScrollView, TouchableOpacity, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { SwiperFlatList } from "react-native-swiper-flatlist"
 import Context from "../../../../Context"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
-import { Dandelion, Fiord, MineShaft, MySin, White } from "../../../shared/Colors"
+import { Black, Dandelion, Fiord, MineShaft, MySin, White } from "../../../shared/Colors"
 import { styles } from "./style"
 import { InfoBoxCustom } from "../../../components/UI/InfoBoxCustom"
-import ImgLight from "../../../assets/icon/priceunit.png"
 import { API_URL, windowHeight, windowWidth } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
 import IconArrow from "../../../assets/icon/arrow3.png"
 import IconDirection2 from "../../../assets/icon/direction2.png"
+import ImgLight from "../../../assets/icon/priceunit.png"
+import ImgClose from "../../../assets/icon/icon-close.png"
+import ImgDefault from "../../../assets/images/img-book-slide1.jpeg"
 
 export const BookScreen = ({ navigation, route }) => {
 
   const { handleHideTabBar, location, countryCode, sumKW } = useContext(Context)
 
-  const [data, setData] = useState(null)
   const [imageData, setImageData] = useState(null)
+  const [imageModal, setImageModal] = useState(false)
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -41,16 +43,93 @@ export const BookScreen = ({ navigation, route }) => {
           }
         })
         .then(res => {
-          // console.log("res?.data", res?.data?.images)
+          console.log("res?.data?.images", res?.data?.images)
           setImageData(res?.data?.images)
-          setData(res?.data)
         })
-        .catch(e => console.log("e", e))
+        .catch(e => console.log("e", e.response))
     })()
   }, [])
 
+  const handleModal = () => setImageModal(!imageModal)
+
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={imageModal}
+        onRequestClose={handleModal}
+      >
+        <View
+          style={{
+            width: "100%",
+            backgroundColor: Black,
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              right: 5,
+              top: windowHeight / 15,
+              width: 50,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 100000
+            }}
+            onPress={handleModal}
+            activeOpacity={0}
+          >
+            <Image source={ImgClose} style={{ width: 25, height: 25 }} />
+          </TouchableOpacity>
+          <SwiperFlatList
+            showPagination={true}
+            paginationDefaultColor={White}
+            paginationActiveColor={Dandelion}
+            paginationStyle={{
+              position: "absolute",
+              bottom: 85
+            }}
+            paginationStyleItem={{
+              width: 14,
+              height: 14
+            }}
+            contentContainerStyle={{
+              alignSelf: "center"
+            }}
+          >
+            {
+              imageData
+                ? (
+                  imageData.length > 0
+                    ? (
+                      imageData && imageData.map((item, index) => {
+                        return (
+                          <Image
+                            source={{ uri: item }}
+                            style={{ width: windowWidth, height: windowHeight / 3 }}
+                            key={index}
+                            resizeMode={"cover"}
+                          />
+                        )
+                      })
+                    )
+                    : (
+                      <Image
+                        source={ImgDefault}
+                        style={{ width: windowWidth, height: windowHeight / 3 }}
+                        resizeMode={"cover"}
+                      />
+                    )
+                )
+                : null
+            }
+          </SwiperFlatList>
+        </View>
+      </Modal>
       <HeaderCustom
         handleBack={() => navigation.goBack()}
         backgroundColor={MySin}
@@ -77,14 +156,34 @@ export const BookScreen = ({ navigation, route }) => {
               height: 14
             }}
           >
-            {
-              imageData && imageData.map((item, index) => {
-                return (
-                  <Image source={{ uri: item }} style={{ width: windowWidth, height: windowHeight / 3 }} key={index}
-                         resizeMode={"cover"} />
-                )
-              })
-            }
+            <TouchableOpacity onPress={handleModal}>
+              {
+                imageData
+                  ? (
+                    imageData.length > 0
+                      ? (
+                        imageData && imageData.map((item, index) => {
+                          return (
+                            <Image
+                              source={{ uri: item }}
+                              style={{ width: windowWidth, height: windowHeight / 3 }}
+                              key={index}
+                              resizeMode={"cover"}
+                            />
+                          )
+                        })
+                      )
+                      : (
+                        <Image
+                          source={ImgDefault}
+                          style={{ width: windowWidth, height: windowHeight / 3 }}
+                          resizeMode={"cover"}
+                        />
+                      )
+                  )
+                  : null
+              }
+            </TouchableOpacity>
           </SwiperFlatList>
         </View>
         <View style={styles.bookInfoBox}>
@@ -121,12 +220,19 @@ export const BookScreen = ({ navigation, route }) => {
             </View>
             {
               route.params?.data[route.params?.itemId]?.connectors.map((item, index) => {
+                console.log("item", item?.status)
                 return (
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("BookType", {
-                      itemId: route.params?.itemId,
-                      portsId: index
-                    })}
+                    onPress={() => {
+                      if (item?.status !== "Faulted") {
+                        navigation.navigate("BookType", {
+                          item,
+                          address: route?.params?.data[route?.params?.itemId].address
+                        })
+                      } else {
+                        alert("The port is Faulted")
+                      }
+                    }}
                     key={item.id}
                     style={styles.typeItem}
                   >
@@ -138,31 +244,163 @@ export const BookScreen = ({ navigation, route }) => {
                         color={MineShaft}
                         fontSize={14}
                       />
-                      <Image source={{ uri: item?.type?.image }} style={{ width: 20, height: 20, marginRight: 10 }} />
-                      <TextCustom
-                        text={`${item?.type?.title}`}
-                        marginRight={5}
-                        fontWeight={"400"}
-                        color={MineShaft}
-                        fontSize={14}
-                      />
+                      <Image source={{ uri: item?.status_image }} style={{ width: 20, height: 20, marginRight: 10 }} />
+                      {
+                        item?.status === "Faulted"
+                          ? (
+                            <TextCustom
+                              text={`${item?.type?.title}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Available"
+                          ? (
+                            <TextCustom
+                              text={`${item?.type?.title}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={Fiord}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Preparing"
+                          ? (
+                            <TextCustom
+                              text={`${item?.type?.title}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#fcb82f"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Charging"
+                          ? (
+                            <TextCustom
+                              color={"#5ac951"}
+                              text={`${item?.type?.title}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
                     </View>
                     <View>
-                      <TextCustom
-                        text={`${item?.power} ${lang[countryCode].kw}`}
-                        marginRight={5}
-                        fontWeight={"400"}
-                        color={MineShaft}
-                        fontSize={14}
-                      />
+                      {
+                        item?.status === "Faulted"
+                          ? (
+                            <TextCustom
+                              text={`${item?.power} ${lang[countryCode].kw}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Available"
+                          ? (
+                            <TextCustom
+                              color={Fiord}
+                              text={`${item?.power} ${lang[countryCode].kw}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Preparing"
+                          ? (
+                            <TextCustom
+                              color={"#fcb82f"}
+                              text={`${item?.power} ${lang[countryCode].kw}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Charging"
+                          ? (
+                            <TextCustom
+                              color={"#5ac951"}
+                              text={`${item?.power} ${lang[countryCode].kw}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <TextCustom
-                        text={sumKW}
-                        fontWeight={"400"}
-                        color={MineShaft}
-                        fontSize={14}
-                      />
+                      {
+                        item?.status === "Faulted"
+                          ? (
+                            <TextCustom
+                              text={sumKW}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Available"
+                          ? (
+                            <TextCustom
+                              color={Fiord}
+                              text={sumKW}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Preparing"
+                          ? (
+                            <TextCustom
+                              color={"#fcb82f"}
+                              text={sumKW}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Charging"
+                          ? (
+                            <TextCustom
+                              color={"#5ac951"}
+                              text={sumKW}
+                              fontWeight={"400"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
                       <Image source={ImgLight} style={{ width: 13, height: 13, marginRight: 10 }} />
                       <Image source={IconArrow} style={{ width: 10, height: 10 }} />
                     </View>

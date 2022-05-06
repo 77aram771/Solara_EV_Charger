@@ -14,7 +14,7 @@ import IconLogin from "../../../assets/icon/login.png"
 import { useDispatch, useSelector } from "react-redux"
 import { PostConfirmCode } from "../../../store/actionsCreators/ConfirmCodeApiActionCreator"
 import { API_URL } from "../../../shared/Const"
-import { PostSignUp } from "../../../store/actionsCreators/SignUpApiActionCreator";
+import { PostSignUp } from "../../../store/actionsCreators/SignUpApiActionCreator"
 
 export const ConfirmCodeScreen = ({ navigation, route }) => {
 

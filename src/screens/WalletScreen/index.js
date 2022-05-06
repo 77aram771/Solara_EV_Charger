@@ -77,12 +77,11 @@ export const WalletScreen = ({ navigation }) => {
         }
       })
         .then(res => {
-          console.log("res", res)
           setLoader(false)
           setAddCardUrl(res?.data?.url)
           handleModal()
         })
-        .catch(e => console.log("e", e))
+        .catch(e => console.log("e", e.response))
     }
   }
 
@@ -110,7 +109,7 @@ export const WalletScreen = ({ navigation }) => {
           }
           handleModalDeleteModal()
         })
-        .catch(e => console.log("e", e))
+        .catch(e => console.log("e", e.response))
     }
   }
 
@@ -125,7 +124,7 @@ export const WalletScreen = ({ navigation }) => {
 
   const handleUserCheck = () => {
     setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("Profile")
+    navigation.navigate("ProfileStack")
   }
 
   return (

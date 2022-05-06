@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux"
 import thunk from "redux-thunk"
-import { createLogger } from "redux-logger"
+// import { createLogger } from "redux-logger"
 import AuthReducer from "./reducer/AuthReducer"
 import ForgotPasswordReducer from "./reducer/ForgotPasswordReducer"
 import CarMakeReducer from "./reducer/CarMakeReducer"
@@ -21,6 +21,6 @@ const appReducers = combineReducers({
 
 const rootReducer = (state, action) => appReducers(state, action)
 
-const logger = createLogger()
+// const logger = createLogger()
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

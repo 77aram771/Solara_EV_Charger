@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, Image, KeyboardAvoidingView, Modal, Platform, TouchableOpacity, View } from "react-native"
-import Constants from "expo-constants"
-import { WebView } from "react-native-webview"
+import { ActivityIndicator, KeyboardAvoidingView, Platform, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { Fiord, Green, Manatee, MySin, SunsetOrange, White } from "../../shared/Colors"
@@ -11,14 +9,12 @@ import { lang } from "../../shared/Lang"
 import Context from "../../../Context"
 import { HeaderCustom } from "../../components/UI/HeaderCustom"
 import { PaginationCarousel } from "../../components/UI/PaginationCarousel"
-import IconPlus from "../../assets/icon/plus.png"
 import IconCard from "../../assets/icon/icon-card.png"
 import { paddingHorizontal } from "../../shared/GlobalStyle"
 import { InputCustom } from "../../components/UI/InputCustom"
-import { API_URL, windowHeight, windowWidth } from "../../shared/Const"
+import { API_URL } from "../../shared/Const"
 import { TextCustom } from "../../components/UI/TextCustom"
 import { DismissKeyboard } from "../../components/DismissKeyboard"
-import IconClose from "../../assets/icon/icon-close.png"
 
 export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
 
@@ -30,8 +26,6 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
   const [showMessage, setShowMessage] = useState(false)
   const [message, setMessage] = useState("")
   const [messageStatus, setMessageStatus] = useState("")
-  const [modalVisible, setModalVisible] = useState(false)
-  const [addCardUrl, setAddCardUrl] = useState("")
   const [loader, setLoader] = useState(false)
   const [cardsData, setCardsData] = useState(null)
   const [cardId, setCardId] = useState("")
@@ -58,29 +52,8 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
         setCardId(res?.data?.data[0]?.id)
         setLoader(false)
       })
-      .catch(e => console.log("e", e))
+      .catch(e => console.log("e", e.response))
   }
-
-  const handleAddCard = async () => {
-    setLoader(true)
-    const Token = await AsyncStorage.getItem("token")
-    if (Token !== null) {
-      await axios.get(`${API_URL}/users/add-card?access-token=${Token}`, {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
-        .then(res => {
-          console.log("res", res)
-          setLoader(false)
-          setAddCardUrl(res?.data?.url)
-          handleModalAddCard()
-        })
-        .catch(e => console.log("e", e))
-    }
-  }
-
-  const handleModalAddCard = () => setModalVisible(!modalVisible)
 
   const handleId = (id) => setCardId(id)
 
@@ -123,42 +96,6 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
 
   return (
     <View style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={handleModalAddCard}
-      >
-        <View style={{ width: windowWidth, backgroundColor: "#00a789", height: Constants.statusBarHeight }} />
-        <TouchableOpacity
-          style={{ position: "absolute", top: Constants.statusBarHeight + 5, right: 0, zIndex: 1 }}
-          onPress={() => handleModalAddCard()}
-        >
-          <Image
-            source={IconClose}
-            style={{ width: 50, height: 50 }}
-            resizeMode={"center"}
-          />
-        </TouchableOpacity>
-        <WebView
-          source={{ uri: `${addCardUrl}` }}
-          onNavigationStateChange={state => {
-            if (state?.url.split("/").pop() === "fail") {
-              (async () => {
-                handleModalAddCard()
-                await getCardData()
-              })()
-              console.log("fail")
-            } else if (state?.url.split("/").pop() === "success") {
-              (async () => {
-                handleModalAddCard()
-                await getCardData()
-              })()
-              console.log("success")
-            }
-          }}
-        />
-      </Modal>
       <HeaderCustom
         handleBack={handleModal}
         backgroundColor={MySin}
@@ -177,26 +114,6 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           style={{ flex: 1 }}
         >
           <View style={{ paddingHorizontal }}>
-            <ButtonCustom
-              text={lang[countryCode].addNewCard}
-              backgroundColor={White}
-              color={Fiord}
-              width={"100%"}
-              marginTop={5}
-              marginBottom={windowHeight / 20}
-              paddingTop={Platform.OS === "ios" ? 14 : 8}
-              paddingBottom={Platform.OS === "ios" ? 14 : 8}
-              click={handleAddCard}
-              fontSize={18}
-              fontWeight={"700"}
-              icon={IconPlus}
-              iconWidth={18}
-              iconHeight={18}
-              iconPositionLeft={false}
-              borderRadius={12}
-              borderColor={Fiord}
-              borderWidth={2}
-            />
             <InputCustom
               placeholder={lang[countryCode].money}
               value={price}

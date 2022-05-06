@@ -305,7 +305,7 @@ export const SignUpScreen = ({ navigation }) => {
                 keyboardType={"phone-pad"}
                 error={phoneError}
                 errorText={phoneErrorMessage}
-                maxLength={12}
+                // maxLength={12}
               />
               <InputCustom
                 placeholder={lang[countryCode].password}

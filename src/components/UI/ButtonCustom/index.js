@@ -2,7 +2,7 @@ import React from "react"
 import { Image, TouchableOpacity, View } from "react-native"
 import { TextCustom } from "../TextCustom"
 import ToggleSwitch from "toggle-switch-react-native"
-import { Manatee, Mercurysolid, MySin } from "../../../shared/Colors";
+import { Manatee, Mercurysolid, MySin } from "../../../shared/Colors"
 
 export const ButtonCustom = ({
   width,

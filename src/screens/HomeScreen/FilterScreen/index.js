@@ -6,7 +6,6 @@ import { Fiord, MySin } from "../../../shared/Colors"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { lang } from "../../../shared/Lang"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
-import IconFilter from "../../../assets/icon/filtr2.png"
 import { styles } from "./style"
 import { paddingHorizontal } from "../../../shared/GlobalStyle"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
@@ -16,6 +15,7 @@ import { CheckItem } from "../../../components/UI/CheckItem"
 import Context from "../../../../Context"
 import { API_URL } from "../../../shared/Const"
 import { GetChargeBoxesData } from "../../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
+import IconFilter from "../../../assets/icon/filtr2.png"
 
 export const FilterScreen = ({ navigation }) => {
 
@@ -31,15 +31,12 @@ export const FilterScreen = ({ navigation }) => {
       id: 1,
       text: lang[countryCode].filterCheckText1,
       active: false
-    },
-    {
-      id: 2,
-      text: lang[countryCode].filterCheckText2,
-      active: false
     }
   ])
   const [min, setMin] = useState("")
   const [max, setMax] = useState("")
+  const [checkMin, setCheckMin] = useState("")
+  const [checkMax, setCheckMax] = useState("")
   const [loader, setLoader] = useState(false)
 
 
@@ -68,6 +65,8 @@ export const FilterScreen = ({ navigation }) => {
         .then(res => {
           setMin(res?.data?.min)
           setMax(res?.data?.max)
+          setCheckMin(res?.data?.min)
+          setCheckMax(res?.data?.max)
         })
     })()
   }, [])
@@ -111,8 +110,16 @@ export const FilterScreen = ({ navigation }) => {
     }))
   }
 
+  const handleMin = (num) => setCheckMin(num)
+
+  const handleMax = (num) => setCheckMax(num)
+
   const handleSave = () => {
-    dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&min=${min}&max=${max}&connector_types[0]=1&language=${countryCode}`))
+    if (checkData[0].active) {
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&connector_types[0]=1&only_free=${1}&min=${checkMin}&max=${checkMax}&=${countryCode}`))
+    } else {
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&min=${checkMin}&max=${checkMax}&connector_types[0]=1&language=${countryCode}`))
+    }
   }
 
   return (
@@ -155,7 +162,15 @@ export const FilterScreen = ({ navigation }) => {
                 </View>
                 <TitleCustom text={lang[countryCode].powerTitle} fontSize={18} color={Fiord} marginBottom={15} />
                 <View style={styles.rangeBox}>
-                  <RangeLineCustom percent={false} min={min} max={max} />
+                  <RangeLineCustom
+                    percent={false}
+                    min={min}
+                    max={max}
+                    handleMin={handleMin}
+                    handleMax={handleMax}
+                    checkMin={checkMin}
+                    checkMax={checkMax}
+                  />
                 </View>
                 <TitleCustom text={lang[countryCode].availability} fontSize={18} color={Fiord} marginBottom={15} />
                 {

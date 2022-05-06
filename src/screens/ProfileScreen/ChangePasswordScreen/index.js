@@ -94,7 +94,6 @@ export const ChangePasswordScreen = ({ navigation }) => {
             console.log("requestOptions", requestOptions)
             fetch(`${API_URL}/users/change-password?access-token=${Token}`, requestOptions)
               .then((res) => {
-                console.log('res', res)
                 setLoader(false)
                 navigation.navigate("Profile")
               })

@@ -22,11 +22,12 @@ function RootNavigation() {
                     hideTransitionAnimation={'slide'}
                 />
                 <NavigationContainer>
-                    {
-                        !check
-                            ? <MyDrawer/>
-                            : <WelcomeScreen/>
-                    }
+                    {/* { */}
+                    {/*     check */}
+                    {/*         ? <MyDrawer/> */}
+                    {/*         : <WelcomeScreen/> */}
+                    {/* } */}
+                  <MyDrawer/>
                 </NavigationContainer>
             </AppearanceProvider>
         </SafeAreaProvider>

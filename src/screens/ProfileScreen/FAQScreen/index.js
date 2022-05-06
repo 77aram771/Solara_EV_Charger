@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
+import axios from "axios"
 import { styles } from "./style"
 import { MySin, White } from "../../../shared/Colors"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
 import { AccordionCustom } from "../../../components/UI/AccordionCustom"
-import axios from "axios";
 import { API_URL } from "../../../shared/Const"
 
 export const FAQScreen = ({ navigation }) => {

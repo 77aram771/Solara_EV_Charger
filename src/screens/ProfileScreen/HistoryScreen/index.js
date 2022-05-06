@@ -35,7 +35,7 @@ export const HistoryScreen = ({ navigation }) => {
             setData(res?.data?.data)
             setTotalPrice(res?.data?.total)
           })
-          .catch(e => console.log("e", e))
+          .catch(e => console.log("e", e.response))
 
         await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}`, {
           headers: {

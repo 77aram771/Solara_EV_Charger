@@ -13,13 +13,13 @@ import { Provider } from "react-redux"
 import { store } from "./src/store"
 import { API_URL, Google_Key } from "./src/shared/Const"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
-import axios from "axios";
+import axios from "axios"
 // import ImgSplashScreenRu from './src/assets/images/img-splashscreen-ru.png'
 // import ImgSplashScreenEn from './src/assets/images/img-splashscreen-en.png'
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state"
-]);
+])
 
 Geocoder.init(Google_Key, { language: "ru" })
 
@@ -89,7 +89,7 @@ export default function App() {
           }
         })
         .then(res => setSumKW(res?.data?.price))
-        .catch(e => console.log("e", e))
+        .catch(e => console.log("e", e.response))
     })()
   }, [])
 

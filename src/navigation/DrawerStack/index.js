@@ -2,7 +2,6 @@ import * as React from 'react'
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import {TabNavigator} from "../TabNavigator"
 import {FilterScreen} from "../../screens/HomeScreen/FilterScreen"
-import Constants from "expo-constants";
 
 const Drawer = createDrawerNavigator()
 

@@ -71,9 +71,9 @@
     "react-native-web": "0.17.1",
     "react-native-webview": "^11.18.1",
     "react-redux": "^7.2.6",
-    "redux": "^4.1.2",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.4.1",
+    "redux": "3.7.2",
+    "redux-logger": "last",
+    "redux-thunk": "last",
     "toggle-switch-react-native": "^3.3.0"
   },
   "devDependencies": {
