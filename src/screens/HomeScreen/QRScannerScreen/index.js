@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Dimensions, StyleSheet, Text, View } from "react-native"
+import { Button, Dimensions, StyleSheet, Text, View } from "react-native"
 import { BarCodeScanner } from "expo-barcode-scanner"
 import Context from "../../../../Context"
 
@@ -43,7 +43,7 @@ export const QRScannerScreen = ({ navigation }) => {
           height: Dimensions.get("screen").height
         }, StyleSheet.absoluteFillObject]}
       />
-      {/* {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)}/>} */}
+      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)}/>}
     </View>
   )
 }

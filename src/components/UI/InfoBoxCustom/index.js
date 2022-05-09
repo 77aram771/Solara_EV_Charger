@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
-import { Image, View } from "react-native"
+import { Image, TouchableOpacity, View } from "react-native"
+import call from 'react-native-phone-call'
 import { styles } from "./style"
 import IconFreeNot from "../../../assets/icon/free-not.png"
 import { TextCustom } from "../TextCustom"
@@ -13,6 +14,11 @@ import Context from "../../../../Context"
 export const InfoBoxCustom = ({ itemId, isBook, data }) => {
 
   const { countryCode } = useContext(Context)
+
+  const args = {
+    number: data[itemId]?.phone,
+    prompt: false
+  }
 
   return (
     <View style={styles.infoBox}>
@@ -60,7 +66,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
           fontSize={16}
           marginBottom={isBook ? 15 : 5}
         />
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", marginBottom: 5 }}>
           {
             isBook
               ? <Image source={IconMapMarker} style={{ width: 20, height: 20, marginRight: 10 }} />
@@ -77,7 +83,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
         {
           isBook
             ? (
-              <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity onPress={() => call(args).catch(console.error)} style={{ flexDirection: "row" }}>
                 <Image source={IconPhone} style={{ width: 20, height: 20, marginRight: 10 }} />
                 <TextCustom
                   text={data[itemId]?.phone}
@@ -86,7 +92,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
                   fontSize={16}
                   marginBottom={10}
                 />
-              </View>
+              </TouchableOpacity>
             )
             : null
         }
