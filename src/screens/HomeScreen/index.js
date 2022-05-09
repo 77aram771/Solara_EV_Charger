@@ -51,8 +51,8 @@ export const HomeScreen = ({ navigation }) => {
   const [cordinate, setCordinate] = useState({
     latitude: location !== null ? location?.coords?.latitude : 40.177200,
     longitude: location !== null ? location?.coords?.longitude : 44.503490,
-    latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA
+    latitudeDelta: 8,
+    longitudeDelta: LONGITUDE_DELTA + 6
   })
 
   const chargeBoxesData = useSelector(state => state?.ChargeBoxesDataReducer.data)
@@ -126,7 +126,7 @@ export const HomeScreen = ({ navigation }) => {
   //     console.log('region', region)
   // }
 
-  const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 2000)
+  const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 500)
 
   const handleItemId = async (e, id) => {
     const Token = await AsyncStorage.getItem("token")
@@ -507,7 +507,7 @@ export const HomeScreen = ({ navigation }) => {
               style={[styles.myLocationButtonOut, {
                 bottom: start
                   ? windowHeight / 12
-                  : itemId !== null
+                  : itemId
                     ? Platform.OS === "android"
                       ? windowHeight / 3.2 : windowHeight / 3.8 : Platform.OS === "android"
                       ? windowHeight / 17

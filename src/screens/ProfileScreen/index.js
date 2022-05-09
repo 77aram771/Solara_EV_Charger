@@ -45,7 +45,6 @@ export const ProfileScreen = ({ navigation }) => {
 
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
-    console.log("Token", Token)
     if (Token !== null) {
       setLogin(true)
       await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
@@ -53,12 +52,8 @@ export const ProfileScreen = ({ navigation }) => {
           tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
         }
       })
-        .then(res => {
-          setUser(res.data)
-          console.log("getUserProfile", res.data)
-        })
+        .then(res => setUser(res.data))
         .catch(e => {
-          console.log("e123123123", e?.response?.data?.status)
           if (e?.response?.data?.status === 401) {
             handleLogOut()
           }

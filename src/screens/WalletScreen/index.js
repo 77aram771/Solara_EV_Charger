@@ -154,13 +154,11 @@ export const WalletScreen = ({ navigation }) => {
                 handleModal()
                 await getCardData()
               })()
-              console.log("fail")
             } else if (state?.url.split("/").pop() === "success") {
               (async () => {
                 handleModal()
                 await getCardData()
               })()
-              console.log("success")
             }
           }}
         />

@@ -44,7 +44,6 @@ export const BookTypeScreen = ({ navigation, route }) => {
 
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
-    console.log("Token", Token)
     if (Token !== null) {
       await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
         headers: {

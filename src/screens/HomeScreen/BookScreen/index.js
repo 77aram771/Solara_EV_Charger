@@ -42,10 +42,7 @@ export const BookScreen = ({ navigation, route }) => {
             tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
           }
         })
-        .then(res => {
-          console.log("res?.data?.images", res?.data?.images)
-          setImageData(res?.data?.images)
-        })
+        .then(res => setImageData(res?.data?.images))
         .catch(e => console.log("e", e.response))
     })()
   }, [])
@@ -220,6 +217,7 @@ export const BookScreen = ({ navigation, route }) => {
             </View>
             {
               route.params?.data[route.params?.itemId]?.connectors.map((item, index) => {
+                console.log("item?.status", item?.status)
                 return (
                   <TouchableOpacity
                     onPress={() => {
@@ -228,8 +226,13 @@ export const BookScreen = ({ navigation, route }) => {
                           item,
                           address: route?.params?.data[route?.params?.itemId].address
                         })
+                      } else if (item?.status !== "Finishing") {
+                        navigation.navigate("BookType", {
+                          item,
+                          address: route?.params?.data[route?.params?.itemId].address
+                        })
                       } else {
-                        alert("The port is Faulted")
+                        alert("The port is Faulted or Finishing")
                       }
                     }}
                     key={item.id}
@@ -246,6 +249,19 @@ export const BookScreen = ({ navigation, route }) => {
                       <Image source={{ uri: item?.status_image }} style={{ width: 20, height: 20, marginRight: 10 }} />
                       {
                         item?.status === "Faulted"
+                          ? (
+                            <TextCustom
+                              text={`${item?.type?.title}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Finishing"
                           ? (
                             <TextCustom
                               text={`${item?.type?.title}`}
@@ -312,6 +328,19 @@ export const BookScreen = ({ navigation, route }) => {
                           : null
                       }
                       {
+                        item?.status === "Finishing"
+                          ? (
+                            <TextCustom
+                              text={`${item?.power} ${lang[countryCode].kw}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
                         item?.status === "Available"
                           ? (
                             <TextCustom
@@ -354,6 +383,18 @@ export const BookScreen = ({ navigation, route }) => {
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                       {
                         item?.status === "Faulted"
+                          ? (
+                            <TextCustom
+                              text={sumKW}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
+                        item?.status === "Finishing"
                           ? (
                             <TextCustom
                               text={sumKW}
