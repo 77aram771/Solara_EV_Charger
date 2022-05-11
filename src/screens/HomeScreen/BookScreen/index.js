@@ -17,6 +17,7 @@ import IconDirection2 from "../../../assets/icon/direction2.png"
 import ImgLight from "../../../assets/icon/priceunit.png"
 import ImgClose from "../../../assets/icon/icon-close.png"
 import ImgDefault from "../../../assets/images/img-book-slide1.jpeg"
+import { SmallModal } from "../../../container/SmallModal";
 
 export const BookScreen = ({ navigation, route }) => {
 
@@ -24,6 +25,7 @@ export const BookScreen = ({ navigation, route }) => {
 
   const [imageData, setImageData] = useState(null)
   const [imageModal, setImageModal] = useState(false)
+  const [modalVisibleCheckUser, setModalVisibleCheckUser] = useState(false)
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -48,6 +50,37 @@ export const BookScreen = ({ navigation, route }) => {
   }, [])
 
   const handleModal = () => setImageModal(!imageModal)
+
+  const handlePort = async (item) => {
+    const Token = await AsyncStorage.getItem("token")
+    if (Token === null) {
+      setModalVisibleCheckUser(true)
+    } else {
+      if (item?.status !== "Faulted") {
+        navigation.navigate("BookType", {
+          item,
+          address: route?.params?.data[route?.params?.itemId].address
+        })
+      } else if (item?.status !== "Finishing") {
+        navigation.navigate("BookType", {
+          item,
+          address: route?.params?.data[route?.params?.itemId].address
+        })
+      } else {
+        alert("The port is Faulted or Finishing")
+      }
+    }
+  }
+
+  const handleModalCheckUser = () => {
+    setModalVisibleCheckUser(!modalVisibleCheckUser)
+    navigation.navigate("Home")
+  }
+
+  const handleUserCheck = () => {
+    setModalVisibleCheckUser(!modalVisibleCheckUser)
+    navigation.navigate("ProfileStack")
+  }
 
   return (
     <View style={styles.container}>
@@ -126,6 +159,20 @@ export const BookScreen = ({ navigation, route }) => {
             }
           </SwiperFlatList>
         </View>
+      </Modal>
+      <Modal
+        // animationType="slide"
+        transparent={true}
+        visible={modalVisibleCheckUser}
+        onRequestClose={handleModalCheckUser}
+      >
+        <SmallModal
+          handleFirstButton={handleModalCheckUser}
+          titleFirstButton={lang[countryCode].cancel}
+          handleSecondButton={handleUserCheck}
+          titleSecondButton={lang[countryCode].logIn}
+          title={lang[countryCode].pleasLoginInProgram}
+        />
       </Modal>
       <HeaderCustom
         handleBack={() => navigation.goBack()}
@@ -220,21 +267,7 @@ export const BookScreen = ({ navigation, route }) => {
                 console.log("item?.status", item?.status)
                 return (
                   <TouchableOpacity
-                    onPress={() => {
-                      if (item?.status !== "Faulted") {
-                        navigation.navigate("BookType", {
-                          item,
-                          address: route?.params?.data[route?.params?.itemId].address
-                        })
-                      } else if (item?.status !== "Finishing") {
-                        navigation.navigate("BookType", {
-                          item,
-                          address: route?.params?.data[route?.params?.itemId].address
-                        })
-                      } else {
-                        alert("The port is Faulted or Finishing")
-                      }
-                    }}
+                    onPress={() => handlePort(item)}
                     key={item.id}
                     style={styles.typeItem}
                   >

@@ -174,7 +174,7 @@ export const WalletScreen = ({ navigation }) => {
           titleFirstButton={lang[countryCode].cancel}
           handleSecondButton={handleUserCheck}
           titleSecondButton={lang[countryCode].logIn}
-          title={lang[countryCode].areYouSureYouWantToDeleteTheCard}
+          title={lang[countryCode].pleasLoginInProgram}
         />
       </Modal>
       <Modal

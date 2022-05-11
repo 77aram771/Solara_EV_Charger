@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, Image, Platform, ScrollView, View } from "react-native"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import moment from "moment"
 import Context from "../../../../Context"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { RangeLineCustom } from "../../../components/UI/RangeLineCustom"
@@ -96,8 +95,12 @@ export const BookTypeScreen = ({ navigation, route }) => {
       .then(res => {
         setLoader(false)
         console.log("res handleChanger", res.data)
+        // AsyncStorage.setItem("transaction_id", res?.data?.transaction_id)
         navigation.navigate("LoadCharge", {
-          transaction_id: res.transaction_id
+          transaction_id: res?.data?.transaction_id,
+          chargingLimit: limit,
+          chargingWatt: user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power),
+          price
         })
       })
       .catch(e => {
@@ -123,7 +126,6 @@ export const BookTypeScreen = ({ navigation, route }) => {
           style={{ width: 70, height: 70, marginBottom: 10 }}
           resizeMode={"cover"}
         />
-
         <View style={{ width: windowWidth / 1.2, marginBottom: 10 }}>
           <TextCustom
             text={route?.params?.address}
@@ -133,7 +135,6 @@ export const BookTypeScreen = ({ navigation, route }) => {
             textAlign={"center"}
           />
         </View>
-
         <View style={styles.bookInfoBox}>
           <TextCustom
             text={`${route?.params?.item?.type?.title}`}

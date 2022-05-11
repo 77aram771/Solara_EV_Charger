@@ -25,7 +25,7 @@ import IconNotification from "../../assets/icon/notification.png"
 
 export const ProfileScreen = ({ navigation }) => {
 
-  const { countryCode } = useContext(Context)
+  const { countryCode, handleHideTabBar } = useContext(Context)
 
   const dispatch = useDispatch()
 
@@ -39,12 +39,14 @@ export const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     return navigation.addListener("focus", async () => {
+      handleHideTabBar(true)
       await getUserProfile()
     })
   }, [navigation])
 
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
+    console.log("Token", Token)
     if (Token !== null) {
       setLogin(true)
       await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
@@ -54,6 +56,7 @@ export const ProfileScreen = ({ navigation }) => {
       })
         .then(res => setUser(res.data))
         .catch(e => {
+          console.log("e?.response?.data?.status", e?.response?.data?.status)
           if (e?.response?.data?.status === 401) {
             handleLogOut()
           }

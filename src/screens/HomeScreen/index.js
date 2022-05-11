@@ -1,8 +1,8 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { Image, Modal, Platform, TouchableOpacity, View } from "react-native"
+import { Image, Platform, TouchableOpacity, View } from "react-native"
 import { Geojson, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import MapView from "react-native-map-clustering"
-import AsyncStorage from "@react-native-async-storage/async-storage"
+// import * as Updates from "expo-updates"
 import { Popup } from "react-native-map-link"
 import { styles } from "./style"
 import { API_URL, Google_Key, windowHeight, windowWidth } from "../../shared/Const"
@@ -18,7 +18,6 @@ import { RenderCluster } from "../../components/UI/RenderCluster"
 import { useDispatch, useSelector } from "react-redux"
 import { GetCarMake } from "../../store/actionsCreators/CarMakeApiActionCreator"
 import { GetChargeBoxesData } from "../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
-import { SmallModal } from "../../container/SmallModal"
 import myPlace from "../../assets/georgia.json"
 import MapViewDirections from "react-native-maps-directions"
 import IconDirection from "../../assets/icon/direction1.png"
@@ -46,7 +45,6 @@ export const HomeScreen = ({ navigation }) => {
   const [start, setStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
   const [modalRedirect, setModalRedirect] = useState(false)
-  const [modalVisibleCheckUser, setModalVisibleCheckUser] = useState(false)
 
   const [cordinate, setCordinate] = useState({
     latitude: location !== null ? location?.coords?.latitude : 40.177200,
@@ -70,8 +68,10 @@ export const HomeScreen = ({ navigation }) => {
   })
 
   useEffect(() => {
-    return navigation.addListener("focus", () => {
+    return navigation.addListener("focus", async () => {
       handleHideTabBar(true)
+      // await Updates.reloadAsync()
+      // await Updates.fetchUpdateAsync()
     })
   }, [navigation])
 
@@ -98,15 +98,14 @@ export const HomeScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
       setOptions(prev => {
-          return (
-            {
-              ...prev,
-              latitude: chargeBoxesData[itemId]?.latitude,
-              longitude: chargeBoxesData[itemId]?.longitude
-            }
-          )
-        }
-      )
+        return (
+          {
+            ...prev,
+            latitude: chargeBoxesData[itemId]?.latitude,
+            longitude: chargeBoxesData[itemId]?.longitude
+          }
+        )
+      })
       setData(chargeBoxesData && chargeBoxesData?.data.map(item => {
         item.active = false
         return item
@@ -129,12 +128,8 @@ export const HomeScreen = ({ navigation }) => {
   const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 500)
 
   const handleItemId = async (e, id) => {
-    const Token = await AsyncStorage.getItem("token")
-    if (Token === null) {
-      setModalVisibleCheckUser(true)
-    } else {
-      setItemId(id)
-    }
+    e.stopPropagation()
+    setItemId(id)
   }
 
   const handleStart = () => setStart(!start)
@@ -144,40 +139,8 @@ export const HomeScreen = ({ navigation }) => {
     setModalRedirect(!modalRedirect)
   }
 
-  const handleModalCheckUser = () => {
-    setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("Home")
-  }
-
-  const handleUserCheck = () => {
-    setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("Profile")
-  }
-
-  // if (chargeBoxesLoader) {
-  //   return (
-  //     <View style={{ width: windowWidth, height: windowHeight, justifyContent: "center", alignItems: "center" }}>
-  //       <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-  //     </View>
-  //   )
-  // }
-
   return (
     <View style={styles.container}>
-      <Modal
-        // animationType="slide"
-        transparent={true}
-        visible={modalVisibleCheckUser}
-        onRequestClose={handleModalCheckUser}
-      >
-        <SmallModal
-          handleFirstButton={handleModalCheckUser}
-          titleFirstButton={lang[countryCode].cancel}
-          handleSecondButton={handleUserCheck}
-          titleSecondButton={lang[countryCode].logIn}
-          title={lang[countryCode].areYouSureYouWantToDeleteTheCard}
-        />
-      </Modal>
       <Popup
         isVisible={modalRedirect}
         onCancelPressed={() => handleRedirect()}
@@ -241,9 +204,22 @@ export const HomeScreen = ({ navigation }) => {
       <MapView
         // layoutAnimationConf={LayoutAnimation.Presets.easeInEaseOut}
         initialRegion={cordinate}
-        // onMarkersChange={(props) => {
-        //   // console.log("props", props)
-        // }}
+        onMarkersChange={(props) => {
+          console.log("props", props)
+        }}
+        needsOffscreenAlphaCompositing={false}
+        showsIndoorLevelPicker={false}
+        accessibilityElementsHidden={false}
+        accessible={false}
+        accessibilityViewIsModal={false}
+        animationEnabled={false}
+        cacheEnabled={false}
+        userLocationCalloutEnabled={false}
+        followsUserLocation={false}
+        liteMode={false}
+        loadingEnabled={false}
+        moveOnMarkerPress={false}
+        preserveClusterPressBehavior={false} shouldRasterizeIOS={false}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         // onRegionChange={onRegionChange}

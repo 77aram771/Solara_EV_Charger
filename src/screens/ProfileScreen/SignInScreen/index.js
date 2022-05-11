@@ -74,7 +74,7 @@ export const SignInScreen = ({ navigation, route }) => {
   const handlePassword = (value) => {
     setPassword(value)
     if (value.length >= 6) {
-      if (regPassword.test(value)) {
+      if (value) {
         setPasswordError(false)
       } else {
         setPasswordError(true)
