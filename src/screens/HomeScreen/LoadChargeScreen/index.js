@@ -14,7 +14,7 @@ import { FullChargeModal } from "../../../container/FullChargeModal"
 import { API_URL, windowHeight, windowWidth } from "../../../shared/Const"
 import IconCancel from "../../../assets/icon/cancel.png"
 import ImgLoadBackground from "../../../assets/images/img-load-background.jpeg"
-import ImgLight from "../../../assets/icon/priceunit.png"
+import ImgLight from "../../../assets/icon/priceunit1.png"
 
 export const LoadChargeScreen = ({ navigation, route }) => {
 
@@ -42,14 +42,14 @@ export const LoadChargeScreen = ({ navigation, route }) => {
         setLoader(false)
         setStatus(res.data.status)
         setProgress(res.data.progress)
-        if (res.data.status === "Charging" && res.data.kw > 0) {
+        if (res.data.status === "Charging" || res.data.kw > 0) {
           setModalVisible(true)
         }
         // else if (res.data.status !== "Charging") {
         //   setModalVisible(false)
         //   navigation.goBack()
         // }
-        // console.log("res handleProgress", res.data)
+        console.log("res handleProgress", res.data)
       })
       .catch(e => {
         console.log("e -----------", e.response.data.message)
@@ -70,7 +70,9 @@ export const LoadChargeScreen = ({ navigation, route }) => {
       })
       .then(res => {
         setLoader(false)
-        navigation.goBack()
+        setTimeout(() => {
+          navigation.navigate("Book")
+        }, 3000)
         console.log("res handleStop", res.data)
       })
       .catch(e => console.log("e -----------", e.response.data.message))
@@ -79,6 +81,9 @@ export const LoadChargeScreen = ({ navigation, route }) => {
   useEffect(() => {
     return navigation.addListener("focus", () => {
       handleHideTabBar(false)
+      if(route?.params?.bool) {
+        setModalVisible(true)
+      }
     })
   }, [navigation])
 
@@ -91,22 +96,14 @@ export const LoadChargeScreen = ({ navigation, route }) => {
   }, [])
 
   useEffect(() => {
-    (() => {
-      let intervalId = (ms) => setInterval(async () => {
-        await handleProgress()
-      }, ms)
+    let intervalId = (ms) => setInterval(async () => {
+      await handleProgress()
+    }, ms)
 
-      if (modalVisible) {
-        console.log("-------------")
-        intervalId(60000)
-      } else {
-        console.log("+++++++++++++")
-        intervalId(5000)
-      }
+    intervalId(5000)
 
-      return () => clearInterval(intervalId)
-    })()
-  }, [modalVisible])
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
     <ImageBackground source={ImgLoadBackground} resizeMode={"cover"} style={styles.container}>

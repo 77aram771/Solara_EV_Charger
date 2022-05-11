@@ -2,7 +2,6 @@ import React, { createRef, useContext, useEffect, useLayoutEffect, useState } fr
 import { Image, Platform, TouchableOpacity, View } from "react-native"
 import { Geojson, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import MapView from "react-native-map-clustering"
-// import * as Updates from "expo-updates"
 import { Popup } from "react-native-map-link"
 import { styles } from "./style"
 import { API_URL, Google_Key, windowHeight, windowWidth } from "../../shared/Const"
@@ -29,6 +28,8 @@ import IconBook from "../../assets/icon/reserve.png"
 import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -70,8 +71,8 @@ export const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(true)
-      // await Updates.reloadAsync()
-      // await Updates.fetchUpdateAsync()
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&connector_types[0]=1&min=7&max=20&language=${countryCode}`))
+      await handleCheckChargeProgress()
     })
   }, [navigation])
 
@@ -124,6 +125,29 @@ export const HomeScreen = ({ navigation }) => {
   // const onRegionChange = (region) => {
   //     console.log('region', region)
   // }
+
+  const handleCheckChargeProgress = async () => {
+    const Token = await AsyncStorage.getItem("token")
+    await axios.post(
+      `${API_URL}/charge-box/get-progress?access-token=${Token}`,
+      {
+        // transaction_id: route.params.transaction_id
+      },
+      {
+        headers: {
+          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
+        }
+      })
+      .then(res => {
+        if (res.data.status === "Charging" || res.data.kw > 0) {
+          navigation.navigate("LoadCharge", { bool: true })
+        }
+        console.log("res handleCheckChargeProgress", res.data)
+      })
+      .catch(e => {
+        console.log("e -----------123", e.response.data.message)
+      })
+  }
 
   const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 500)
 

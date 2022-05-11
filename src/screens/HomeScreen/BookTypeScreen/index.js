@@ -19,30 +19,29 @@ export const BookTypeScreen = ({ navigation, route }) => {
   const { handleHideTabBar, countryCode, sumKW } = useContext(Context)
 
   const [loader, setLoader] = useState(false)
+  const [loaderGetUser, setLoaderGetUser] = useState(false)
   const [user, setUser] = useState(false)
   const [price, setPrice] = useState(0)
   const [checkMin, setCheckMin] = useState(0)
   const [checkMax, setCheckMax] = useState(100)
   const [limit, setLimit] = useState(0)
   const [km, setKm] = useState(0)
-  const [time, setTime] = useState(0)
+  const [timeH, setTimeH] = useState(0)
+  const [timeM, setTimeM] = useState(0)
   const [showErrorText, setShowErrorText] = useState(false)
   const [errorText, setErrorText] = useState("")
 
   useEffect(() => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(false)
+      await getUserProfile()
     })
   }, [navigation])
 
-  useEffect(() => {
-    (async () => {
-      await getUserProfile()
-    })()
-  }, [])
-
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
+    setLoaderGetUser(true)
+    console.log("token", Token)
     if (Token !== null) {
       await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
         headers: {
@@ -53,9 +52,17 @@ export const BookTypeScreen = ({ navigation, route }) => {
           setUser(res.data)
           setLimit(res.data.car_capacity)
           setKm(res.data.car_power_reserve)
+          setPrice(Math.floor(res.data.car_capacity * sumKW))
+          setLoaderGetUser(false)
+          let myNumber = res.data.car_capacity / res.data?.car_max_kw
+          let h = String(myNumber).split(".")[0]
+          let m = String(myNumber).split(".")[1]
+          console.log("h", h)
+          console.log("m", m)
         })
         .catch(e => {
           console.log("e --------", e.response)
+          setLoaderGetUser(false)
         })
     }
   }
@@ -65,7 +72,26 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLimit(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1)
     setKm(Math.ceil(user?.car_power_reserve / 100 * (checkMax - num)), 1)
     setPrice(Math.floor(limit * sumKW))
-    setTime(user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power))
+    if (user?.car_max_kw > route?.params?.item?.power) {
+      let myNumber = limit / user?.car_max_kw
+      let H = parseInt(myNumber);
+      let M = myNumber - H;
+      console.log("myNumber", myNumber)
+      console.log("H", H)
+      console.log("M", M)
+      setTimeH(H)
+      setTimeM(M)
+
+    } else {
+      let myNumber = limit / user?.car_max_kw
+      let H = parseInt(myNumber);
+      let M = myNumber - H;
+      console.log("myNumber", myNumber)
+      console.log("H", H)
+      console.log("M", M)
+      setTimeH(H)
+      setTimeM(M)
+    }
   }
 
   const handleMax = (num) => {
@@ -73,7 +99,26 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLimit(Math.ceil(user?.car_capacity / 100 * (num - checkMin)), 1)
     setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)), 1)
     setPrice(Math.floor(limit * sumKW))
-    setTime(user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power))
+    if (user?.car_max_kw > route?.params?.item?.power) {
+      let myNumber = limit / user?.car_max_kw
+      let H = parseInt(myNumber);
+      let M = myNumber - H;
+      console.log("myNumber", myNumber)
+      console.log("H", H)
+      console.log("M", M)
+      setTimeH(H)
+      setTimeM(M)
+
+    } else {
+      let myNumber = limit / user?.car_max_kw
+      let H = parseInt(myNumber);
+      let M = myNumber - H;
+      console.log("myNumber", myNumber)
+      console.log("H", H)
+      console.log("M", M)
+      setTimeH(H)
+      setTimeM(M)
+    }
   }
 
   const handleChanger = async () => {
@@ -95,7 +140,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
       .then(res => {
         setLoader(false)
         console.log("res handleChanger", res.data)
-        // AsyncStorage.setItem("transaction_id", res?.data?.transaction_id)
+        AsyncStorage.setItem("transaction_id", res?.data?.transaction_id)
         navigation.navigate("LoadCharge", {
           transaction_id: res?.data?.transaction_id,
           chargingLimit: limit,
@@ -154,131 +199,139 @@ export const BookTypeScreen = ({ navigation, route }) => {
           width: windowWidth
         }}
       >
-        <View style={styles.typeBox}>
-          <View style={[styles.typeItem, { borderTopWidth: 0 }]}>
-            <TextCustom text={lang[countryCode].Tariff} color={Fiord} fontSize={16} fontWeight={"700"} />
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextCustom
-                text={`${sumKW}`}
-                fontWeight={"400"}
-                color={MineShaft}
-                fontSize={14}
-              />
-              <Image source={ImgLight} style={{ width: 13, height: 13 }} />
-            </View>
-          </View>
-          <View style={styles.typeItem}>
-            <TextCustom text={lang[countryCode].maxPower} color={MineShaft} fontSize={14} fontWeight={"400"} />
-            <TextCustom
-              text={`${route?.params?.item?.power} ${lang[countryCode].kw}`}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-          </View>
-          <View style={styles.typeItem}>
-            <TextCustom text={lang[countryCode].yourCar} color={MineShaft} fontSize={14} fontWeight={"400"} />
-            <TextCustom
-              text={`${user?.car_make_name}${user?.car_model_name}`}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-          </View>
-          <View style={styles.typeItem}>
-            <TextCustom
-              text={lang[countryCode].approximatePrice}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextCustom
-                text={`${price}`}
-                color={MineShaft}
-                fontSize={14}
-                fontWeight={"400"}
-              />
-              <Image source={ImgLight} style={{ width: 13, height: 13 }} />
-            </View>
-          </View>
-          <View style={styles.typeItem}>
-            <TextCustom text={lang[countryCode].fillingTime} color={MineShaft} fontSize={14} fontWeight={"400"} />
-            <TextCustom
-              text={`${time} ${lang[countryCode].H} 45${lang[countryCode].M}`}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-          </View>
-          <View style={styles.typeItem}>
-            <TextCustom
-              text={lang[countryCode].mileageIncrease}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-            <TextCustom
-              text={`${km} ${lang[countryCode].km}`}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-          </View>
-          <View style={styles.typeItem}>
-            <TextCustom
-              text={lang[countryCode].chargingLimit}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-            <TextCustom
-              text={`${limit}${lang[countryCode].kw}`}
-              color={MineShaft}
-              fontSize={14}
-              fontWeight={"400"}
-            />
-          </View>
-          {
-            loader
-              ? (
-                <ActivityIndicator size="large" color={MySin} animating={true} />
-              )
-              : null
-          }
-          {
-            showErrorText
-              ? (
-                <TextCustom
-                  text={errorText}
-                  color={SunsetOrange}
-                  fontSize={14}
-                  fontWeight={"500"}
-                  textAlign={"center"}
-                />
-              )
-              : null
-          }
-        </View>
-        <View style={styles.titleBox}>
-          <TextCustom
-            text={lang[countryCode].selectChargingPercent}
-            color={MineShaft}
-            fontSize={14}
-            fontWeight={"400"}
-          />
-        </View>
-        <View style={styles.rangeBox}>
-          <RangeLineCustom
-            percent={true}
-            max={100}
-            min={0}
-            checkMax={checkMax}
-            checkMin={checkMin}
-            handleMin={handleMin}
-            handleMax={handleMax}
-          />
-        </View>
+        {
+          loaderGetUser
+            ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginTop: 30 }} />
+            : (
+              <>
+                <View style={styles.typeBox}>
+                  <View style={[styles.typeItem, { borderTopWidth: 0 }]}>
+                    <TextCustom text={lang[countryCode].Tariff} color={Fiord} fontSize={16} fontWeight={"700"} />
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                      <TextCustom
+                        text={`${sumKW}`}
+                        fontWeight={"400"}
+                        color={MineShaft}
+                        fontSize={14}
+                      />
+                      <Image source={ImgLight} style={{ width: 13, height: 13 }} />
+                    </View>
+                  </View>
+                  <View style={styles.typeItem}>
+                    <TextCustom text={lang[countryCode].maxPower} color={MineShaft} fontSize={14} fontWeight={"400"} />
+                    <TextCustom
+                      text={`${route?.params?.item?.power} ${lang[countryCode].kw}`}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                  </View>
+                  <View style={styles.typeItem}>
+                    <TextCustom text={lang[countryCode].yourCar} color={MineShaft} fontSize={14} fontWeight={"400"} />
+                    <TextCustom
+                      text={`${user?.car_make_name || "-"}${user?.car_model_name || "-"}`}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                  </View>
+                  <View style={styles.typeItem}>
+                    <TextCustom
+                      text={lang[countryCode].approximatePrice}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                      <TextCustom
+                        text={`${price}`}
+                        color={MineShaft}
+                        fontSize={14}
+                        fontWeight={"400"}
+                      />
+                      <Image source={ImgLight} style={{ width: 13, height: 13 }} />
+                    </View>
+                  </View>
+                  <View style={styles.typeItem}>
+                    <TextCustom text={lang[countryCode].fillingTime} color={MineShaft} fontSize={14} fontWeight={"400"} />
+                    <TextCustom
+                      text={`${timeH > 0 ? timeH : ""} ${timeH > 0 ? lang[countryCode].H : ""} ${timeM}${lang[countryCode].M}`}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                  </View>
+                  <View style={styles.typeItem}>
+                    <TextCustom
+                      text={lang[countryCode].mileageIncrease}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                    <TextCustom
+                      text={`${km} ${lang[countryCode].km}`}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                  </View>
+                  <View style={styles.typeItem}>
+                    <TextCustom
+                      text={lang[countryCode].chargingLimit}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                    <TextCustom
+                      text={`${limit}${lang[countryCode].kw}`}
+                      color={MineShaft}
+                      fontSize={14}
+                      fontWeight={"400"}
+                    />
+                  </View>
+                  {
+                    loader
+                      ? (
+                        <ActivityIndicator size="large" color={MySin} animating={true} />
+                      )
+                      : null
+                  }
+                  {
+                    showErrorText
+                      ? (
+                        <TextCustom
+                          text={errorText}
+                          color={SunsetOrange}
+                          fontSize={14}
+                          fontWeight={"500"}
+                          textAlign={"center"}
+                        />
+                      )
+                      : null
+                  }
+                </View>
+                <View style={styles.titleBox}>
+                  <TextCustom
+                    text={lang[countryCode].selectChargingPercent}
+                    color={MineShaft}
+                    fontSize={14}
+                    fontWeight={"400"}
+                  />
+                </View>
+                <View style={styles.rangeBox}>
+                  <RangeLineCustom
+                    percent={true}
+                    max={100}
+                    min={0}
+                    checkMax={checkMax}
+                    checkMin={checkMin}
+                    handleMin={handleMin}
+                    handleMax={handleMax}
+                  />
+                </View>
+              </>
+            )
+        }
       </ScrollView>
       <View style={styles.buttonContainer}>
         <ButtonCustom

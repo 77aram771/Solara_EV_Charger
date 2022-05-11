@@ -56,7 +56,7 @@ export const FullChargeModal = ({ navigation, handleModal, status, progress, han
           </View>
           <View style={styles.infoItem}>
             <TextCustom
-              text={`${lang[countryCode].total}: ${progress}${lang[countryCode].kw}`}
+              text={`${lang[countryCode].total}: ${progress} ${lang[countryCode].kw}`}
               color={White}
               fontSize={24}
               fontWeight={"400"}

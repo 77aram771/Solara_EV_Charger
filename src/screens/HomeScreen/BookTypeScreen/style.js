@@ -39,7 +39,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 1,
     borderColor: Fiord,
-    backgroundColor: White
+    backgroundColor: White,
+    zIndex: 1
   },
   typeBox: {
     width: windowWidth / 1.1,

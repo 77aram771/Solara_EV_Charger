@@ -28,26 +28,25 @@ export const BookScreen = ({ navigation, route }) => {
   const [modalVisibleCheckUser, setModalVisibleCheckUser] = useState(false)
 
   useEffect(() => {
-    return navigation.addListener("focus", () => {
+    return navigation.addListener("focus", async () => {
+      await getDetails()
       handleHideTabBar(false)
     })
   }, [navigation])
 
-  useEffect(() => {
-    (async () => {
-      const Token = await AsyncStorage.getItem("token")
-      await axios.post(
-        `${API_URL}/charge-box/details?access-token=${Token}`,
-        { id: route?.params?.data[route?.params.itemId].id },
-        {
-          headers: {
-            tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-          }
-        })
-        .then(res => setImageData(res?.data?.images))
-        .catch(e => console.log("e", e.response))
-    })()
-  }, [])
+  const getDetails = async () => {
+    const Token = await AsyncStorage.getItem("token")
+    await axios.post(
+      `${API_URL}/charge-box/details?access-token=${Token}`,
+      { id: route?.params?.data[route?.params.itemId].id },
+      {
+        headers: {
+          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
+        }
+      })
+      .then(res => setImageData(res?.data?.images))
+      .catch(e => console.log("e", e.response))
+  }
 
   const handleModal = () => setImageModal(!imageModal)
 
@@ -171,7 +170,7 @@ export const BookScreen = ({ navigation, route }) => {
           titleFirstButton={lang[countryCode].cancel}
           handleSecondButton={handleUserCheck}
           titleSecondButton={lang[countryCode].logIn}
-          title={lang[countryCode].pleasLoginInProgram}
+          title={lang[countryCode].pleaseLoginInProgram}
         />
       </Modal>
       <HeaderCustom
