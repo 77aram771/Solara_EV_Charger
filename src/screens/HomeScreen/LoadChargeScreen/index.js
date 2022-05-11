@@ -73,13 +73,20 @@ export const LoadChargeScreen = ({ navigation, route }) => {
         }
       })
       .then(res => {
-        setLoader(false)
         setTimeout(() => {
-          navigation.navigate("Book")
-        }, 3000)
+          setLoader(false)
+          if (route?.params?.bool) {
+            navigation.navigate("Home")
+          } else {
+            navigation.navigate("Book")
+          }
+        }, 2000)
         console.log("res handleStop", res.data)
       })
-      .catch(e => console.log("e -----------", e.response.data.message))
+      .catch(e => {
+        setLoader(false)
+        console.log("e -----------", e.response.data.message)
+      })
   }
 
   useEffect(() => {
