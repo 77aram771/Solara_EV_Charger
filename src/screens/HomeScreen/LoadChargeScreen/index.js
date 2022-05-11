@@ -20,7 +20,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
 
   const { handleHideTabBar, countryCode, sumKW } = useContext(Context)
 
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [showButton, setShowButton] = useState(false)
   const [status, setStatus] = useState("")
@@ -28,10 +28,11 @@ export const LoadChargeScreen = ({ navigation, route }) => {
 
   const handleProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
+    const transactionId = await AsyncStorage.getItem("transaction_id")
     await axios.post(
       `${API_URL}/charge-box/get-progress?access-token=${Token}`,
       {
-        transaction_id: route.params.transaction_id
+        transaction_id: Number(transactionId)
       },
       {
         headers: {
@@ -52,16 +53,19 @@ export const LoadChargeScreen = ({ navigation, route }) => {
         console.log("res handleProgress", res.data)
       })
       .catch(e => {
+        setLoader(false)
         console.log("e -----------", e.response.data.message)
       })
   }
 
   const handleStop = async () => {
     const Token = await AsyncStorage.getItem("token")
+    const transactionId = await AsyncStorage.getItem("transaction_id")
+    console.log("transactionId", transactionId)
     await axios.post(
       `${API_URL}/charge-box/stop?access-token=${Token}`,
       {
-        transaction_id: route.params.transaction_id
+        transaction_id: Number(transactionId)
       },
       {
         headers: {
@@ -81,7 +85,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
   useEffect(() => {
     return navigation.addListener("focus", () => {
       handleHideTabBar(false)
-      if(route?.params?.bool) {
+      if (route?.params?.bool) {
         setModalVisible(true)
       }
     })
@@ -120,6 +124,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
           progress={progress}
           handleStop={handleStop}
           sumKW={sumKW}
+          loader={loader}
         />
       </Modal>
       <HeaderCustom

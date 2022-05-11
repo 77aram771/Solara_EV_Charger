@@ -128,10 +128,11 @@ export const HomeScreen = ({ navigation }) => {
 
   const handleCheckChargeProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
+    const transactionId = await AsyncStorage.getItem("transaction_id")
     await axios.post(
       `${API_URL}/charge-box/get-progress?access-token=${Token}`,
       {
-        // transaction_id: route.params.transaction_id
+        transaction_id: Number(transactionId)
       },
       {
         headers: {

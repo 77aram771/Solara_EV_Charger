@@ -119,6 +119,7 @@ export const lang = {
     delete: "Ջնջել",
     stop: "Դադարել",
     amount: "Գումարը",
+    charged: "Լիցքավորված",
   },
   ru: {
     H: "ч",
@@ -234,6 +235,7 @@ export const lang = {
     delete: "Удалить",
     stop: "Остоновить",
     amount: "Сумма",
+    charged: "Заряжено",
   },
   en: {
     H: "h",
@@ -349,5 +351,6 @@ export const lang = {
     delete: "Delete",
     stop: "Stop",
     amount: "Amount",
+    charged: "Charged",
   }
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Image, Platform, ScrollView, View } from "react-native"
+import { ActivityIndicator, Image, Platform, ScrollView, View } from "react-native"
 import CircularProgress from "react-native-circular-progress-indicator"
 import { Fiord, MySin, White } from "../../shared/Colors"
 import { styles } from "./style"
@@ -12,7 +12,7 @@ import Context from "../../../Context"
 import IconCancel from "../../assets/icon/cancel.png"
 import ImgLight from "../../assets/icon/priceunit.png"
 
-export const FullChargeModal = ({ navigation, handleModal, status, progress, handleStop, sumKW }) => {
+export const FullChargeModal = ({ navigation, handleModal, loader, status, progress, handleStop, sumKW }) => {
 
   const { countryCode } = useContext(Context)
 
@@ -56,7 +56,7 @@ export const FullChargeModal = ({ navigation, handleModal, status, progress, han
           </View>
           <View style={styles.infoItem}>
             <TextCustom
-              text={`${lang[countryCode].total}: ${progress} ${lang[countryCode].kw}`}
+              text={`${lang[countryCode].charged}: ${progress} ${lang[countryCode].kw}`}
               color={White}
               fontSize={24}
               fontWeight={"400"}
@@ -66,51 +66,55 @@ export const FullChargeModal = ({ navigation, handleModal, status, progress, han
       </ScrollView>
       <View style={styles.buttonContainer}>
         {
-          status !== "Charging"
-            ? (
-              <ButtonCustom
-                text={lang[countryCode].goToHomeScreen.toUpperCase()}
-                backgroundColor={MySin}
-                color={Fiord}
-                width={"100%"}
-                click={() => {
-                  navigation.navigate("Home")
-                  handleModal()
-                }}
-                fontSize={18}
-                fontWeight={"700"}
-                icon={IconDirection}
-                iconWidth={18}
-                iconHeight={18}
-                paddingTop={Platform.OS === "ios" ? 14 : 8}
-                paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                marginBottom={20}
-                iconPositionLeft={false}
-                borderRadius={10}
-                borderColor={White}
-                borderWidth={1}
-              />
-            )
+          loader
+            ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginBottom: 30 }} />
             : (
-              <ButtonCustom
-                text={lang[countryCode].stop.toUpperCase()}
-                backgroundColor={White}
-                color={Fiord}
-                width={"100%"}
-                click={() => handleStop()}
-                fontSize={18}
-                fontWeight={"700"}
-                icon={IconCancel}
-                iconWidth={18}
-                iconHeight={18}
-                iconPositionLeft={false}
-                borderRadius={10}
-                borderColor={Fiord}
-                marginBottom={20}
-                paddingTop={Platform.OS === "ios" ? 14 : 8}
-                paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                borderWidth={1}
-              />
+              status !== "Charging"
+                ? (
+                  <ButtonCustom
+                    text={lang[countryCode].goToHomeScreen.toUpperCase()}
+                    backgroundColor={MySin}
+                    color={Fiord}
+                    width={"100%"}
+                    click={() => {
+                      navigation.navigate("Home")
+                      handleModal()
+                    }}
+                    fontSize={18}
+                    fontWeight={"700"}
+                    icon={IconDirection}
+                    iconWidth={18}
+                    iconHeight={18}
+                    paddingTop={Platform.OS === "ios" ? 14 : 8}
+                    paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                    marginBottom={20}
+                    iconPositionLeft={false}
+                    borderRadius={10}
+                    borderColor={White}
+                    borderWidth={1}
+                  />
+                )
+                : (
+                  <ButtonCustom
+                    text={lang[countryCode].stop.toUpperCase()}
+                    backgroundColor={White}
+                    color={Fiord}
+                    width={"100%"}
+                    click={() => handleStop()}
+                    fontSize={18}
+                    fontWeight={"700"}
+                    icon={IconCancel}
+                    iconWidth={18}
+                    iconHeight={18}
+                    iconPositionLeft={false}
+                    borderRadius={10}
+                    borderColor={Fiord}
+                    marginBottom={20}
+                    paddingTop={Platform.OS === "ios" ? 14 : 8}
+                    paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                    borderWidth={1}
+                  />
+                )
             )
         }
       </View>

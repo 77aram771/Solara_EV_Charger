@@ -139,17 +139,15 @@ export const BookTypeScreen = ({ navigation, route }) => {
       })
       .then(res => {
         setLoader(false)
-        console.log("res handleChanger", res.data)
-        AsyncStorage.setItem("transaction_id", res?.data?.transaction_id)
+        AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
         navigation.navigate("LoadCharge", {
-          transaction_id: res?.data?.transaction_id,
           chargingLimit: limit,
           chargingWatt: user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power),
           price
         })
       })
       .catch(e => {
-        console.log("e -----------", e.response.data.message)
+        console.log("e ----------- 8989", e.response.data.message)
         setLoader(false)
         setErrorText(e.response.data.message)
         setShowErrorText(true)
