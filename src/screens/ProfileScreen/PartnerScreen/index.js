@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
 import axios from "axios"
+import * as WebBrowser from "expo-web-browser"
 import { styles } from "./style"
 import { Mercurysolid, MineShaft, MySin, White } from "../../../shared/Colors"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
@@ -28,6 +29,10 @@ export const PartnerScreen = ({ navigation }) => {
     })()
   }, [])
 
+  const handlePressButtonAsync = async (uri) => {
+    await WebBrowser.openBrowserAsync(uri)
+  }
+
   return (
     <>
       <HeaderCustom
@@ -42,28 +47,32 @@ export const PartnerScreen = ({ navigation }) => {
       >
         <View style={styles.container}>
           {
-            data.map(item => (
-              <ButtonCustom
-                key={item.id}
-                width={"45%"}
-                height={100}
-                backgroundColor={White}
-                borderColor={Mercurysolid}
-                color={MineShaft}
-                borderWidth={1}
-                borderRadius={18}
-                click={() => alert("asd")}
-                fontSize={18}
-                fontWeight={"400"}
-                icon={item?.image}
-                iconWidth={50}
-                iconHeight={50}
-                iconUri={true}
-                marginBottom={20}
-                justifyContent={"center"}
-                paddingLeft={20}
-              />
-            ))
+            data.map(item => {
+              console.log("item", item)
+              return (
+                <ButtonCustom
+                  key={item.id}
+                  width={"45%"}
+                  height={100}
+                  backgroundColor={White}
+                  borderColor={Mercurysolid}
+                  color={MineShaft}
+                  borderWidth={1}
+                  borderRadius={18}
+                  click={item?.url ? () => handlePressButtonAsync(item.url) : () => {
+                  }}
+                  fontSize={18}
+                  fontWeight={"400"}
+                  icon={item?.image}
+                  iconWidth={50}
+                  iconHeight={50}
+                  iconUri={true}
+                  marginBottom={20}
+                  justifyContent={"center"}
+                  iconMarginRight={0}
+                />
+              )
+            })
           }
         </View>
       </ScrollView>

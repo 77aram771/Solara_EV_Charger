@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react"
 import { Image, Modal, Platform, ScrollView, TouchableOpacity, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
-import { SwiperFlatList } from "react-native-swiper-flatlist"
 import Context from "../../../../Context"
+import { SwiperFlatList } from "react-native-swiper-flatlist"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { Black, Dandelion, Fiord, MineShaft, MySin, White } from "../../../shared/Colors"
 import { styles } from "./style"
@@ -12,12 +12,12 @@ import { API_URL, windowHeight, windowWidth } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
+import { SmallModal } from "../../../container/SmallModal"
 import IconArrow from "../../../assets/icon/arrow3.png"
 import IconDirection2 from "../../../assets/icon/direction2.png"
 import ImgLight from "../../../assets/icon/priceunit.png"
 import ImgClose from "../../../assets/icon/icon-close.png"
 import ImgDefault from "../../../assets/images/img-book-slide1.jpeg"
-import { SmallModal } from "../../../container/SmallModal";
 
 export const BookScreen = ({ navigation, route }) => {
 

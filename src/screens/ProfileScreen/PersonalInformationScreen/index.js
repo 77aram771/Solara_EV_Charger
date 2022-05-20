@@ -7,13 +7,13 @@ import { Fiord, Manatee, MySin, Silver, White } from "../../../shared/Colors"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
-import IconCheck from "../../../assets/icon/check2.png"
-import IconPassword from "../../../assets/icon/password3.png"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { API_URL } from "../../../shared/Const"
 import { regName } from "../../../shared/MockData"
+import IconCheck from "../../../assets/icon/check2.png"
+import IconPassword from "../../../assets/icon/password3.png"
 
 export const PersonalInformationScreen = ({ navigation, route }) => {
 

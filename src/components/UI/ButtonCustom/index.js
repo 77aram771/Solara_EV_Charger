@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, TouchableOpacity, View } from "react-native"
-import { TextCustom } from "../TextCustom"
 import ToggleSwitch from "toggle-switch-react-native"
+import { TextCustom } from "../TextCustom"
 import { Manatee, Mercurysolid, MySin } from "../../../shared/Colors"
 
 export const ButtonCustom = ({
@@ -28,6 +28,7 @@ export const ButtonCustom = ({
   icon,
   iconWidth,
   iconHeight,
+  iconMarginRight = 10,
   justifyContent = "center",
   alignItems = "center",
   iconPositionLeft = false,
@@ -60,20 +61,22 @@ export const ButtonCustom = ({
         alignItems
       }}
     >
-      <View style={{ justifyContent: "flex-start", flexDirection: "row", alignItems: "center" }}>
+      <View style={{
+        justifyContent: "flex-start",
+        flexDirection: "row",
+        alignItems: "center"
+      }}>
         {
           icon
             ? (
               iconUri
                 ? (
                   <Image
-                    source={{
-                      uri: icon
-                    }}
+                    source={{ uri: icon }}
                     style={{
                       width: iconWidth,
                       height: iconHeight,
-                      marginRight: 10
+                      marginRight: iconMarginRight
                     }}
                     resizeMode={"contain"}
                   />
@@ -84,7 +87,7 @@ export const ButtonCustom = ({
                     style={{
                       width: iconWidth,
                       height: iconHeight,
-                      marginRight: 10
+                      marginRight: iconMarginRight
                     }}
                     resizeMode={"contain"}
                   />
@@ -93,13 +96,19 @@ export const ButtonCustom = ({
             )
             : null
         }
-        <TextCustom
-          text={text}
-          color={color}
-          fontSize={fontSize}
-          fontFamily={fontFamily}
-          fontWeight={fontWeight}
-        />
+        {
+          text
+            ? (
+              <TextCustom
+                text={text}
+                color={color}
+                fontSize={fontSize}
+                fontFamily={fontFamily}
+                fontWeight={fontWeight}
+              />
+            )
+            : null
+        }
       </View>
       {
         switchButton

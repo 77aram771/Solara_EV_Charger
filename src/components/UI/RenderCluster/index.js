@@ -5,9 +5,7 @@ import { Fiord, White } from "../../../shared/Colors"
 import { windowWidth } from "../../../shared/Const"
 import { TextCustom } from "../TextCustom"
 
-export const RenderCluster = (cluster,props) => {
-  // console.log("cluster", cluster.markers);
-  // console.log("props", props);
+export const RenderCluster = (cluster) => {
   const { id, geometry, onPress, properties } = cluster
   const points = properties.point_count
 

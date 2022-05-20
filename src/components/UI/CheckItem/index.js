@@ -4,7 +4,7 @@ import {TextCustom} from "../TextCustom"
 import {MineShaft} from "../../../shared/Colors"
 import {styles} from "./style"
 import IconCheck from '../../../assets/icon/check1.png'
-import IconCheckActive from '../../../assets/icon/check2.png'
+import IconCheckActive from '../../../assets/icon/icon-check.png'
 
 export const CheckItem = ({text, bool = true, handle}) => {
     return (

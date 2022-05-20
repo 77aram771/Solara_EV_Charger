@@ -3,9 +3,6 @@ import { View, Image, KeyboardAvoidingView, Platform, ScrollView, Text, Activity
 import { useDispatch, useSelector } from "react-redux"
 import Checkbox from "expo-checkbox"
 import { styles } from "./style"
-import IconSolara from "../../../assets/icon/icon-solara.png"
-import IconLogin from "../../../assets/icon/login.png"
-import IconArrowDown from "../../../assets/icon/dropdown.png"
 import { Fiord, Manatee, MySin, SunsetOrange, White } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
@@ -19,6 +16,10 @@ import { SelectCustom } from "../../../components/UI/SelectCustom"
 import { GetCarModal } from "../../../store/actionsCreators/CarModalApiActionCreator"
 import { PostSignUp } from "../../../store/actionsCreators/SignUpApiActionCreator"
 import { TextCustom } from "../../../components/UI/TextCustom"
+import IconSolara from "../../../assets/icon/icon-solara.png"
+import IconLogin from "../../../assets/icon/login.png"
+import IconArrowDown from "../../../assets/icon/dropdown.png"
+import { HeaderCustom } from "../../../components/UI/HeaderCustom";
 
 export const SignUpScreen = ({ navigation }) => {
 
@@ -260,12 +261,18 @@ export const SignUpScreen = ({ navigation }) => {
   return (
     <DismissKeyboard>
       <KeyboardAvoidingView
-        // behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
-        // keyboardVerticalOffset={Platform.OS === 'android' ? windowHeight / 3 : 25}
         style={{ flex: 1 }}
         contentContainerStyle={{ flex: 1 }}
       >
         <View style={styles.container}>
+          <HeaderCustom
+            text={''}
+            backgroundColor={MySin}
+            handleBack={() => navigation.goBack()}
+            backArrowHide={false}
+            borderBottomEndRadius={0}
+            borderBottomStartRadius={0}
+          />
           <View style={styles.headerBox}>
             <Image
               source={IconSolara}

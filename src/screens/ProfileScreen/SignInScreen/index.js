@@ -11,10 +11,6 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useDispatch, useSelector } from "react-redux"
 import { styles } from "./style"
-import IconSolara from "../../../assets/icon/icon-solara.png"
-import IconEmail from "../../../assets/icon/email1.png"
-import IconPassword from "../../../assets/icon/password1.png"
-import IconLogin from "../../../assets/icon/login.png"
 import { Fiord, Manatee, MineShaft, MySin, SunsetOrange, White } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
@@ -23,8 +19,15 @@ import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { TextCustom } from "../../../components/UI/TextCustom"
-import { regEmail, regPassword } from "../../../shared/MockData"
 import { AuthSignIn } from "../../../store/actionsCreators/AuthApiActionCreator"
+import { HeaderCustom } from "../../../components/UI/HeaderCustom"
+import { regEmail } from "../../../shared/MockData"
+import IconSolara from "../../../assets/icon/icon-solara.png"
+import IconEmail from "../../../assets/icon/email1.png"
+import IconPassword from "../../../assets/icon/password1.png"
+import IconLogin from "../../../assets/icon/login.png"
+import IconEyeClose from "../../../assets/icon/icon-dont-eye.png"
+import IconEye from "../../../assets/icon/icon-eye.png"
 
 export const SignInScreen = ({ navigation, route }) => {
 
@@ -41,6 +44,7 @@ export const SignInScreen = ({ navigation, route }) => {
   const [emailErrorMessage] = useState(lang[countryCode].wrongЕmail)
   const [password, setPassword] = useState("")
   const [passwordError, setPasswordError] = useState(false)
+  const [showPassword, setShowPassword] = useState(true)
   const [passwordErrorMessage] = useState("please enter password")
 
   useEffect(() => {
@@ -60,32 +64,18 @@ export const SignInScreen = ({ navigation, route }) => {
 
   const handleEmail = (value) => {
     setEmail(value)
-    if (value.length > 0) {
-      if (regEmail.test(value)) {
-        setEmailError(false)
-      } else {
-        setEmailError(true)
-      }
-    } else {
-      setEmailError(false)
-    }
+    setEmailError(false)
   }
 
   const handlePassword = (value) => {
     setPassword(value)
-    if (value.length >= 6) {
-      if (value) {
-        setPasswordError(false)
-      } else {
-        setPasswordError(true)
-      }
-    } else {
-      setPasswordError(false)
-    }
+    setPasswordError(false)
   }
 
+  const handleShowPassword = () => setShowPassword(!showPassword)
+
   const handleEnter = async () => {
-    if (email.length > 0) {
+    if (email.length > 0 && regEmail.test(email)) {
       setEmailError(false)
       if (password.length >= 6) {
         await route.params.handleLogIn(email, password)
@@ -100,13 +90,18 @@ export const SignInScreen = ({ navigation, route }) => {
 
   return (
     <DismissKeyboard>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ flex: 1 }}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
           <View style={styles.container}>
-            <View>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <HeaderCustom
+                text={""}
+                backgroundColor={MySin}
+                handleBack={() => navigation.goBack()}
+                backArrowHide={false}
+                borderBottomEndRadius={0}
+                borderBottomStartRadius={0}
+              />
               <View style={styles.headerBox}>
                 <Image
                   source={IconSolara}
@@ -138,10 +133,11 @@ export const SignInScreen = ({ navigation, route }) => {
                   value={password}
                   handle={value => handlePassword(value)}
                   placeholderTextColor={Manatee}
-                  icon={IconPassword}
+                  icon={password.length > 1 ? showPassword ? IconEyeClose : IconEye : IconPassword}
                   iconWidth={25}
                   iconHeight={25}
-                  secureTextEntry={true}
+                  iconClick={password.length > 1 ? () => handleShowPassword() : null}
+                  secureTextEntry={showPassword}
                   error={passwordError}
                   errorText={passwordErrorMessage}
                   disable={true}

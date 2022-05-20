@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, TextInput, View } from "react-native"
+import { Image, TextInput, TouchableOpacity, View } from "react-native"
 import { styles } from "./style"
 import { TextCustom } from "../TextCustom"
 import { BrightGray, SunsetOrange } from "../../../shared/Colors"
@@ -18,6 +18,7 @@ export const InputCustom = ({
   icon,
   iconWidth,
   iconHeight,
+  iconClick = null,
   secureTextEntry = false,
   maxLength,
   disable = true,
@@ -25,35 +26,58 @@ export const InputCustom = ({
 }) => {
   return (
     <View style={styles.container}>
-      <TextInput
-        style={[styles.input, {
-          borderColor: error ? SunsetOrange : BrightGray,
-          position: "relative",
-          paddingRight: icon ? 50 : 20,
-          backgroundColor
-        }]}
-        value={value}
-        onChangeText={value => handle(value)}
-        placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor}
-        keyboardType={keyboardType}
-        multiline={multiline}
-        numberOfLines={numberOfLines}
-        textAlignVertical={textAlignVertical}
-        secureTextEntry={secureTextEntry}
-        maxLength={maxLength}
-        editable={disable}
-      />
-      {
-        icon
-          ? (
-            <Image
-              source={icon}
-              style={[styles.icon, { width: iconWidth, height: iconHeight }]}
-            />
-          )
-          : null
-      }
+      <View style={{ width: "100%", position: "relative", justifyContent: "center", alignItems: "center" }}>
+        <TextInput
+          style={[styles.input, {
+            borderColor: error ? SunsetOrange : BrightGray,
+            backgroundColor,
+            height: numberOfLines && 100
+          }]}
+          value={value}
+          onChangeText={value => handle(value)}
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor}
+          keyboardType={keyboardType}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          textAlignVertical={textAlignVertical}
+          secureTextEntry={secureTextEntry}
+          maxLength={maxLength}
+          editable={disable}
+        />
+        {
+          iconClick !== null
+            ? (
+              <TouchableOpacity
+                onPress={iconClick}
+                style={[styles.iconBox, {
+                  width: iconWidth,
+                  height: iconHeight
+                }]}
+              >
+                <Image
+                  source={icon}
+                  style={{ width: iconWidth, height: iconHeight }}
+                />
+              </TouchableOpacity>
+            )
+            : icon
+              ? (
+                <View
+                  style={[styles.iconBox, {
+                    width: iconWidth,
+                    height: iconHeight
+                  }]}
+                >
+                  <Image
+                    source={icon}
+                    style={{ width: iconWidth, height: iconHeight }}
+                  />
+                </View>
+              )
+              : null
+        }
+      </View>
       {
         error
           ? (

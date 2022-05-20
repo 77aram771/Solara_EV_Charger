@@ -81,7 +81,7 @@ export const ProfileScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {justifyContent: login ? 'space-between' : 'flex-start'}]}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -92,9 +92,7 @@ export const ProfileScreen = ({ navigation }) => {
       </Modal>
       {
         userLoader
-          ? (
-            <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-          )
+          ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
           : (
             <>
               {
@@ -272,8 +270,16 @@ export const ProfileScreen = ({ navigation }) => {
                   : (
                     <>
                       <View style={styles.headerBox}>
-                        <Image source={IconSolara}
-                               style={{ width: 100, height: 100, position: "absolute", bottom: -45 }} />
+                        <Image
+                          source={IconSolara}
+                          style={{
+                            width: 150,
+                            height: 150,
+                            position: "absolute",
+                            bottom: -65
+                          }}
+                          resizeMode={"cover"}
+                        />
                       </View>
                       <View style={styles.mineBox}>
                         <ButtonCustom
@@ -319,9 +325,7 @@ export const ProfileScreen = ({ navigation }) => {
                           paddingLeft={20}
                         />
                       </View>
-                      <View style={styles.footerBox}>
-
-                      </View>
+                      <View style={styles.footerBox} />
                     </>
                   )
               }

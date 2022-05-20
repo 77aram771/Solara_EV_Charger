@@ -3,6 +3,8 @@ import { Image, Platform, TouchableOpacity, View } from "react-native"
 import { Geojson, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import MapView from "react-native-map-clustering"
 import { Popup } from "react-native-map-link"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
 import { styles } from "./style"
 import { API_URL, Google_Key, windowHeight, windowWidth } from "../../shared/Const"
 import { MapStyle } from "../../shared/MapStyle"
@@ -28,8 +30,6 @@ import IconBook from "../../assets/icon/reserve.png"
 import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -295,7 +295,6 @@ export const HomeScreen = ({ navigation }) => {
           !start
             ? (
               data && data.map((item, index) => {
-                // console.log("item", item)
                 return (
                   <Marker
                     onPress={(e) => handleItemId(e, index)}

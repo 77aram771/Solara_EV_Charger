@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { BrightGray, Fiord, MySin, White } from "../../../shared/Colors"
+import { BrightGray, Mercurysolid, MySin, White } from "../../../shared/Colors"
 import { windowWidth } from "../../../shared/Const"
 import { paddingHorizontal } from "../../../shared/GlobalStyle"
 
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: Fiord,
+    borderColor: Mercurysolid,
     backgroundColor: White,
     zIndex: 1
   },

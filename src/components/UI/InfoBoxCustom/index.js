@@ -2,14 +2,15 @@ import React, { useContext } from "react"
 import { Image, TouchableOpacity, View } from "react-native"
 import call from 'react-native-phone-call'
 import { styles } from "./style"
-import IconFreeNot from "../../../assets/icon/free-not.png"
 import { TextCustom } from "../TextCustom"
 import { lang } from "../../../shared/Lang"
 import { Fiord, SunsetOrange } from "../../../shared/Colors"
-import IconFree from "../../../assets/icon/free.png"
-import IconPhone from "../../../assets/icon/phone1.png"
-import IconMapMarker from "../../../assets/icon/mapmarket.png"
 import Context from "../../../../Context"
+// import IconFree from "../../../assets/icon/free.png"
+import IconPhone from "../../../assets/icon/phone1.png"
+import IconCheckActive from '../../../assets/icon/icon-check.png'
+import IconMapMarker from "../../../assets/icon/mapmarket.png"
+import IconFreeNot from "../../../assets/icon/free-not.png"
 
 export const InfoBoxCustom = ({ itemId, isBook, data }) => {
 
@@ -44,7 +45,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
               : (
                 <>
                   <Image
-                    source={IconFree}
+                    source={IconCheckActive}
                     style={{ width: 20, height: 20, marginRight: 7 }}
                   />
                   <TextCustom

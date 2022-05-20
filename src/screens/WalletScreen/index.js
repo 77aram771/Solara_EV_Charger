@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Platform, Modal, TouchableOpacity, Image, ScrollView, RefreshControl } from "react-native"
+import { View, Platform, Modal, TouchableOpacity, Image, RefreshControl, FlatList } from "react-native"
 import axios from "axios"
 import Constants from "expo-constants"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -195,43 +195,45 @@ export const WalletScreen = ({ navigation }) => {
         text={lang[countryCode].cards}
         backgroundColor={MySin}
         handleBack={() => navigation.goBack()}
-        backArrowHide={true}
+        backArrowHide={false}
       />
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          width: windowWidth,
-          marginTop: 35,
-          justifyContent: "flex-start",
-          alignItems: "center"
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={loader}
-            onRefresh={getCardData}
-            tintColor={MySin}
-          />
-        }
-      >
-        {
-          cardsData && cardsData.length > 0
-            ? (
-              cardsData.map(item => {
-                  return (
-                    <RenderCard
-                      name={item.name}
-                      title={item.title}
-                      expire={item.expire}
-                      key={item.id}
-                      handleDelete={() => handleId(item.id)}
-                    />
-                  )
-                }
-              )
-            )
-            : <TextCustom text={lang[countryCode].noCardsAddedYet} color={MineShaft} fontSize={16} fontWeight={"700"} />
-        }
-      </ScrollView>
+      {
+        cardsData && cardsData.length > 0
+          ? (
+            <FlatList
+              keyExtractor={item => item.id}
+              data={cardsData}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl
+                  refreshing={loader}
+                  onRefresh={getCardData}
+                  tintColor={MySin}
+                />
+              }
+              renderItem={({ item }) => {
+                return (
+                  <RenderCard
+                    name={item.name}
+                    title={item.title}
+                    expire={item.expire}
+                    key={item.id}
+                    handleDelete={() => handleId(item.id)}
+                  />
+                )
+              }}
+              style={{ flex: 1 }}
+              contentContainerStyle={{
+                width: windowWidth,
+                marginTop: 35,
+                justifyContent: "flex-start",
+                alignItems: "center"
+              }}
+            />
+          )
+          : <TextCustom text={lang[countryCode].noCardsAddedYet} color={MineShaft} fontSize={16} fontWeight={"700"} />
+      }
       <ButtonCustom
         text={lang[countryCode].addNewCard}
         backgroundColor={White}

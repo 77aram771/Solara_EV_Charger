@@ -12,40 +12,94 @@ import IconDirection1 from "../../../assets/icon/direction1.png"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { API_URL } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
+import { regEmail, regName, regPhone } from "../../../shared/MockData"
 
 export const AskQuestionScreen = ({ navigation, route }) => {
 
   const { countryCode } = useContext(Context)
 
   const [name, setName] = useState(route?.params?.userData?.full_name)
+  const [nameError, setNameError] = useState(false)
+  const [nameErrorMessage] = useState(lang[countryCode].error)
   const [phone, setPhone] = useState(route?.params?.userData?.phone_number)
+  const [phoneError, setPhoneError] = useState(false)
+  const [phoneErrorMessage] = useState(lang[countryCode].wrongPhone)
   const [email, setEmail] = useState(route?.params?.userData?.email)
+  const [emailError, setEmailError] = useState(false)
+  const [emailErrorMessage] = useState(lang[countryCode].wrongЕmail)
   const [mail, setMail] = useState("")
+  const [mailError, setMailError] = useState(false)
+  const [mailErrorMessage] = useState(lang[countryCode].wrongЕmail)
   const [loader, setLoader] = useState(false)
   const [message, setMessage] = useState("")
 
+  const handleName = (value) => {
+    setName(value)
+    setNameError(false)
+  }
+
+  const handlePhone = (value) => {
+    setPhone(value)
+    setPhoneError(false)
+  }
+
+  const handleEmail = (value) => {
+    setEmail(value)
+    setEmailError(false)
+  }
+
+  const handleMail = (value) => {
+    setMail(value)
+    setMailError(false)
+  }
+
   const handleSend = async () => {
-    setLoader(true)
-    setMessage("")
-    await axios.post(
-      `${API_URL}/data/ask-question`,
-      {
-        full_name: name,
-        phone,
-        email,
-        message: mail
-      },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
+    if (name.length > 0 && regName.test(name)) {
+      setNameError(false)
+      if (phone.length > 0 && regPhone.test(phone)) {
+        setPhoneError(false)
+        if (email.length > 0 && regEmail.test(email)) {
+          setEmailError(false)
+          if (mail.length > 0) {
+            setMailError(false)
+            setLoader(true)
+            setMessage("")
+            setMail("")
+            await axios.post(
+              `${API_URL}/data/ask-question`,
+              {
+                full_name: name,
+                phone,
+                email,
+                message: mail
+              },
+              {
+                headers: {
+                  tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
+                }
+              })
+              .then(res => {
+                setLoader(false)
+                if (res.status) {
+                  setMessage("Thanks for Question")
+                }
+              })
+              .catch(e => {
+                console.log("e", e)
+                setLoader(false)
+              })
+          } else {
+            setMailError(true)
+          }
+        } else {
+          setEmailError(true)
         }
-      })
-      .then(res => {
-        setLoader(false)
-        if (res.status) {
-          setMessage("Thanks for Question")
-        }
-      })
+      } else {
+        setPhoneError(true)
+      }
+    } else {
+      setNameError(true)
+    }
   }
 
   return (
@@ -65,32 +119,39 @@ export const AskQuestionScreen = ({ navigation, route }) => {
             <InputCustom
               placeholder={`${lang[countryCode].name} ${lang[countryCode].surname}`}
               value={name}
-              handle={value => setName(value)}
+              handle={value => handleName(value)}
               placeholderTextColor={Manatee}
+              error={nameError}
+              errorText={nameErrorMessage}
             />
             <InputCustom
               placeholder={lang[countryCode].phone}
               value={phone}
-              handle={value => setPhone(value)}
+              handle={value => handlePhone(value)}
               placeholderTextColor={Manatee}
               keyboardType={"phone-pad"}
+              error={phoneError}
+              errorText={phoneErrorMessage}
             />
             <InputCustom
               placeholder={lang[countryCode].email}
               value={email}
-              handle={value => setEmail(value)}
+              handle={value => handleEmail(value)}
               placeholderTextColor={Manatee}
               keyboardType={"email-address"}
+              error={emailError}
+              errorText={emailErrorMessage}
             />
             <InputCustom
               placeholder={lang[countryCode].mail}
               value={mail}
-              handle={value => setMail(value)}
+              handle={value => handleMail(value)}
               placeholderTextColor={Manatee}
               multiline={true}
-              numberOfLines={10}
+              numberOfLines={30}
               textAlignVertical={"top"}
-
+              error={mailError}
+              errorText={mailErrorMessage}
             />
             {
               loader

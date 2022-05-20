@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: White,
         alignItems: 'center',
-        justifyContent: 'space-between',
         paddingHorizontal
     },
     headerBox: {
@@ -21,13 +20,14 @@ export const styles = StyleSheet.create({
         borderBottomEndRadius: 15,
         borderBottomStartRadius: 15,
         position: 'relative',
+        marginBottom: windowHeight / 7
     },
     mineBox: {
         width: windowWidth,
         alignSelf: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        paddingHorizontal,
+        paddingHorizontal
     },
     titleBox: {
         width: windowWidth,
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     },
     headerBoxUser: {
         width: windowWidth,
-        height: Constants.statusBarHeight + windowHeight / 2.5,
+        height: Constants.statusBarHeight + windowHeight / 2.7,
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingBottom: windowHeight / 30

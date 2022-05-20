@@ -1,13 +1,13 @@
 import React from "react"
 import { Image, TouchableOpacity, View } from "react-native"
 import { windowWidth } from "../../../shared/Const"
-import { Grayapprox, MineShaft, White } from "../../../shared/Colors"
+import { Mercurysolid, MineShaft, White } from "../../../shared/Colors"
+import { TextCustom } from "../TextCustom"
 import IconAmericanExpress from "../../../assets/icon/card/american-express.png"
 import IconVisa from "../../../assets/icon/card/visa.png"
 import IconMastercard from "../../../assets/icon/card/mastercard.png"
 import IconDiscover from "../../../assets/icon/card/discover.png"
 import IconDelete from "../../../assets/icon/delete.png"
-import { TextCustom } from "../TextCustom"
 
 export const RenderCard = ({ expire, name, title, handleDelete }) => {
 
@@ -23,11 +23,8 @@ export const RenderCard = ({ expire, name, title, handleDelete }) => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        shadowOffset: { width: 0, height: 0 },
-        shadowColor: Grayapprox,
-        shadowOpacity: .2,
-        shadowRadius: 10,
-        elevation: 3,
+        borderWidth: 1,
+        borderColor: Mercurysolid,
         marginBottom: 50
       }}
     >

@@ -1,10 +1,10 @@
 import React from "react"
 import { Image, TouchableOpacity, View } from "react-native"
 import Constants from "expo-constants"
-import IconArrowBack from "../../../assets/icon/arrow2.png"
 import { TextCustom } from "../TextCustom"
 import { White } from "../../../shared/Colors"
 import { styles } from "./style"
+import IconArrowBack from "../../../assets/icon/arrow2.png"
 
 export const HeaderCustom = ({
   text,
@@ -22,7 +22,7 @@ export const HeaderCustom = ({
         height: !androidModalHeader ? Constants.statusBarHeight + 70 : 70,
         paddingTop: !androidModalHeader ? Constants.statusBarHeight : 0,
         borderBottomEndRadius,
-        borderBottomStartRadius
+        borderBottomStartRadius,
       }]}
     >
       {
@@ -33,7 +33,7 @@ export const HeaderCustom = ({
                 width: 50,
                 height: 50,
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             />
           )
@@ -43,7 +43,7 @@ export const HeaderCustom = ({
                 width: 50,
                 height: 50,
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
               onPress={() => handleBack()}
             >
@@ -51,10 +51,10 @@ export const HeaderCustom = ({
             </TouchableOpacity>
           )
       }
-      <View style={{width: '80%'}}>
+      <View style={{ width: "70%"}}>
         <TextCustom text={text} color={White} fontSize={16} textAlign={"center"} />
       </View>
-      <View style={{ width: 50, height: 50 }} />
+      <View style={{ width: 50, height: 50}} />
     </View>
   )
 }
