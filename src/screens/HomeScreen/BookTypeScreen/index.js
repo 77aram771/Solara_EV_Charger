@@ -71,7 +71,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setCheckMin(num)
     setLimit(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1)
     setKm(Math.ceil(user?.car_power_reserve / 100 * (checkMax - num)), 1)
-    setPrice(Math.floor(limit * sumKW))
+    setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
       let myNumber = limit / user?.car_max_kw
       let H = parseInt(myNumber);
@@ -98,7 +98,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setCheckMax(num)
     setLimit(Math.ceil(user?.car_capacity / 100 * (num - checkMin)), 1)
     setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)), 1)
-    setPrice(Math.floor(limit * sumKW))
+    setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
       let myNumber = limit / user?.car_max_kw
       let H = parseInt(myNumber);

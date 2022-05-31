@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
   },
   sliderBox: {
     width: windowWidth,
-    // minHeight: windowHeight / 5,
     paddingBottom: 30,
     justifyContent: "flex-start",
     alignItems: "center",

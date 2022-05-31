@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react"
-import { FlatList, Image, TouchableHighlight, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, RefreshControl, TouchableHighlight, TouchableOpacity, View } from "react-native"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import moment from "moment"
@@ -22,6 +22,7 @@ export const HistoryScreen = ({ navigation }) => {
 
   const { countryCode } = useContext(Context)
 
+  const [loader, setLoader] = useState(false)
   const [check, setCheck] = useState(false)
   const [data, setData] = useState([])
   const [charging, setCharging] = useState([])
@@ -36,6 +37,7 @@ export const HistoryScreen = ({ navigation }) => {
   }, [navigation])
 
   const handleGetPaymentsData = async () => {
+    setLoader(true)
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
       await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}`,
@@ -45,10 +47,14 @@ export const HistoryScreen = ({ navigation }) => {
           }
         })
         .then(res => {
+          setLoader(false)
           setData(res?.data?.data)
           setTotalPrice(res?.data?.total)
         })
-        .catch(e => console.log("e", e.response))
+        .catch(e => {
+          setLoader(false)
+          console.log("e", e.response)
+        })
     }
   }
 
@@ -65,7 +71,10 @@ export const HistoryScreen = ({ navigation }) => {
           setCharging(res?.data?.data)
           setTotalCharge(res?.data?.total)
         })
-        .catch(e => console.log("e", e))
+        .catch(e => {
+          setLoader(false)
+          console.log("e", e)
+        })
     }
   }
 
@@ -229,6 +238,13 @@ export const HistoryScreen = ({ navigation }) => {
                   )
                 }}
                 style={{ width: "100%" }}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={loader}
+                    onRefresh={handleGetPaymentsData}
+                    tintColor={MySin}
+                  />
+                }
               />
             )
             : (
@@ -345,6 +361,13 @@ export const HistoryScreen = ({ navigation }) => {
                   )
                 }}
                 style={{ width: "100%" }}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={loader}
+                    onRefresh={handleGetChargingData}
+                    tintColor={MySin}
+                  />
+                }
               />
             )
         }

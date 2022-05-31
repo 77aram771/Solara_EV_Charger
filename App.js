@@ -35,12 +35,12 @@ export default function App() {
 
   const [check, setCheck] = useState(false)
   const [location, setLocation] = useState(null)
-  const [errorMsg, setErrorMsg] = useState(null)
+  const [setErrorMsg] = useState(null)
   const [userAddress, setUserAddress] = useState("")
   const [showTabBar, setShowTabBar] = useState(false)
   const [load, setLoad] = useState(true)
   const [countryCode, setCountryCode] = useState("en")
-  const [sumKW, setSumKW] = useState('')
+  const [sumKW, setSumKW] = useState("")
 
   const handleCheck = () => setCheck(true)
 
@@ -52,24 +52,7 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS === "android" && !Constants.isDevice) {
-        setErrorMsg("Oops, this will not work on Snack in an Android emulator. Try it on your device!")
-        return
-      }
-      let { status } = await Location.requestForegroundPermissionsAsync()
-      Location.installWebGeolocationPolyfill()
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied")
-        return
-      }
-      let location = await Location.getCurrentPositionAsync({})
-      setLocation(location)
-      Geocoder.from(location.coords.latitude, location.coords.longitude)
-        .then((json) => {
-          let addressComponent = `${json.results[0].address_components[1].long_name} ${json.results[0].address_components[0].long_name}`
-          setUserAddress(addressComponent)
-        })
-        .catch(error => console.warn(error))
+      await handleLocationUser()
     })()
   }, [])
 
@@ -93,6 +76,27 @@ export default function App() {
     })()
   }, [])
 
+  const handleLocationUser = async () => {
+    if (Platform.OS === "android" && !Constants.isDevice) {
+      setErrorMsg("Oops, this will not work on Snack in an Android emulator. Try it on your device!")
+      return
+    }
+    let { status } = await Location.requestForegroundPermissionsAsync()
+    Location.installWebGeolocationPolyfill()
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied")
+      return
+    }
+    let location = await Location.getCurrentPositionAsync({})
+    setLocation(location)
+    Geocoder.from(location.coords.latitude, location.coords.longitude)
+      .then((json) => {
+        let addressComponent = `${json.results[0].address_components[1].long_name} ${json.results[0].address_components[0].long_name}`
+        setUserAddress(addressComponent)
+      })
+      .catch(error => console.warn(error))
+  }
+
   if (!fontsLoaded) {
     return <AppLoading />
   } else {
@@ -112,7 +116,8 @@ export default function App() {
             sumKW: sumKW,
             handleCheck: () => handleCheck(),
             handleHideTabBar: (bool) => handleHideTabBar(bool),
-            handleCountryCode: (code) => handleCountryCode(code)
+            handleCountryCode: (code) => handleCountryCode(code),
+            handleLocationUser: (code) => handleLocationUser(code)
           }}
         >
           <Provider store={store}>

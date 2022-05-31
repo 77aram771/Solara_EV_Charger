@@ -122,7 +122,8 @@ export const lang = {
     charged: "Լիցքավորված",
     stationName: "Կայանի անվանումը",
     dateAndTime: 'Ամսաթիվ և ժամ',
-    payment: 'Վճարում'
+    payment: 'Վճարում',
+    costs: 'արժե'
   },
   ru: {
     H: "ч",
@@ -241,7 +242,8 @@ export const lang = {
     charged: "Заряжено",
     stationName: "Название станции",
     dateAndTime: 'Дата и время',
-    payment: 'Оплата'
+    payment: 'Оплата',
+    costs: 'стоит'
   },
   en: {
     H: "h",
@@ -360,6 +362,7 @@ export const lang = {
     charged: "Charged",
     stationName: "Station name",
     dateAndTime: 'Date and time',
-    payment: 'Payment'
+    payment: 'Payment',
+    costs: 'costs'
   }
 }

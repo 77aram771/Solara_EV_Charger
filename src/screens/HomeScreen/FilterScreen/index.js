@@ -38,7 +38,7 @@ export const FilterScreen = ({ navigation }) => {
   const [checkMin, setCheckMin] = useState("")
   const [checkMax, setCheckMax] = useState("")
   const [loader, setLoader] = useState(false)
-
+  const [customUrl, setCustomUrl] = useState([])
 
   useEffect(() => {
     (async () => {
@@ -52,11 +52,6 @@ export const FilterScreen = ({ navigation }) => {
           setLoader(false)
           setFilterData(res.data.data)
         })
-    })()
-  }, [])
-
-  useEffect(() => {
-    (async () => {
       await axios.get(`${API_URL}/data/get-min-max-kw`, {
         headers: {
           tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
@@ -71,33 +66,50 @@ export const FilterScreen = ({ navigation }) => {
     })()
   }, [])
 
+  // useEffect(() => {
+  //   console.log("filterData", filterData)
+  // }, [filterData])
+
+
   const handleSwitch = (id) => {
-    setFilterData(filterData.map(item => {
+    setFilterData(filterData.map((item, index) => {
+      setCustomUrl(customUrl.concat(`connector_types[${index}]=${id}`))
+
+      const newAAA = customUrl.filter(item => item !== `connector_types[${index}]=${id}`)
+      console.log(`newAAA`, newAAA)
       if (item.id === id) {
         item.active = !item.active
-        setFilterItems(
-          filterItems.concat([item])
-        )
+        setFilterItems(filterItems.concat([item]))
+
         if (!item.active) {
           setFilterItems(filterItems.filter(item => item.id === id))
         }
       }
       return item
     }))
-    // setFilterItems(filterItems.filter(item => item.id !== id))
     setAllSwitch(false)
   }
 
   const handleAllSwitch = () => {
     setAllSwitch(!allSwitch)
-    if (setAllSwitch) {
+    if (!allSwitch) {
       setFilterData(filterData.map(item => {
         item.active = !allSwitch
         return item
       }))
-      setFilterItems(
-        filterItems.concat(filterData)
-      )
+      setFilterItems(filterItems.concat(filterData))
+      const newUrl = []
+      filterData.map((item, index) => {
+        newUrl.push(`connector_types[${index}]=${item.id}`)
+      })
+      setCustomUrl(newUrl)
+    } else {
+      setFilterData(filterData.map(item => {
+        item.active = !allSwitch
+        return item
+      }))
+      setFilterItems(filterItems.concat(filterData))
+      setCustomUrl([])
     }
   }
 
@@ -116,10 +128,12 @@ export const FilterScreen = ({ navigation }) => {
 
   const handleSave = () => {
     if (checkData[0].active) {
-      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&connector_types[0]=1&only_free=${1}&min=${checkMin}&max=${checkMax}&=${countryCode}`))
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}&only_free=${1}&min=${checkMin}&max=${checkMax}&=${countryCode}`))
     } else {
-      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&min=${checkMin}&max=${checkMax}&connector_types[0]=1&language=${countryCode}`))
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode}`))
     }
+    navigation.closeDrawer()
+    console.log("customUrl", `${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}min=${checkMin}&max=${checkMax}&language=${countryCode}`)
   }
 
   return (
@@ -196,10 +210,7 @@ export const FilterScreen = ({ navigation }) => {
           color={MySin}
           width={"100%"}
           height={50}
-          click={() => {
-            handleSave()
-            navigation.closeDrawer()
-          }}
+          click={() => handleSave()}
           fontSize={22}
           fontWeight={"700"}
           icon={IconFilter}

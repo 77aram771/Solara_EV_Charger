@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Image, TouchableOpacity, View } from "react-native"
-import call from 'react-native-phone-call'
+import call from "react-native-phone-call"
 import { styles } from "./style"
 import { TextCustom } from "../TextCustom"
 import { lang } from "../../../shared/Lang"
@@ -8,7 +8,7 @@ import { Fiord, SunsetOrange } from "../../../shared/Colors"
 import Context from "../../../../Context"
 // import IconFree from "../../../assets/icon/free.png"
 import IconPhone from "../../../assets/icon/phone1.png"
-import IconCheckActive from '../../../assets/icon/icon-check.png'
+import IconCheckActive from "../../../assets/icon/icon-check.png"
 import IconMapMarker from "../../../assets/icon/mapmarket.png"
 import IconFreeNot from "../../../assets/icon/free-not.png"
 
@@ -79,6 +79,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
             fontWeight={"400"}
             fontSize={16}
             marginBottom={10}
+            wrap={true}
           />
         </View>
         {
