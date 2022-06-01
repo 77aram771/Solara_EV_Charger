@@ -43,13 +43,10 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
       setNameError(false)
       if (Token !== null) {
         setLoader(true)
-        await axios.post(`${API_URL}/users/update-profile?access-token=${Token}`, {
-          full_name: name
-        }, {
-          headers: {
-            tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-          }
-        })
+        await axios.post(`${API_URL}/users/update-profile?access-token=${Token}`,
+          { full_name: name },
+          { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        )
           .then(res => {
             setLoader(false)
             if (res.status === 200) {

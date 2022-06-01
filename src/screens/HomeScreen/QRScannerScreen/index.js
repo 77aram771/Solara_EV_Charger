@@ -44,18 +44,13 @@ export const QRScannerScreen = ({ navigation, route }) => {
   }
 
   const handleGetDataQr = async (title) => {
-    console.log('title', title)
+    console.log("title", title)
     const Token = await AsyncStorage.getItem("token")
     await axios.post(
       `${API_URL}/charge-box/details-by-title?access-token=${Token}`,
-      {
-        title: title
-      },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { title: title },
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => {
         if (res.status === 200) {
           navigation.goBack()
@@ -87,7 +82,7 @@ export const QRScannerScreen = ({ navigation, route }) => {
     )
   }
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1 }}>
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
         type={type}
@@ -95,7 +90,7 @@ export const QRScannerScreen = ({ navigation, route }) => {
         style={[styles.container]}
       >
         <BarcodeMask edgeColor="#62B1F6" showAnimatedLine />
-        <View style={{ flex: 1}}>
+        <View style={{ flex: 1 }}>
           {scanned && <Button title="Scan Again" onPress={() => setScanned(false)} />}
         </View>
       </BarCodeScanner>

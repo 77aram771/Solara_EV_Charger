@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     width: windowWidth,
     backgroundColor: White,
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal,
     paddingVertical: 20

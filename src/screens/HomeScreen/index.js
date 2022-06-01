@@ -15,6 +15,7 @@ import { InfoBoxCustom } from "../../components/UI/InfoBoxCustom"
 import { useDispatch, useSelector } from "react-redux"
 import { GetCarMake } from "../../store/actionsCreators/CarMakeApiActionCreator"
 import { GetChargeBoxesData } from "../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
+import { Map } from "../../container/Map"
 import IconDirection from "../../assets/icon/direction1.png"
 import IconDirection2 from "../../assets/icon/direction2.png"
 import IconDirection3 from "../../assets/icon/direction3.png"
@@ -24,7 +25,6 @@ import IconBook from "../../assets/icon/reserve.png"
 import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
-import { Map } from "../../container/Map"
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -133,14 +133,9 @@ export const HomeScreen = ({ navigation }) => {
     const transactionId = await AsyncStorage.getItem("transaction_id")
     await axios.post(
       `${API_URL}/charge-box/get-progress?access-token=${Token}`,
-      {
-        transaction_id: Number(transactionId)
-      },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { transaction_id: Number(transactionId) },
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(async res => {
         if (res.data.status === "Charging" || res.data.kw > 0) {
           navigation.navigate("LoadCharge", { bool: true })

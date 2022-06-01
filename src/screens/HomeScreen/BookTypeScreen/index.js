@@ -43,22 +43,17 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLoaderGetUser(true)
     console.log("token", Token)
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`,
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => {
           setUser(res.data)
           setLimit(res.data.car_capacity)
           setKm(res.data.car_power_reserve)
           setPrice(Math.floor(res.data.car_capacity * sumKW))
           setLoaderGetUser(false)
-          let myNumber = res.data.car_capacity / res.data?.car_max_kw
-          let h = String(myNumber).split(".")[0]
-          let m = String(myNumber).split(".")[1]
-          console.log("h", h)
-          console.log("m", m)
+          setTimeH(String(res.data.car_capacity / res.data?.car_max_kw).split(".")[0])
+          setTimeM(String(res.data.car_capacity / res.data?.car_max_kw).split(".")[1][0])
         })
         .catch(e => {
           console.log("e --------", e.response)
@@ -73,24 +68,11 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setKm(Math.ceil(user?.car_power_reserve / 100 * (checkMax - num)), 1)
     setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
-      let myNumber = limit / user?.car_max_kw
-      let H = parseInt(myNumber);
-      let M = myNumber - H;
-      console.log("myNumber", myNumber)
-      console.log("H", H)
-      console.log("M", M)
-      setTimeH(H)
-      setTimeM(M)
-
+      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
+      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
     } else {
-      let myNumber = limit / user?.car_max_kw
-      let H = parseInt(myNumber);
-      let M = myNumber - H;
-      console.log("myNumber", myNumber)
-      console.log("H", H)
-      console.log("M", M)
-      setTimeH(H)
-      setTimeM(M)
+      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
+      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
     }
   }
 
@@ -100,24 +82,11 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)), 1)
     setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
-      let myNumber = limit / user?.car_max_kw
-      let H = parseInt(myNumber);
-      let M = myNumber - H;
-      console.log("myNumber", myNumber)
-      console.log("H", H)
-      console.log("M", M)
-      setTimeH(H)
-      setTimeM(M)
-
+      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
+      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
     } else {
-      let myNumber = limit / user?.car_max_kw
-      let H = parseInt(myNumber);
-      let M = myNumber - H;
-      console.log("myNumber", myNumber)
-      console.log("H", H)
-      console.log("M", M)
-      setTimeH(H)
-      setTimeM(M)
+      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
+      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
     }
   }
 
@@ -132,11 +101,8 @@ export const BookTypeScreen = ({ navigation, route }) => {
         from_percent: checkMin,
         to_percent: checkMax
       },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => {
         setLoader(false)
         AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())

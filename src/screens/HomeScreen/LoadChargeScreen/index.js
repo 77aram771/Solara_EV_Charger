@@ -31,14 +31,9 @@ export const LoadChargeScreen = ({ navigation, route }) => {
     const transactionId = await AsyncStorage.getItem("transaction_id")
     await axios.post(
       `${API_URL}/charge-box/get-progress?access-token=${Token}`,
-      {
-        transaction_id: Number(transactionId)
-      },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { transaction_id: Number(transactionId) },
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => {
         setLoader(false)
         setStatus(res.data.status)
@@ -64,14 +59,9 @@ export const LoadChargeScreen = ({ navigation, route }) => {
     console.log("transactionId", transactionId)
     await axios.post(
       `${API_URL}/charge-box/stop?access-token=${Token}`,
-      {
-        transaction_id: Number(transactionId)
-      },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { transaction_id: Number(transactionId) },
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => {
         setTimeout(() => {
           setLoader(false)

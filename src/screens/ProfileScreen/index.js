@@ -22,6 +22,7 @@ import IconUser from "../../assets/icon/user.png"
 import IconEmail from "../../assets/icon/email2.png"
 import IconHistory from "../../assets/icon/icon-history.png"
 import IconNotification from "../../assets/icon/notification.png"
+import ImgLight from "../../assets/icon/priceunit1.png"
 
 export const ProfileScreen = ({ navigation }) => {
 
@@ -48,11 +49,9 @@ export const ProfileScreen = ({ navigation }) => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
       setLogin(true)
-      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`, {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`,
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => setUser(res.data))
         .catch(e => {
           if (e?.response?.data?.status === 401) {
@@ -79,7 +78,7 @@ export const ProfileScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={[styles.container, {justifyContent: login ? 'space-between' : 'flex-start'}]}>
+    <View style={[styles.container, { justifyContent: login ? "space-between" : "flex-start" }]}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -113,12 +112,16 @@ export const ProfileScreen = ({ navigation }) => {
                           fontSize={18}
                           marginBottom={10}
                         />
-                        <TextCustom
-                          text={`${lang[countryCode].balance}: ${user?.amount} ${lang[countryCode].dram}`}
-                          color={White}
-                          fontSize={16}
-                          marginBottom={10}
-                        />
+                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'baseline'}}>
+                          <TextCustom
+                            text={`${lang[countryCode].balance}: ${user?.amount}`}
+                            color={White}
+                            fontSize={16}
+                            marginBottom={10}
+                            marginRight={5}
+                          />
+                          <Image source={ImgLight} style={{ width: 13, height: 13 }} />
+                        </View>
                         <ButtonCustom
                           text={lang[countryCode].topUpBalance}
                           paddingTop={10}

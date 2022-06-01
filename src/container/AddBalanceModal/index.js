@@ -22,7 +22,7 @@ import IconCard from "../../assets/icon/icon-card.png"
 
 export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
 
-  const { countryCode, sumKW } = useContext(Context)
+  const { countryCode } = useContext(Context)
 
   const [price, setPrice] = useState("")
   const [priceError, setPriceError] = useState(false)
@@ -48,16 +48,22 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
     await axios.post(
       `${API_URL}/users/get-cards?access-token=${Token}`,
       {},
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => {
-        setCardsData([...res?.data?.data, {
-          "id": 3,
-          "title": "Idram"
-        }])
+        setCardsData(
+          [
+            ...res?.data?.data,
+            {
+              "id": 3,
+              "title": "Idram"
+            },
+            {
+              "id": 4,
+              "title": "Telcell"
+            }
+          ]
+        )
         setCardId(res?.data?.data[0]?.id)
         setLoader(false)
       })
@@ -71,21 +77,15 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
     if (price > 0) {
       setPriceError(false)
       if (Token !== null) {
-        setLoader(true)
-        setShowMessage(false)
         if (cardId === 3) {
+          setLoader(true)
+          setShowMessage(false)
           await axios.post(
             `${API_URL}/users/fill-wallet-idram?access-token=${Token}`,
-            {
-              amount: price
-            },
-            {
-              headers: {
-                tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-              }
-            })
+            { amount: price },
+            { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+          )
             .then(res => {
-              // console.log("res", res.data)
               if (res.status === 200) {
                 setShowMessage(true)
                 setAddCardUrl(res?.data?.url)
@@ -96,7 +96,6 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               setLoader(false)
               setPrice("")
               getUserProfile()
-              // handleModal()
             })
             .catch(e => {
               setLoader(false)
@@ -105,18 +104,19 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               setMessageStatus(e?.response?.data?.status)
               setPrice("")
             })
+        } else if (cardId === 4) {
+          alert("Coming some")
         } else {
+          setLoader(true)
+          setShowMessage(false)
           await axios.post(
             `${API_URL}/users/fill-wallet?access-token=${Token}`,
             {
               user_card_id: cardId,
               amount: price
             },
-            {
-              headers: {
-                tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-              }
-            })
+            { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+          )
             .then(res => {
               if (res.status === 200) {
                 setShowMessage(true)
@@ -228,7 +228,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 color={Fiord}
               />
               <TextCustom
-                text={` ${sumKW} ${lang[countryCode].dram}`}
+                text={` 1 ${lang[countryCode].dram}`}
                 fontWeight={"700"}
                 fontSize={16}
                 textAlign={"center"}

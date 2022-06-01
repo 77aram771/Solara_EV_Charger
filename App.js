@@ -66,11 +66,8 @@ export default function App() {
     (async () => {
       await axios.get(
         `${API_URL}/data/get-kw-price?language=ru=${countryCode}`,
-        {
-          headers: {
-            tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-          }
-        })
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => setSumKW(res?.data?.price))
         .catch(e => console.log("e", e.response))
     })()

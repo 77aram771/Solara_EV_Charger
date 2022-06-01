@@ -6,11 +6,7 @@ export const GetChargeBoxesData = (url) => (dispatch) => {
   if (url !== null) {
     return new Promise(async () => {
       axios
-        .get(url, {
-          headers: {
-            tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-          }
-        })
+        .get(url, { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } })
         .then(response => {
           dispatch(fetchSuccess(response.data))
         })

@@ -39,11 +39,8 @@ export const BookScreen = ({ navigation, route }) => {
     await axios.post(
       `${API_URL}/charge-box/details?access-token=${Token}`,
       { id: route?.params?.data[route?.params.itemId].id },
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => setImageData(res?.data?.images))
       .catch(e => console.log("e", e.response))
   }

@@ -9,6 +9,7 @@ import IconVisa from "../../../assets/icon/card/visa.png"
 import IconMastercard from "../../../assets/icon/card/mastercard.png"
 import IconDiscover from "../../../assets/icon/card/discover.png"
 import IconIdram from "../../../assets/icon/icon-idram.png"
+import IconTelcell from "../../../assets/icon/icon-telcell.png"
 
 const renderItem = ({ item }) => {
 
@@ -19,7 +20,7 @@ const renderItem = ({ item }) => {
       style={{
         padding: 20,
         borderRadius: 20,
-        alignItems: item.title === "Idram" ? "center" : "flex-start",
+        alignItems: item.title === "Idram" && "Telcell" ? "center" : "flex-start",
         backgroundColor: "white"
       }}
     >
@@ -31,38 +32,51 @@ const renderItem = ({ item }) => {
             </View>
           )
           : (
-            <>
-              {
-                Number(num) === 3 &&
-                <Image source={IconAmericanExpress} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
-              }
-              {
-                Number(num) === 4 && <Image source={IconVisa} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
-              }
-              {
-                Number(num) === 5 &&
-                <Image source={IconMastercard} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
-              }
-              {
-                Number(num) === 6 &&
-                <Image source={IconDiscover} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
-              }
-              <View
-                style={{
-                  width: "100%",
-                  marginTop: 20,
-                  justifyContent: "center",
-                  alignItems: "flex-start"
-                }}
-              >
-                <TextCustom text={"Card number"} color={MineShaft} fontSize={16} fontWeight={"700"} marginBottom={10} />
-                <View
-                  style={{ width: "100%", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                  <TextCustom text={`****`} color={MineShaft} fontSize={26} fontWeight={"700"} />
-                  <TextCustom text={`${item.title.slice(-4)}`} color={MineShaft} fontSize={26} fontWeight={"700"} />
+            item.title === "Telcell"
+              ? (
+                <View>
+                  <Image source={IconTelcell} style={{ height: 130 }} resizeMode={"cover"} />
                 </View>
-              </View>
-            </>
+              )
+              : (
+                <>
+                  {
+                    Number(num) === 3 &&
+                    <Image source={IconAmericanExpress} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
+                  }
+                  {
+                    Number(num) === 4 && <Image source={IconVisa} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
+                  }
+                  {
+                    Number(num) === 5 &&
+                    <Image source={IconMastercard} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
+                  }
+                  {
+                    Number(num) === 6 &&
+                    <Image source={IconDiscover} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
+                  }
+                  <View
+                    style={{
+                      width: "100%",
+                      marginTop: 20,
+                      justifyContent: "center",
+                      alignItems: "flex-start"
+                    }}
+                  >
+                    <TextCustom text={"Card number"} color={MineShaft} fontSize={16} fontWeight={"700"} marginBottom={10} />
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}>
+                      <TextCustom text={`****`} color={MineShaft} fontSize={26} fontWeight={"700"} />
+                      <TextCustom text={`${item.title.slice(-4)}`} color={MineShaft} fontSize={26} fontWeight={"700"} />
+                    </View>
+                  </View>
+                </>
+              )
           )
       }
     </View>

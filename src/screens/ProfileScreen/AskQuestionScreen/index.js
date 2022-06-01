@@ -73,11 +73,8 @@ export const AskQuestionScreen = ({ navigation, route }) => {
                 email,
                 message: mail
               },
-              {
-                headers: {
-                  tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-                }
-              })
+              { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+            )
               .then(res => {
                 setLoader(false)
                 if (res.status) {

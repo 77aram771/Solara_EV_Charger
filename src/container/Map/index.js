@@ -27,7 +27,7 @@ export const Map = ({
     <MapView
       initialRegion={cordinate}
       onMarkersChange={(props) => {
-        console.log("props", props)
+        // console.log("props", props)
       }}
       needsOffscreenAlphaCompositing={false}
       showsIndoorLevelPicker={false}

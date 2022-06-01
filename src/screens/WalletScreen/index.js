@@ -52,11 +52,8 @@ export const WalletScreen = ({ navigation }) => {
     await axios.post(
       `${API_URL}/users/get-cards?access-token=${Token}`,
       {},
-      {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+    )
       .then(res => {
         setCardsData(res?.data?.data)
         setLoader(false)
@@ -71,11 +68,9 @@ export const WalletScreen = ({ navigation }) => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/add-card?access-token=${Token}`, {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      await axios.get(`${API_URL}/users/add-card?access-token=${Token}`,
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => {
           setLoader(false)
           setAddCardUrl(res?.data?.url)
@@ -97,11 +92,8 @@ export const WalletScreen = ({ navigation }) => {
       await axios.post(
         `${API_URL}/users/delete-card?access-token=${Token}`,
         { id },
-        {
-          headers: {
-            tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-          }
-        })
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => {
           setLoader(false)
           if (res.status === 200) {

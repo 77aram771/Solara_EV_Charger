@@ -43,20 +43,16 @@ export const FilterScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       setLoader(true)
-      await axios.get(`${API_URL}/connector-types/?page=1&per-page=20&title=&language=${countryCode}`, {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      await axios.get(`${API_URL}/connector-types/?page=1&per-page=20&title=&language=${countryCode}`,
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => {
           setLoader(false)
           setFilterData(res.data.data)
         })
-      await axios.get(`${API_URL}/data/get-min-max-kw`, {
-        headers: {
-          tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5"
-        }
-      })
+      await axios.get(`${API_URL}/data/get-min-max-kw`,
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
         .then(res => {
           setMin(res?.data?.min)
           setMax(res?.data?.max)
