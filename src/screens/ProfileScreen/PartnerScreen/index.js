@@ -18,7 +18,8 @@ export const PartnerScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      await axios.get(`${API_URL}/partners/?page=1&per-page=20&title=&language=ru`,
+      await axios.get(
+        `${API_URL}/partners/?page=1&per-page=20&title=&language=ru`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
@@ -46,7 +47,6 @@ export const PartnerScreen = ({ navigation }) => {
         <View style={styles.container}>
           {
             data.map(item => {
-              console.log("item", item)
               return (
                 <ButtonCustom
                   key={item.id}

@@ -17,7 +17,8 @@ export const FAQScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      await axios.get(`${API_URL}/faq/?page=1&per-page=20&title=&language=${countryCode}`,
+      await axios.get(
+        `${API_URL}/faq/?page=1&per-page=20&title=&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {

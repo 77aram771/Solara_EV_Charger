@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react"
 import { Button, StyleSheet, View } from "react-native"
 import axios from "axios"
 import { BarCodeScanner } from "expo-barcode-scanner"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import BarcodeMask from "react-native-barcode-mask"
 import Context from "../../../../Context"
 import { API_URL, windowWidth } from "../../../shared/Const"
@@ -44,10 +43,8 @@ export const QRScannerScreen = ({ navigation, route }) => {
   }
 
   const handleGetDataQr = async (title) => {
-    console.log("title", title)
-    const Token = await AsyncStorage.getItem("token")
     await axios.post(
-      `${API_URL}/charge-box/details-by-title?access-token=${Token}`,
+      `${API_URL}/charge-box/details-by-title`,
       { title: title },
       { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
     )

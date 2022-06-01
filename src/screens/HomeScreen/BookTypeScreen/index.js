@@ -41,19 +41,21 @@ export const BookTypeScreen = ({ navigation, route }) => {
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
     setLoaderGetUser(true)
-    console.log("token", Token)
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`,
+      await axios.get(
+        `${API_URL}/users/get-profile?access-token=${Token}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
           setUser(res.data)
-          setLimit(res.data.car_capacity)
+          setLimit(Math.ceil(res.data.car_capacity / 100 * (checkMax)), 1)
           setKm(res.data.car_power_reserve)
           setPrice(Math.floor(res.data.car_capacity * sumKW))
           setLoaderGetUser(false)
-          setTimeH(String(res.data.car_capacity / res.data?.car_max_kw).split(".")[0])
-          setTimeM(String(res.data.car_capacity / res.data?.car_max_kw).split(".")[1][0])
+          const newTime = Number(res.data.car_capacity / res.data?.car_max_kw).toFixed(1)
+          const newTime2 = String(newTime).split(".")
+          setTimeH(Number(newTime2[0]))
+          setTimeM(Number(newTime2[1]))
         })
         .catch(e => {
           console.log("e --------", e.response)
@@ -64,29 +66,33 @@ export const BookTypeScreen = ({ navigation, route }) => {
 
   const handleMin = (num) => {
     setCheckMin(num)
-    setLimit(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1)
-    setKm(Math.ceil(user?.car_power_reserve / 100 * (checkMax - num)), 1)
+    setLimit(Math.ceil(user?.car_capacity / 100 * (checkMax - num)))
+    setKm(Math.ceil(user?.car_power_reserve / 100 * (checkMax - num)))
     setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
-      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
-      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
+      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
+      setTimeH(Number(newTime[0]))
+      setTimeM(Number(newTime[1]))
     } else {
-      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
-      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
+      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
+      setTimeH(Number(newTime[0]))
+      setTimeM(Number(newTime[1]))
     }
   }
 
   const handleMax = (num) => {
     setCheckMax(num)
-    setLimit(Math.ceil(user?.car_capacity / 100 * (num - checkMin)), 1)
-    setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)), 1)
-    setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
+    setLimit(Math.ceil(user?.car_capacity / 100 * (num - checkMin)))
+    setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)))
+    setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (num - checkMin)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
-      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
-      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
+      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
+      setTimeH(Number(newTime[0]))
+      setTimeM(Number(newTime[1]))
     } else {
-      setTimeH(String(limit / user?.car_max_kw).split(".")[0])
-      setTimeM(String(limit / user?.car_max_kw).split(".")[1][0])
+      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
+      setTimeH(Number(newTime[0]))
+      setTimeM(Number(newTime[1]))
     }
   }
 

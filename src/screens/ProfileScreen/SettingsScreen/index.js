@@ -16,6 +16,8 @@ import IconAbout from "../../../assets/icon/about.png"
 import IconLike from "../../../assets/icon/partner.png"
 import IconFb from "../../../assets/icon/facebook.png"
 import IconIns from "../../../assets/icon/instagram.png"
+import IconViber from "../../../assets/icon/icon-viber.png"
+import IconTelegram from "../../../assets/icon/icon-telegram.png"
 
 export const SettingsScreen = ({ navigation }) => {
 
@@ -175,7 +177,7 @@ export const SettingsScreen = ({ navigation }) => {
           color={Fiord}
           marginBottom={20}
         />
-        <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={{ width: "100%", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
           <ButtonCustom
             width={"45%"}
             height={120}
@@ -206,6 +208,42 @@ export const SettingsScreen = ({ navigation }) => {
             fontSize={18}
             fontWeight={"400"}
             icon={IconIns}
+            iconWidth={50}
+            iconHeight={50}
+            marginBottom={20}
+            justifyContent={"center"}
+            iconMarginRight={0}
+          />
+          <ButtonCustom
+            width={"45%"}
+            height={120}
+            backgroundColor={White}
+            borderColor={Mercurysolid}
+            color={MineShaft}
+            borderWidth={1}
+            borderRadius={18}
+            click={() => alert("Need url from Viber")}
+            fontSize={18}
+            fontWeight={"400"}
+            icon={IconViber}
+            iconWidth={50}
+            iconHeight={50}
+            marginBottom={20}
+            justifyContent={"center"}
+            iconMarginRight={0}
+          />
+          <ButtonCustom
+            width={"45%"}
+            height={120}
+            backgroundColor={White}
+            borderColor={Mercurysolid}
+            color={MineShaft}
+            borderWidth={1}
+            borderRadius={18}
+            click={() => alert("Need url from Telegram")}
+            fontSize={18}
+            fontWeight={"400"}
+            icon={IconTelegram}
             iconWidth={50}
             iconHeight={50}
             marginBottom={20}

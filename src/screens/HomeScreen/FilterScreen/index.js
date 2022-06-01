@@ -62,23 +62,22 @@ export const FilterScreen = ({ navigation }) => {
     })()
   }, [])
 
-  // useEffect(() => {
-  //   console.log("filterData", filterData)
-  // }, [filterData])
+  useEffect(() => {
+    const newUrl = []
+    filterItems.map((item, index) => {
+      newUrl.push(`connector_types[${index}]=${item.id}`)
+    })
+    setCustomUrl(newUrl)
+  }, [filterItems])
 
 
   const handleSwitch = (id) => {
-    setFilterData(filterData.map((item, index) => {
-      setCustomUrl(customUrl.concat(`connector_types[${index}]=${id}`))
-
-      const newAAA = customUrl.filter(item => item !== `connector_types[${index}]=${id}`)
-      console.log(`newAAA`, newAAA)
+    setFilterData(filterData.map((item) => {
       if (item.id === id) {
         item.active = !item.active
         setFilterItems(filterItems.concat([item]))
-
         if (!item.active) {
-          setFilterItems(filterItems.filter(item => item.id === id))
+          setFilterItems(filterItems.filter(i => i.id !== item.id))
         }
       }
       return item
@@ -94,17 +93,12 @@ export const FilterScreen = ({ navigation }) => {
         return item
       }))
       setFilterItems(filterItems.concat(filterData))
-      const newUrl = []
-      filterData.map((item, index) => {
-        newUrl.push(`connector_types[${index}]=${item.id}`)
-      })
-      setCustomUrl(newUrl)
     } else {
       setFilterData(filterData.map(item => {
         item.active = !allSwitch
         return item
       }))
-      setFilterItems(filterItems.concat(filterData))
+      setFilterItems([])
       setCustomUrl([])
     }
   }
