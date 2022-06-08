@@ -118,6 +118,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
             iconHeight={24}
             iconPositionLeft={false}
             borderRadius={12}
+            disabled={loader}
           />
         </View>
       </DismissKeyboard>
@@ -140,6 +141,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
         borderRadius={12}
         borderColor={Fiord}
         borderWidth={1}
+        disabled={loader}
       />
     </View>
   )

@@ -131,6 +131,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
             borderColor={White}
             borderWidth={1}
             marginTop={5}
+            disabled={forgotPasswordLoader}
           />
         </View>
       </View>

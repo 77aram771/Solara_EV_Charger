@@ -185,6 +185,7 @@ export const AskQuestionScreen = ({ navigation, route }) => {
               iconPositionLeft={false}
               click={handleSend}
               marginTop={40}
+              disabled={loader}
             />
           </View>
         </ScrollView>

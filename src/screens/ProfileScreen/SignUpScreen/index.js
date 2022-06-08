@@ -6,7 +6,7 @@ import { styles } from "./style"
 import { Fiord, Manatee, MySin, SunsetOrange, White } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
-import { regEmail, regPassword, regPhone } from "../../../shared/MockData"
+import { regEmail, regName, regPassword, regPhone } from "../../../shared/MockData"
 import { API_URL } from "../../../shared/Const"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { InputCustom } from "../../../components/UI/InputCustom"
@@ -16,10 +16,10 @@ import { SelectCustom } from "../../../components/UI/SelectCustom"
 import { GetCarModal } from "../../../store/actionsCreators/CarModalApiActionCreator"
 import { PostSignUp } from "../../../store/actionsCreators/SignUpApiActionCreator"
 import { TextCustom } from "../../../components/UI/TextCustom"
+import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import IconSolara from "../../../assets/icon/icon-solara.png"
 import IconLogin from "../../../assets/icon/login.png"
 import IconArrowDown from "../../../assets/icon/dropdown.png"
-import { HeaderCustom } from "../../../components/UI/HeaderCustom";
 
 export const SignUpScreen = ({ navigation }) => {
 
@@ -113,6 +113,15 @@ export const SignUpScreen = ({ navigation }) => {
 
   const handleName = (value) => {
     setName(value)
+    if (value.length > 0) {
+      if (regName.test(value)) {
+        setNameError(false)
+      } else {
+        setNameError(true)
+      }
+    } else {
+      setNameError(false)
+    }
     setNameError(false)
   }
 
@@ -148,6 +157,8 @@ export const SignUpScreen = ({ navigation }) => {
     }
     setAutoModalError(false)
   }
+
+  const handleCheck = () => setSelection(!isSelected)
 
   const handleSignUp = () => {
 
@@ -205,7 +216,8 @@ export const SignUpScreen = ({ navigation }) => {
       } else {
         setEmailError(true)
       }
-    } else {
+    }
+    else {
       setNameError(true)
     }
   }
@@ -311,7 +323,7 @@ export const SignUpScreen = ({ navigation }) => {
                 style={[styles.checkboxContainer, { borderBottomWidth: !isSelectedError ? 0 : 1, borderColor: "red" }]}>
                 <Checkbox
                   value={isSelected}
-                  onValueChange={setSelection}
+                  onValueChange={handleCheck}
                   style={styles.checkbox}
                 />
                 <Text style={styles.label}>{lang[countryCode].iAgreeWithTheRules}</Text>
@@ -348,6 +360,7 @@ export const SignUpScreen = ({ navigation }) => {
                 borderColor={White}
                 borderWidth={1}
                 marginTop={5}
+                disabled={signUpLoader}
               />
             </View>
           </ScrollView>

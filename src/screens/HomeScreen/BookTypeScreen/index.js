@@ -320,6 +320,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
           paddingTop={Platform.OS === "ios" ? 14 : 8}
           paddingBottom={Platform.OS === "ios" ? 14 : 8}
           borderRadius={10}
+          disabled={loader}
         />
       </View>
     </View>

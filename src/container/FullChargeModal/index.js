@@ -92,6 +92,7 @@ export const FullChargeModal = ({ navigation, handleModal, loader, status, progr
                     borderRadius={10}
                     borderColor={White}
                     borderWidth={1}
+                    disabled={loader}
                   />
                 )
                 : (
@@ -113,6 +114,7 @@ export const FullChargeModal = ({ navigation, handleModal, loader, status, progr
                     paddingTop={Platform.OS === "ios" ? 14 : 8}
                     paddingBottom={Platform.OS === "ios" ? 14 : 8}
                     borderWidth={1}
+                    disabled={loader}
                   />
                 )
             )

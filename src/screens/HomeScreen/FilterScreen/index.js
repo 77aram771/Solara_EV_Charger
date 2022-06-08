@@ -207,6 +207,7 @@ export const FilterScreen = ({ navigation }) => {
           iconHeight={22}
           iconPositionLeft={false}
           borderRadius={10}
+          disabled={loader}
         />
       </View>
     </View>

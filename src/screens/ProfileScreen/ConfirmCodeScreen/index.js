@@ -41,12 +41,10 @@ export const ConfirmCodeScreen = ({ navigation, route }) => {
   }, [confirmCodeData])
 
   const handleCode = (value) => {
-    if (value.length === 0) {
-      setCodeError(false)
-    } else if (value.length === 6) {
-      setCodeError(false)
-    } else {
+    if (value.length > 6) {
       setCodeError(true)
+    } else {
+      setCodeError(false)
     }
     setCode(value)
   }
@@ -86,13 +84,6 @@ export const ConfirmCodeScreen = ({ navigation, route }) => {
             keyboardType={"numeric"}
           />
           {
-            confirmCodeLoader
-              ? (
-                <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-              )
-              : null
-          }
-          {
             confirmCodeError
               ? (
                 <TextCustom text={confirmCodeError} color={SunsetOrange} fontSize={14} fontWeight={"500"} />
@@ -116,6 +107,7 @@ export const ConfirmCodeScreen = ({ navigation, route }) => {
             iconHeight={24}
             iconPositionLeft={false}
             borderRadius={12}
+            disabled={confirmCodeLoader}
           />
           <TouchableOpacity onPress={handelSendSmsAgain}>
             <TextCustom
@@ -126,6 +118,13 @@ export const ConfirmCodeScreen = ({ navigation, route }) => {
               fontWeight={"500"}
             />
           </TouchableOpacity>
+          {
+            confirmCodeLoader
+              ? (
+                <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
+              )
+              : null
+          }
         </View>
       </DismissKeyboard>
     </View>

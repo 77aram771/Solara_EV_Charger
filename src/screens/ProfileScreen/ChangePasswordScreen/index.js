@@ -164,6 +164,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
             iconHeight={24}
             iconPositionLeft={false}
             borderRadius={12}
+            disabled={loader}
           />
         </View>
       </DismissKeyboard>

@@ -143,13 +143,6 @@ export const SignInScreen = ({ navigation, route }) => {
                   disable={true}
                 />
                 {
-                  userLoader
-                    ? (
-                      <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-                    )
-                    : null
-                }
-                {
                   userError
                     ? (
                       <TextCustom text={userError} color={SunsetOrange} fontSize={14} fontWeight={"500"} />
@@ -174,6 +167,7 @@ export const SignInScreen = ({ navigation, route }) => {
                   borderRadius={16}
                   borderColor={White}
                   borderWidth={1}
+                  disabled={userLoader}
                 />
                 <TouchableOpacity
                   onPress={() => navigation.navigate("ForgotPassword")}
@@ -187,6 +181,13 @@ export const SignInScreen = ({ navigation, route }) => {
                     fontWeight={"500"}
                   />
                 </TouchableOpacity>
+                {
+                  userLoader
+                    ? (
+                      <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
+                    )
+                    : null
+                }
               </View>
             </View>
             <TouchableOpacity style={styles.footerBox} onPress={() => navigation.navigate("SignUp")}>
