@@ -10,11 +10,11 @@ import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
-import IconLogin from "../../../assets/icon/login.png"
 import { useDispatch, useSelector } from "react-redux"
 import { PostConfirmCode } from "../../../store/actionsCreators/ConfirmCodeApiActionCreator"
 import { API_URL } from "../../../shared/Const"
 import { PostSignUp } from "../../../store/actionsCreators/SignUpApiActionCreator"
+import IconLogin from "../../../assets/icon/login.png"
 
 export const ConfirmCodeScreen = ({ navigation, route }) => {
 
@@ -34,7 +34,8 @@ export const ConfirmCodeScreen = ({ navigation, route }) => {
     if (confirmCodeData !== null) {
       if (confirmCodeData.status === 200) {
         dispatch(PostConfirmCode(null))
-        navigation.navigate("SignIn")
+        // navigation.navigate("SignIn")
+        navigation.navigate("Profile")
       }
     }
   }, [confirmCodeData])
@@ -62,9 +63,7 @@ export const ConfirmCodeScreen = ({ navigation, route }) => {
     }
   }
 
-  const handelSendSmsAgain = () => {
-    dispatch(PostSignUp(`${API_URL}/auth/sign-up`, route.params))
-  }
+  const handelSendSmsAgain = () => dispatch(PostSignUp(`${API_URL}/auth/sign-up`, route.params))
 
   return (
     <View style={styles.container}>

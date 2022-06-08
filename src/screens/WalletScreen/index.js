@@ -116,7 +116,7 @@ export const WalletScreen = ({ navigation }) => {
 
   const handleUserCheck = () => {
     setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("ProfileStack")
+    navigation.navigate("SignIn")
   }
 
   return (
@@ -245,6 +245,7 @@ export const WalletScreen = ({ navigation }) => {
         borderRadius={12}
         borderColor={Fiord}
         borderWidth={2}
+        disabled={loader}
       />
     </View>
   )

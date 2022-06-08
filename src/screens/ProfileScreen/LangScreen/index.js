@@ -43,6 +43,7 @@ export const LangScreen = ({ navigation }) => {
       item.active = false
       if (item.id === id) {
         handleCountryCode(item.countryCode)
+        navigation.goBack()
         item.active = true
       }
       return item

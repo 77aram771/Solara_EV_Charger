@@ -1,11 +1,10 @@
 import React, { useContext } from "react"
 import { ScrollView, View } from "react-native"
-import Constants from "expo-constants"
 import * as WebBrowser from "expo-web-browser"
 import { styles } from "./style"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { lang } from "../../../shared/Lang"
-import { Fiord, Mercurysolid, MineShaft, White } from "../../../shared/Colors"
+import { Fiord, Mercurysolid, MineShaft, MySin, White } from "../../../shared/Colors"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import Context from "../../../../Context"
 import IconNotification from "../../../assets/icon/notification.png"
@@ -18,6 +17,7 @@ import IconFb from "../../../assets/icon/facebook.png"
 import IconIns from "../../../assets/icon/instagram.png"
 import IconViber from "../../../assets/icon/icon-viber.png"
 import IconTelegram from "../../../assets/icon/icon-telegram.png"
+import { HeaderCustom } from "../../../components/UI/HeaderCustom";
 
 export const SettingsScreen = ({ navigation }) => {
 
@@ -29,12 +29,10 @@ export const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TitleCustom
+      <HeaderCustom
+        handleBack={() => navigation.goBack()}
+        backgroundColor={MySin}
         text={lang[countryCode].otherSections}
-        fontSize={22}
-        color={Fiord}
-        marginBottom={60}
-        marginTop={Constants.statusBarHeight + 30}
       />
       <ScrollView
         style={{ flex: 1, width: "100%" }}
@@ -47,6 +45,7 @@ export const SettingsScreen = ({ navigation }) => {
           textAlign={"left"}
           color={Fiord}
           marginBottom={10}
+          marginTop={30}
         />
         <ButtonCustom
           text={`${lang[countryCode].notifications}`}

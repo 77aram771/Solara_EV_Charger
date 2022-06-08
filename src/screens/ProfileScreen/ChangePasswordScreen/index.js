@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { View, Platform, ActivityIndicator } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { styles } from "./style"
-import { Fiord, Manatee, MySin } from "../../../shared/Colors"
+import { Fiord, Manatee, MySin, SunsetOrange } from "../../../shared/Colors"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
@@ -12,6 +12,7 @@ import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { regPassword } from "../../../shared/MockData"
 import { API_URL } from "../../../shared/Const"
+import { TextCustom } from "../../../components/UI/TextCustom";
 
 export const ChangePasswordScreen = ({ navigation }) => {
 
@@ -19,39 +20,21 @@ export const ChangePasswordScreen = ({ navigation }) => {
 
   const [password, setPassword] = useState("")
   const [passwordError, setPasswordError] = useState(false)
-  const [passwordErrorMessage] = useState(lang[countryCode].wrongPassword)
   const [newPassword, setNewPassword] = useState("")
   const [newPasswordError, setNewPasswordError] = useState(false)
-  const [newPasswordErrorMessage] = useState(lang[countryCode].wrongPassword)
   const [RPassword, setRPassword] = useState("")
   const [RPasswordError, setRPasswordError] = useState(false)
-  const [RPasswordErrorMessage] = useState(lang[countryCode].wrongPassword)
   const [loader, setLoader] = useState(false)
+  const [showErrorMassage, setShowErrorMassage] = useState(false)
 
   const handlePassword = (value) => {
     setPassword(value)
-    if (value.length >= 6) {
-      if (regPassword.test(value)) {
-        setPasswordError(false)
-      } else {
-        setPasswordError(true)
-      }
-    } else {
-      setPasswordError(false)
-    }
+    setPasswordError(false)
   }
 
   const handleNewPassword = (value) => {
     setNewPassword(value)
-    if (value.length >= 6) {
-      if (regPassword.test(value)) {
-        setNewPasswordError(false)
-      } else {
-        setNewPasswordError(true)
-      }
-    } else {
-      setNewPasswordError(false)
-    }
+    setNewPasswordError(false)
   }
 
   const handleRPassword = (value) => {
@@ -69,38 +52,43 @@ export const ChangePasswordScreen = ({ navigation }) => {
 
   const handleSave = async () => {
     const Token = await AsyncStorage.getItem("token")
-    if (regPassword.test(password)) {
+    if (password.length > 1) {
       setPasswordError(false)
       if (regPassword.test(newPassword)) {
         setNewPasswordError(false)
         if (RPassword === newPassword) {
           setRPasswordError(false)
-          if (Token !== null) {
-            setLoader(true)
-            const myHeaders = new Headers()
-            myHeaders.append("tokakey", "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5")
+          if (password === newPassword) {
+            setShowErrorMassage(true)
+          } else {
+            if (Token !== null) {
+              setLoader(true)
+              const myHeaders = new Headers()
+              myHeaders.append("tokakey", "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5")
 
-            const formdata = new FormData()
-            formdata.append("current_password", password)
-            formdata.append("password", newPassword)
-            formdata.append("repeat_password", RPassword)
+              const formdata = new FormData()
+              formdata.append("current_password", password)
+              formdata.append("password", newPassword)
+              formdata.append("repeat_password", RPassword)
 
-            const requestOptions = {
-              method: "POST",
-              headers: myHeaders,
-              body: formdata,
-              redirect: "follow"
+              const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: formdata,
+                redirect: "follow"
+              }
+
+              fetch(`${API_URL}/users/change-password?access-token=${Token}`, requestOptions)
+                .then(() => {
+                  setLoader(false)
+                  navigation.navigate("Profile")
+                })
+                .catch(error => {
+                  setLoader(false)
+                  console.log("error", error)
+                })
             }
-            console.log("requestOptions", requestOptions)
-            fetch(`${API_URL}/users/change-password?access-token=${Token}`, requestOptions)
-              .then((res) => {
-                setLoader(false)
-                navigation.navigate("Profile")
-              })
-              .catch(error => {
-                setLoader(false)
-                console.log("error", error)
-              })
+            setRPasswordError(false)
           }
         } else {
           setRPasswordError(true)
@@ -128,7 +116,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
             handle={value => handlePassword(value)}
             placeholderTextColor={Manatee}
             error={passwordError}
-            errorText={passwordErrorMessage}
+            errorText={lang[countryCode].wrongPassword}
             secureTextEntry={true}
           />
           <InputCustom
@@ -137,7 +125,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
             handle={value => handleNewPassword(value)}
             placeholderTextColor={Manatee}
             error={newPasswordError}
-            errorText={newPasswordErrorMessage}
+            errorText={lang[countryCode].wrongPassword}
             secureTextEntry={true}
           />
           <InputCustom
@@ -146,14 +134,17 @@ export const ChangePasswordScreen = ({ navigation }) => {
             handle={value => handleRPassword(value)}
             placeholderTextColor={Manatee}
             error={RPasswordError}
-            errorText={RPasswordErrorMessage}
+            errorText={lang[countryCode].wrongPassword}
             secureTextEntry={true}
           />
           {
             loader
-              ? (
-                <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-              )
+              ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
+              : null
+          }
+          {
+            showErrorMassage
+              ? <TextCustom text={lang[countryCode].theOldPasswordIsTheSameAsTheNewPassword} color={SunsetOrange} fontSize={14} fontWeight={"500"} />
               : null
           }
           <ButtonCustom

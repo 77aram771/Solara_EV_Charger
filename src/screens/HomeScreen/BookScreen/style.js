@@ -48,6 +48,6 @@ export const styles = StyleSheet.create({
     borderTopColor: BrightGray,
     justifyContent: "space-between",
     alignItems: "center",
-    flexDirection: "row"
+    flexDirection: "row",
   }
 })

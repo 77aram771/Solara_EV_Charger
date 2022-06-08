@@ -6,7 +6,7 @@ import { styles } from "./style"
 import { Fiord, Manatee, MySin, SunsetOrange, White } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
-import { regEmail, regName, regPassword, regPhone } from "../../../shared/MockData"
+import { regEmail, regPassword, regPhone } from "../../../shared/MockData"
 import { API_URL } from "../../../shared/Const"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { InputCustom } from "../../../components/UI/InputCustom"
@@ -113,54 +113,22 @@ export const SignUpScreen = ({ navigation }) => {
 
   const handleName = (value) => {
     setName(value)
-    if (value.length > 0) {
-      if (regName.test(value)) {
-        setNameError(false)
-      } else {
-        setNameError(true)
-      }
-    } else {
-      setNameError(false)
-    }
+    setNameError(false)
   }
 
   const handleEmail = (value) => {
     setEmail(value)
-    if (value.length > 0) {
-      if (regEmail.test(value)) {
-        setEmailError(false)
-      } else {
-        setEmailError(true)
-      }
-    } else {
-      setEmailError(false)
-    }
+    setEmailError(false)
   }
 
   const handlePhone = (value) => {
     setPhone(value)
-    if (value.length > 0) {
-      if (regPhone.test(value)) {
-        setPhoneError(false)
-      } else {
-        setPhoneError(true)
-      }
-    } else {
-      setPhoneError(false)
-    }
+    setPhoneError(false)
   }
 
   const handlePassword = (value) => {
     setPassword(value)
-    if (value.length > 0) {
-      if (regPassword.test(value)) {
-        setPasswordError(false)
-      } else {
-        setPasswordError(true)
-      }
-    } else {
-      setPasswordError(false)
-    }
+    setPasswordError(false)
   }
 
   const handleAuto = (value) => {
@@ -169,15 +137,7 @@ export const SignUpScreen = ({ navigation }) => {
       const findCar = carMakeData?.data.find(item => item?.title === value)
       setAutoId(findCar?.id)
     }
-    if (value !== null) {
-      if (value) {
-        setAutoDataError(false)
-      } else {
-        setAutoDataError(true)
-      }
-    } else {
-      setAutoDataError(false)
-    }
+    setAutoDataError(false)
   }
 
   const handleAutoModel = (value) => {
@@ -186,15 +146,7 @@ export const SignUpScreen = ({ navigation }) => {
       const findModal = carModalData?.data.find(item => item?.title === value)
       setAutoModalId(findModal?.id)
     }
-    if (value !== null) {
-      if (value) {
-        setAutoModalError(false)
-      } else {
-        setAutoModalError(true)
-      }
-    } else {
-      setAutoModalError(false)
-    }
+    setAutoModalError(false)
   }
 
   const handleSignUp = () => {
@@ -327,7 +279,7 @@ export const SignUpScreen = ({ navigation }) => {
                 value={auto}
                 data={autoData}
                 placeholder={{
-                  label: "Auto",
+                  label: lang[countryCode].car,
                   value: null,
                   color: Manatee
                 }}
@@ -343,7 +295,7 @@ export const SignUpScreen = ({ navigation }) => {
                 value={autoModal}
                 data={autoModalData}
                 placeholder={{
-                  label: "Model",
+                  label: lang[countryCode].make,
                   value: null,
                   color: Manatee
                 }}
@@ -362,7 +314,7 @@ export const SignUpScreen = ({ navigation }) => {
                   onValueChange={setSelection}
                   style={styles.checkbox}
                 />
-                <Text style={styles.label}>Do you like React Native?</Text>
+                <Text style={styles.label}>{lang[countryCode].iAgreeWithTheRules}</Text>
               </View>
               {
                 signUpLoader

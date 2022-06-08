@@ -20,7 +20,7 @@ const renderItem = ({ item }) => {
       style={{
         padding: 20,
         borderRadius: 20,
-        alignItems: item.title === "Idram" && "Telcell" ? "center" : "flex-start",
+        alignItems: item.title === "Idram" || "Telcell" ? "center" : "flex-start",
         backgroundColor: "white"
       }}
     >

@@ -29,7 +29,6 @@ export const FilterScreen = ({ navigation }) => {
   const [checkData, setCheckData] = useState([
     {
       id: 1,
-      text: lang[countryCode].filterCheckText1,
       active: false
     }
   ])
@@ -182,7 +181,7 @@ export const FilterScreen = ({ navigation }) => {
                     return (
                       <CheckItem
                         key={item.id}
-                        text={item.text}
+                        text={lang[countryCode].filterCheckText1}
                         bool={item.active}
                         handle={() => handleCheckItem(item.id)}
                       />

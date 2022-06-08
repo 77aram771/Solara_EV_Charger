@@ -68,14 +68,11 @@ export const BookScreen = ({ navigation, route }) => {
     }
   }
 
-  const handleModalCheckUser = () => {
-    setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("Home")
-  }
+  const handleModalCheckUser = () => setModalVisibleCheckUser(!modalVisibleCheckUser)
 
   const handleUserCheck = () => {
     setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("ProfileStack")
+    navigation.navigate("SignIn")
   }
 
   return (
@@ -230,7 +227,7 @@ export const BookScreen = ({ navigation, route }) => {
           <InfoBoxCustom itemId={route.params.itemId} isBook={route.params.isBook} data={route.params?.data} />
           <View style={styles.typeBox}>
             <View style={[styles.typeItem, { paddingLeft: 20, borderTopWidth: 0 }]}>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", width: "55%" }}>
                 <TextCustom
                   text={`${lang[countryCode].type}`}
                   marginRight={5}
@@ -239,7 +236,7 @@ export const BookScreen = ({ navigation, route }) => {
                   fontSize={16}
                 />
               </View>
-              <View>
+              <View style={{ width: "21%" }}>
                 <TextCustom
                   text={`${lang[countryCode].Tariff}`}
                   marginRight={5}
@@ -248,7 +245,7 @@ export const BookScreen = ({ navigation, route }) => {
                   fontSize={16}
                 />
               </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View style={{ flexDirection: "row", alignItems: "center", width: "21%" }}>
                 <TextCustom
                   text={`${lang[countryCode].price}`}
                   fontWeight={"400"}
@@ -266,7 +263,7 @@ export const BookScreen = ({ navigation, route }) => {
                     key={item.id}
                     style={styles.typeItem}
                   >
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: "row", width: "60%" }}>
                       <TextCustom
                         text={`${++index}.`}
                         marginRight={5}
@@ -341,7 +338,7 @@ export const BookScreen = ({ navigation, route }) => {
                           : null
                       }
                     </View>
-                    <View>
+                    <View style={{ width: "20%" }}>
                       {
                         item?.status === "Faulted"
                           ? (
@@ -408,7 +405,7 @@ export const BookScreen = ({ navigation, route }) => {
                           : null
                       }
                     </View>
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", width: "20%" }}>
                       {
                         item?.status === "Faulted"
                           ? (

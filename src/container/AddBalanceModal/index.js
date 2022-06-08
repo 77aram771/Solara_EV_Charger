@@ -105,7 +105,32 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               setPrice("")
             })
         } else if (cardId === 4) {
-          alert("Coming some")
+          setLoader(true)
+          setShowMessage(false)
+          await axios.post(
+            `${API_URL}/users/fill-wallet-telcell?access-token=${Token}`,
+            { amount: price },
+            { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+          )
+            .then(res => {
+              if (res.status === 200) {
+                setShowMessage(true)
+                setAddCardUrl(res?.data?.url)
+                setModalVisible(true)
+              }
+              setMessageStatus(res.status)
+              setMessage("")
+              setLoader(false)
+              setPrice("")
+              getUserProfile()
+            })
+            .catch(e => {
+              setLoader(false)
+              setShowMessage(true)
+              setMessage(e?.response?.data?.message)
+              setMessageStatus(e?.response?.data?.status)
+              setPrice("")
+            })
         } else {
           setLoader(true)
           setShowMessage(false)
@@ -152,7 +177,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
         visible={modalVisible}
         onRequestClose={handleModalWebView}
       >
-        <View style={{ width: windowWidth, backgroundColor: "#00a789", height: Constants.statusBarHeight }} />
+        <View style={{ width: windowWidth, backgroundColor: "#00a789", height: Constants.statusBarHeight, marginTop: 55 }} />
         <TouchableOpacity
           style={{ position: "absolute", top: Constants.statusBarHeight + 5, left: 0, zIndex: 1 }}
           onPress={() => handleModalWebView()}
@@ -290,6 +315,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           borderRadius={10}
           borderColor={White}
           borderWidth={1}
+          disabled={loader}
         />
       </View>
     </View>
