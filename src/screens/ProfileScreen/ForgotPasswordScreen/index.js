@@ -38,20 +38,16 @@ export const ForgotPasswordScreen = ({ navigation }) => {
 
   const handleEmail = (value) => {
     setEmail(value)
-    if (value.length > 0) {
-      if (regEmail.test(value)) {
-        setEmailError(false)
-      } else {
-        setEmailError(true)
-      }
-    } else {
-      setEmailError(false)
-    }
+    setEmailError(true)
   }
 
   const handleSend = () => {
     if (regEmail.test(email)) {
+      setEmailError(false)
       dispatch(ForgotPasswordApi(`${API_URL}/auth/reset-password`, { email }))
+    }
+    else {
+      setEmailError(true)
     }
   }
 

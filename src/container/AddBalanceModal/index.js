@@ -51,6 +51,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
       { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
     )
       .then(res => {
+        console.log("res", res.data.data)
         setCardsData(
           [
             ...res?.data?.data,
@@ -177,7 +178,12 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
         visible={modalVisible}
         onRequestClose={handleModalWebView}
       >
-        <View style={{ width: windowWidth, backgroundColor: "#00a789", height: Constants.statusBarHeight, marginTop: 55 }} />
+        <View style={{
+          width: windowWidth,
+          backgroundColor: "#00a789",
+          height: Constants.statusBarHeight,
+          marginTop: 55
+        }} />
         <TouchableOpacity
           style={{ position: "absolute", top: Constants.statusBarHeight + 5, left: 0, zIndex: 1 }}
           onPress={() => handleModalWebView()}
@@ -192,14 +198,16 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           source={{ uri: `${addCardUrl}` }}
           onNavigationStateChange={state => {
             if (state?.url.split("/").pop() === "fail") {
-              (async () => {
+              (() => {
                 handleModalWebView()
-                await getCardData()
+                getUserProfile()
+                handleModal()
               })()
             } else if (state?.url.split("/").pop() === "success") {
-              (async () => {
+              (() => {
                 handleModalWebView()
-                await getCardData()
+                getUserProfile()
+                handleModal()
               })()
             }
           }}
