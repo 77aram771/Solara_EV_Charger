@@ -26,9 +26,9 @@ export const Map = ({
   return (
     <MapView
       initialRegion={cordinate}
-      onMarkersChange={(props) => {
-        // console.log("props", props)
-      }}
+      // onMarkersChange={(props) => {
+      //   // console.log("props", props)
+      // }}
       needsOffscreenAlphaCompositing={false}
       showsIndoorLevelPicker={false}
       accessibilityElementsHidden={false}

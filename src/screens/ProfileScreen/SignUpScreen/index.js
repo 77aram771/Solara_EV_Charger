@@ -37,7 +37,7 @@ export const SignUpScreen = ({ navigation }) => {
 
   const [name, setName] = useState("")
   const [nameError, setNameError] = useState(false)
-  const [nameErrorMessage] = useState(lang[countryCode].error)
+  const [nameErrorMessage] = useState(lang[countryCode].wrongName)
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState(false)
   const [emailErrorMessage] = useState(lang[countryCode].wrongЕmail)
@@ -46,18 +46,18 @@ export const SignUpScreen = ({ navigation }) => {
   const [phoneErrorMessage] = useState(lang[countryCode].wrongPhone)
   const [password, setPassword] = useState("")
   const [passwordError, setPasswordError] = useState(false)
-  const [passwordErrorMessage] = useState("please enter password")
+  const [passwordErrorMessage] = useState(lang[countryCode].wrongPassword)
   const [auto, setAuto] = useState(null)
   const [autoId, setAutoId] = useState(null)
   const [autoMaxLength, setAutoMaxLength] = useState(null)
   const [autoData, setAutoData] = useState([])
   const [autoDataError, setAutoDataError] = useState(false)
-  const [autoDataErrorMessage] = useState("choose auto pleas")
+  const [autoDataErrorMessage] = useState(lang[countryCode].chooseAuto)
   const [autoModal, setAutoModal] = useState(null)
   const [autoModalId, setAutoModalId] = useState(null)
   const [autoModalData, setAutoModalData] = useState([])
   const [autoModalError, setAutoModalError] = useState(false)
-  const [autoModalErrorMessage] = useState("choose auto modal pleas")
+  const [autoModalErrorMessage] = useState(lang[countryCode].chooseModal)
   const [isSelected, setSelection] = useState(false)
   const [isSelectedError, setIsSelectedError] = useState(false)
 
@@ -205,7 +205,7 @@ export const SignUpScreen = ({ navigation }) => {
                 setAutoModalError(true)
               }
             } else {
-              setAutoModalError(true)
+              setAutoDataError(true)
             }
           } else {
             setPasswordError(true)
@@ -216,8 +216,7 @@ export const SignUpScreen = ({ navigation }) => {
       } else {
         setEmailError(true)
       }
-    }
-    else {
+    } else {
       setNameError(true)
     }
   }
@@ -230,7 +229,7 @@ export const SignUpScreen = ({ navigation }) => {
       >
         <View style={styles.container}>
           <HeaderCustom
-            text={''}
+            text={""}
             backgroundColor={MySin}
             handleBack={() => navigation.goBack()}
             backArrowHide={false}

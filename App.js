@@ -114,7 +114,7 @@ export default function App() {
             handleCheck: () => handleCheck(),
             handleHideTabBar: (bool) => handleHideTabBar(bool),
             handleCountryCode: (code) => handleCountryCode(code),
-            handleLocationUser: (code) => handleLocationUser(code)
+            handleLocationUser: () => handleLocationUser()
           }}
         >
           <Provider store={store}>

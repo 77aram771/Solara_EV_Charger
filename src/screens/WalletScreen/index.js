@@ -116,7 +116,10 @@ export const WalletScreen = ({ navigation }) => {
 
   const handleUserCheck = () => {
     setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("SignIn")
+    navigation.navigate("ProfileStack")
+    setTimeout(() => {
+      navigation.navigate("SignIn")
+    }, 100)
   }
 
   return (

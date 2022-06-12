@@ -39,15 +39,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
 
   const handleRPassword = (value) => {
     setRPassword(value)
-    if (value.length > 1) {
-      if (value === newPassword) {
-        setRPasswordError(false)
-      } else {
-        setRPasswordError(true)
-      }
-    } else {
-      setRPasswordError(false)
-    }
+    setRPasswordError(false)
   }
 
   const handleSave = async () => {

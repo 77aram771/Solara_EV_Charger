@@ -36,17 +36,25 @@ export const ForgotPasswordScreen = ({ navigation }) => {
     })
   }, [navigation])
 
+  useEffect(() => {
+    console.log("forgotPasswordData", forgotPasswordData)
+    if (forgotPasswordData === 200) {
+      setTimeout(() => {
+        navigation.goBack()
+      }, 4000)
+    }
+  }, [forgotPasswordData])
+
   const handleEmail = (value) => {
     setEmail(value)
-    setEmailError(true)
+    setEmailError(false)
   }
 
   const handleSend = () => {
     if (regEmail.test(email)) {
       setEmailError(false)
       dispatch(ForgotPasswordApi(`${API_URL}/auth/reset-password`, { email }))
-    }
-    else {
+    } else {
       setEmailError(true)
     }
   }

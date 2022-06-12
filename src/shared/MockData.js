@@ -4,7 +4,7 @@ import IconRussian from "../assets/icon/ru.png"
 import { windowHeight, windowWidth } from "./Const"
 
 export const ASPECT_RATIO = windowWidth / windowHeight
-export const LATITUDE_DELTA = 0.0922
+export const LATITUDE_DELTA = 0.09
 export const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 export const horizontalAnimation = {
@@ -35,7 +35,7 @@ export const langData = [
   },
   {
     id: 2,
-    title: "հայերեն",
+    title: "Հայերեն",
     active: false,
     icon: IconArmenia,
     countryCode: "hy"

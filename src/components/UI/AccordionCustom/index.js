@@ -9,8 +9,10 @@ export const AccordionCustom = ({ title, text, active, handle }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handle} style={styles.item}>
-        <TextCustom text={title} />
-        <View style={{ width: 30, alignItems: "flex-end" }}>
+        <View style={{width: '90%'}}>
+          <TextCustom text={title} />
+        </View>
+        <View style={{ width: 20, alignItems: "flex-end"}}>
           <Image
             source={IconArrow}
             style={{ width: 15, height: 15, transform: [{ rotate: active ? "180deg" : "0deg" }] }}

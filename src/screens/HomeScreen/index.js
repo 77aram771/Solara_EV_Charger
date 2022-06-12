@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { Image, Platform, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Image, Platform, TouchableOpacity, View } from "react-native"
 import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -40,13 +40,14 @@ export const HomeScreen = ({ navigation }) => {
   const [km, setKm] = useState(Number)
   const [min, setMin] = useState("")
   const [start, setStart] = useState(false)
+  const [loaderStart, setLoaderStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
   const [modalRedirect, setModalRedirect] = useState(false)
   const [cordinate, setCordinate] = useState({
-    latitude: location !== null ? location?.coords?.latitude : 40.177200,
-    longitude: location !== null ? location?.coords?.longitude : 44.503490,
-    latitudeDelta: 8,
-    longitudeDelta: LONGITUDE_DELTA + 6
+    latitude: location !== null ? location?.coords?.latitude : 40,
+    longitude: location !== null ? location?.coords?.longitude : 45,
+    latitudeDelta: 6,
+    longitudeDelta: LONGITUDE_DELTA
   })
   const [options, setOptions] = useState({
     latitude: null,
@@ -149,7 +150,13 @@ export const HomeScreen = ({ navigation }) => {
       })
   }
 
-  const getCurrentPosition = () => _mapView.current.animateToRegion(cordinate, 500)
+  const getCurrentPosition = async () => {
+    if (location === null) {
+      await handleLocationUser()
+    } else {
+      _mapView.current.animateToRegion(cordinate, 500)
+    }
+  }
 
   const handleItemId = async (e, id) => {
     e.stopPropagation()
@@ -176,11 +183,15 @@ export const HomeScreen = ({ navigation }) => {
   }
 
   const handleStart = async () => {
-    if (location !== null) {
-      setStart(!start)
-    } else {
+    if (location === null) {
       await handleLocationUser()
+      setLoaderStart(true)
+    } else {
+      setLoaderStart(false)
+      setStart(!start)
     }
+    setLoaderStart(false)
+
   }
 
   const handleRedirect = async () => {
@@ -278,28 +289,31 @@ export const HomeScreen = ({ navigation }) => {
         handleReady={handleReady}
         handleReset={handleReset}
       />
-      {
-        location &&
-        <TouchableOpacity
-          style={[styles.myLocationButtonOut, {
-            bottom: start
-              ? windowHeight / 12
-              : itemId !== null || qrItem !== null
-                ? Platform.OS === "android"
-                  ? windowHeight / 3.2 : windowHeight / 3.8 : Platform.OS === "android"
-                  ? windowHeight / 17
-                  : windowHeight / 20
-          }]}
-          onPress={() => getCurrentPosition(cordinate)}
-        >
-          <Image source={IconDirection} style={{ width: 25, height: 25 }} />
-        </TouchableOpacity>
-      }
+      <TouchableOpacity
+        style={[styles.myLocationButtonOut, {
+          bottom: start
+            ? windowHeight / 12
+            : itemId !== null || qrItem !== null
+              ? Platform.OS === "android"
+                ? windowHeight / 3
+                : windowHeight / 3.8
+              : Platform.OS === "android"
+                ? windowHeight / 17
+                : windowHeight / 20
+        }]}
+        onPress={() => getCurrentPosition(cordinate)}
+      >
+        <Image source={IconDirection} style={{ width: 25, height: 25 }} />
+      </TouchableOpacity>
       {
         itemId !== null
           ? (
             <View style={styles.infoContainer}>
-
+              {/* { */}
+              {/*   loaderStart */}
+              {/*     ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} /> */}
+              {/*     : null */}
+              {/* } */}
               {
                 start
                   ? null

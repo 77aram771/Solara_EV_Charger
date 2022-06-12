@@ -1,11 +1,12 @@
 import React, { useContext } from "react"
-import { ScrollView, View } from "react-native"
+import { Linking, Platform, ScrollView, View } from "react-native"
 import * as WebBrowser from "expo-web-browser"
 import { styles } from "./style"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { lang } from "../../../shared/Lang"
 import { Fiord, Mercurysolid, MineShaft, MySin, White } from "../../../shared/Colors"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
+import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import Context from "../../../../Context"
 import IconNotification from "../../../assets/icon/notification.png"
 import IconLanguage from "../../../assets/icon/language.png"
@@ -17,7 +18,10 @@ import IconFb from "../../../assets/icon/facebook.png"
 import IconIns from "../../../assets/icon/instagram.png"
 import IconViber from "../../../assets/icon/icon-viber.png"
 import IconTelegram from "../../../assets/icon/icon-telegram.png"
-import { HeaderCustom } from "../../../components/UI/HeaderCustom";
+
+const url = (Platform.OS === 'android')
+  ? 'viber//:1-408-555-1212?body=yourMessage'
+  : 'viber:1-408-555-1212'
 
 export const SettingsScreen = ({ navigation }) => {
 

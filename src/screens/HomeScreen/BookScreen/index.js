@@ -72,7 +72,10 @@ export const BookScreen = ({ navigation, route }) => {
 
   const handleUserCheck = () => {
     setModalVisibleCheckUser(!modalVisibleCheckUser)
-    navigation.navigate("SignIn")
+    navigation.navigate("ProfileStack")
+    setTimeout(() => {
+      navigation.navigate("SignIn")
+    }, 100)
   }
 
   return (

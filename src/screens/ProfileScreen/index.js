@@ -87,252 +87,254 @@ export const ProfileScreen = ({ navigation }) => {
       >
         <AddBalanceModal getUserProfile={getUserProfile} handleModal={handleModal} />
       </Modal>
-      {
-        userLoader
-          ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-          : (
-            <>
-              {
-                login
-                  ? (
-                    <>
-                      <ImageBackground source={ImgUserBackground} style={styles.headerBoxUser} resizeMode={"cover"}>
-                        <Image
-                          source={IconSolaraUser}
-                          resizeMode={"contain"}
-                          style={{
-                            width: windowWidth / 3,
-                            height: windowHeight / 6,
-                            marginBottom: 10
-                          }}
-                        />
+      <>
+        {
+          login
+            ? (
+              userLoader
+                ? (
+                  <View style={{justifyContent: 'center', alignItems: 'center', width: windowWidth, height: windowHeight}}>
+                    <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
+                  </View>
+                )
+                : (
+                  <>
+                    <ImageBackground source={ImgUserBackground} style={styles.headerBoxUser} resizeMode={"cover"}>
+                      <Image
+                        source={IconSolaraUser}
+                        resizeMode={"contain"}
+                        style={{
+                          width: windowWidth / 3,
+                          height: windowHeight / 6,
+                          marginBottom: 10
+                        }}
+                      />
+                      <TextCustom
+                        text={user?.full_name}
+                        color={White}
+                        fontSize={18}
+                        marginBottom={10}
+                      />
+                      <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "baseline" }}>
                         <TextCustom
-                          text={user?.full_name}
+                          text={`${lang[countryCode].balance}: ${user?.amount}`}
                           color={White}
-                          fontSize={18}
+                          fontSize={16}
                           marginBottom={10}
+                          marginRight={5}
                         />
-                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'baseline'}}>
-                          <TextCustom
-                            text={`${lang[countryCode].balance}: ${user?.amount}`}
-                            color={White}
-                            fontSize={16}
-                            marginBottom={10}
-                            marginRight={5}
-                          />
-                          <Image source={ImgLight} style={{ width: 13, height: 13 }} />
-                        </View>
-                        <ButtonCustom
-                          text={lang[countryCode].topUpBalance}
-                          paddingTop={10}
-                          paddingBottom={10}
-                          paddingRight={10}
-                          paddingLeft={10}
-                          borderRadius={10}
-                          fontSize={13}
-                          color={White}
-                          backgroundColor={Fiord}
-                          click={handleModal}
-                        />
-                      </ImageBackground>
-                      <View style={styles.mineBox}>
-                        <ButtonCustom
-                          text={lang[countryCode].personalInformation}
-                          width={"100%"}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => navigation.navigate("PersonalInformation", {
-                            user
-                          })}
-                          fontSize={15}
-                          fontWeight={"400"}
-                          icon={IconUser}
-                          iconWidth={20}
-                          iconHeight={20}
-                          iconPositionLeft={false}
-                          justifyContent={"flex-start"}
-                          paddingLeft={20}
-                          paddingTop={Platform.OS === "ios" ? 14 : 8}
-                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                          marginBottom={10}
-                        />
-                        <ButtonCustom
-                          text={`${lang[countryCode].correspondence}`}
-                          width={"100%"}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => navigation.navigate("AskQuestion", { userData })}
-                          fontSize={15}
-                          fontWeight={"400"}
-                          icon={IconEmail}
-                          iconWidth={20}
-                          iconHeight={20}
-                          iconPositionLeft={false}
-                          justifyContent={"flex-start"}
-                          paddingLeft={20}
-                          paddingTop={Platform.OS === "ios" ? 14 : 8}
-                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                          marginBottom={10}
-                        />
-                        <ButtonCustom
-                          text={`${lang[countryCode].history}`}
-                          width={"100%"}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => navigation.navigate("History")}
-                          fontSize={15}
-                          fontWeight={"400"}
-                          icon={IconHistory}
-                          iconWidth={20}
-                          iconHeight={20}
-                          iconPositionLeft={false}
-                          justifyContent={"flex-start"}
-                          paddingLeft={20}
-                          paddingTop={Platform.OS === "ios" ? 14 : 8}
-                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                          marginBottom={10}
-                        />
-                        <ButtonCustom
-                          text={`${lang[countryCode].getNotification}`}
-                          width={"100%"}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => setNotificationActive(!notificationActive)}
-                          fontSize={15}
-                          fontWeight={"400"}
-                          icon={IconNotification}
-                          iconWidth={20}
-                          iconHeight={20}
-                          iconPositionLeft={false}
-                          justifyContent={"space-between"}
-                          paddingLeft={20}
-                          paddingRight={20}
-                          paddingTop={Platform.OS === "ios" ? 14 : 8}
-                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                          marginBottom={10}
-                          switchButton={true}
-                          switchActive={notificationActive}
-                        />
-                        <ButtonCustom
-                          text={`${lang[countryCode].settings}`}
-                          width={"100%"}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => navigation.navigate("Settings")}
-                          fontSize={15}
-                          fontWeight={"400"}
-                          icon={IconMenu}
-                          iconWidth={20}
-                          iconHeight={20}
-                          iconPositionLeft={false}
-                          justifyContent={"flex-start"}
-                          paddingLeft={20}
-                          paddingTop={Platform.OS === "ios" ? 14 : 8}
-                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                        />
+                        <Image source={ImgLight} style={{ width: 13, height: 13 }} />
                       </View>
                       <ButtonCustom
-                        text={lang[countryCode].exit}
-                        backgroundColor={White}
-                        color={Fiord}
+                        text={lang[countryCode].topUpBalance}
+                        paddingTop={10}
+                        paddingBottom={10}
+                        paddingRight={10}
+                        paddingLeft={10}
+                        borderRadius={10}
+                        fontSize={13}
+                        color={White}
+                        backgroundColor={Fiord}
+                        click={handleModal}
+                      />
+                    </ImageBackground>
+                    <View style={styles.mineBox}>
+                      <ButtonCustom
+                        text={lang[countryCode].personalInformation}
                         width={"100%"}
-                        marginTop={5}
-                        marginBottom={20}
+                        backgroundColor={White}
+                        borderColor={Mercurysolid}
+                        color={MineShaft}
+                        borderWidth={1}
+                        borderRadius={18}
+                        click={() => navigation.navigate("PersonalInformation", {
+                          user
+                        })}
+                        fontSize={15}
+                        fontWeight={"400"}
+                        icon={IconUser}
+                        iconWidth={20}
+                        iconHeight={20}
+                        iconPositionLeft={false}
+                        justifyContent={"flex-start"}
+                        paddingLeft={20}
                         paddingTop={Platform.OS === "ios" ? 14 : 8}
                         paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                        click={handleLogOut}
-                        fontSize={18}
-                        fontWeight={"700"}
-                        icon={IconLogOut}
-                        iconWidth={18}
-                        iconHeight={18}
-                        iconPositionLeft={false}
-                        borderRadius={12}
-                        borderColor={Fiord}
-                        borderWidth={1}
+                        marginBottom={10}
                       />
-                    </>
-                  )
-                  : (
-                    <>
-                      <View style={styles.headerBox}>
-                        <Image
-                          source={IconSolara}
-                          style={{
-                            width: 150,
-                            height: 150,
-                            position: "absolute",
-                            bottom: -65
-                          }}
-                          resizeMode={"cover"}
-                        />
-                      </View>
-                      <View style={styles.mineBox}>
-                        <ButtonCustom
-                          text={`${lang[countryCode].signIn} / ${lang[countryCode].signUp}`}
-                          width={"100%"}
-                          height={50}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => navigation.navigate("SignIn", {
-                            login,
-                            handleLogIn: (email, password) => handleLogIn(email, password)
-                          })}
-                          fontSize={18}
-                          fontWeight={"400"}
-                          icon={IconUserLogin}
-                          iconWidth={20}
-                          iconHeight={20}
-                          marginBottom={20}
-                          iconPositionLeft={false}
-                          justifyContent={"flex-start"}
-                          paddingLeft={20}
-                        />
-                        <ButtonCustom
-                          text={`${lang[countryCode].settings}`}
-                          width={"100%"}
-                          height={50}
-                          backgroundColor={White}
-                          borderColor={Mercurysolid}
-                          color={MineShaft}
-                          borderWidth={1}
-                          borderRadius={18}
-                          click={() => navigation.navigate("Settings")}
-                          fontSize={18}
-                          fontWeight={"400"}
-                          icon={IconMenu}
-                          iconWidth={20}
-                          iconHeight={20}
-                          iconPositionLeft={false}
-                          justifyContent={"flex-start"}
-                          paddingLeft={20}
-                        />
-                      </View>
-                      <View style={styles.footerBox} />
-                    </>
-                  )
-              }
-            </>
-          )
-      }
+                      <ButtonCustom
+                        text={`${lang[countryCode].correspondence}`}
+                        width={"100%"}
+                        backgroundColor={White}
+                        borderColor={Mercurysolid}
+                        color={MineShaft}
+                        borderWidth={1}
+                        borderRadius={18}
+                        click={() => navigation.navigate("AskQuestion", { userData })}
+                        fontSize={15}
+                        fontWeight={"400"}
+                        icon={IconEmail}
+                        iconWidth={20}
+                        iconHeight={20}
+                        iconPositionLeft={false}
+                        justifyContent={"flex-start"}
+                        paddingLeft={20}
+                        paddingTop={Platform.OS === "ios" ? 14 : 8}
+                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                        marginBottom={10}
+                      />
+                      <ButtonCustom
+                        text={`${lang[countryCode].history}`}
+                        width={"100%"}
+                        backgroundColor={White}
+                        borderColor={Mercurysolid}
+                        color={MineShaft}
+                        borderWidth={1}
+                        borderRadius={18}
+                        click={() => navigation.navigate("History")}
+                        fontSize={15}
+                        fontWeight={"400"}
+                        icon={IconHistory}
+                        iconWidth={20}
+                        iconHeight={20}
+                        iconPositionLeft={false}
+                        justifyContent={"flex-start"}
+                        paddingLeft={20}
+                        paddingTop={Platform.OS === "ios" ? 14 : 8}
+                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                        marginBottom={10}
+                      />
+                      <ButtonCustom
+                        text={`${lang[countryCode].getNotification}`}
+                        width={"100%"}
+                        backgroundColor={White}
+                        borderColor={Mercurysolid}
+                        color={MineShaft}
+                        borderWidth={1}
+                        borderRadius={18}
+                        click={() => setNotificationActive(!notificationActive)}
+                        fontSize={15}
+                        fontWeight={"400"}
+                        icon={IconNotification}
+                        iconWidth={20}
+                        iconHeight={20}
+                        iconPositionLeft={false}
+                        justifyContent={"space-between"}
+                        paddingLeft={20}
+                        paddingRight={20}
+                        paddingTop={Platform.OS === "ios" ? 14 : 8}
+                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                        marginBottom={10}
+                        switchButton={true}
+                        switchActive={notificationActive}
+                      />
+                      <ButtonCustom
+                        text={`${lang[countryCode].settings}`}
+                        width={"100%"}
+                        backgroundColor={White}
+                        borderColor={Mercurysolid}
+                        color={MineShaft}
+                        borderWidth={1}
+                        borderRadius={18}
+                        click={() => navigation.navigate("Settings")}
+                        fontSize={15}
+                        fontWeight={"400"}
+                        icon={IconMenu}
+                        iconWidth={20}
+                        iconHeight={20}
+                        iconPositionLeft={false}
+                        justifyContent={"flex-start"}
+                        paddingLeft={20}
+                        paddingTop={Platform.OS === "ios" ? 14 : 8}
+                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                      />
+                    </View>
+                    <ButtonCustom
+                      text={lang[countryCode].exit}
+                      backgroundColor={White}
+                      color={Fiord}
+                      width={"100%"}
+                      marginTop={5}
+                      marginBottom={20}
+                      paddingTop={Platform.OS === "ios" ? 14 : 8}
+                      paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                      click={handleLogOut}
+                      fontSize={18}
+                      fontWeight={"700"}
+                      icon={IconLogOut}
+                      iconWidth={18}
+                      iconHeight={18}
+                      iconPositionLeft={false}
+                      borderRadius={12}
+                      borderColor={Fiord}
+                      borderWidth={1}
+                    />
+                  </>
+                )
+            )
+            : (
+              <>
+                <View style={styles.headerBox}>
+                  <Image
+                    source={IconSolara}
+                    style={{
+                      width: 150,
+                      height: 150,
+                      position: "absolute",
+                      bottom: -65
+                    }}
+                    resizeMode={"cover"}
+                  />
+                </View>
+                <View style={styles.mineBox}>
+                  <ButtonCustom
+                    text={`${lang[countryCode].signIn} / ${lang[countryCode].signUp}`}
+                    width={"100%"}
+                    height={50}
+                    backgroundColor={White}
+                    borderColor={Mercurysolid}
+                    color={MineShaft}
+                    borderWidth={1}
+                    borderRadius={18}
+                    click={() => navigation.navigate("SignIn", {
+                      login,
+                      handleLogIn: (email, password) => handleLogIn(email, password)
+                    })}
+                    fontSize={18}
+                    fontWeight={"400"}
+                    icon={IconUserLogin}
+                    iconWidth={20}
+                    iconHeight={20}
+                    marginBottom={20}
+                    iconPositionLeft={false}
+                    justifyContent={"flex-start"}
+                    paddingLeft={20}
+                  />
+                  <ButtonCustom
+                    text={`${lang[countryCode].settings}`}
+                    width={"100%"}
+                    height={50}
+                    backgroundColor={White}
+                    borderColor={Mercurysolid}
+                    color={MineShaft}
+                    borderWidth={1}
+                    borderRadius={18}
+                    click={() => navigation.navigate("Settings")}
+                    fontSize={18}
+                    fontWeight={"400"}
+                    icon={IconMenu}
+                    iconWidth={20}
+                    iconHeight={20}
+                    iconPositionLeft={false}
+                    justifyContent={"flex-start"}
+                    paddingLeft={20}
+                  />
+                </View>
+                <View style={styles.footerBox} />
+              </>
+            )
+        }
+      </>
     </View>
   )
 }
