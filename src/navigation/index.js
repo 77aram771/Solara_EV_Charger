@@ -30,7 +30,6 @@ function RootNavigation() {
         </NavigationContainer>
       </AppearanceProvider>
     </SafeAreaProvider>
-
   )
 }
 

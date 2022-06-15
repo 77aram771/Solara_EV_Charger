@@ -3,6 +3,7 @@ import { ActivityIndicator, Image, KeyboardAvoidingView, Modal, Platform, Toucha
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { WebView } from "react-native-webview"
+import Icon from "react-native-vector-icons/AntDesign"
 import Constants from "expo-constants"
 import { Fiord, Green, Manatee, MySin, SunsetOrange, White } from "../../shared/Colors"
 import { styles } from "./style"
@@ -13,11 +14,10 @@ import { HeaderCustom } from "../../components/UI/HeaderCustom"
 import { PaginationCarousel } from "../../components/UI/PaginationCarousel"
 import { paddingHorizontal } from "../../shared/GlobalStyle"
 import { InputCustom } from "../../components/UI/InputCustom"
-import { API_URL, windowWidth } from "../../shared/Const"
+import { API_URL, windowHeight, windowWidth } from "../../shared/Const"
 import { TextCustom } from "../../components/UI/TextCustom"
 import { DismissKeyboard } from "../../components/DismissKeyboard"
 import ImgLight from "../../assets/icon/priceunit.png"
-import IconClose from "../../assets/icon/cancel.png"
 import IconCard from "../../assets/icon/icon-card.png"
 
 export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
@@ -32,7 +32,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
   const [messageStatus, setMessageStatus] = useState("")
   const [loader, setLoader] = useState(false)
   const [cardsData, setCardsData] = useState(null)
-  const [cardId, setCardId] = useState("")
+  const [cardId, setCardId] = useState(3)
   const [modalVisible, setModalVisible] = useState(false)
   const [addCardUrl, setAddCardUrl] = useState("")
 
@@ -51,10 +51,8 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
       { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
     )
       .then(res => {
-        console.log("res", res.data.data)
         setCardsData(
           [
-            ...res?.data?.data,
             {
               "id": 3,
               "title": "Idram"
@@ -62,10 +60,14 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
             {
               "id": 4,
               "title": "Telcell"
-            }
+            },
+            ...res?.data?.data
           ]
         )
-        setCardId(res?.data?.data[0]?.id)
+        console.log("res?.data?.data[0]?.id", res?.data?.data)
+        if (res?.data?.data.length > 0) {
+          setCardId(res?.data?.data[0]?.id)
+        }
         setLoader(false)
       })
       .catch(e => console.log("e", e.response))
@@ -178,21 +180,16 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
         visible={modalVisible}
         onRequestClose={handleModalWebView}
       >
-        <View style={{
+        <View style={[{
           width: windowWidth,
           backgroundColor: "#00a789",
-          height: Constants.statusBarHeight,
-          marginTop: 55
-        }} />
+          height: Constants.statusBarHeight
+        }, Platform.OS === "ios" ? { marginTop: 55 } : { paddingTop: 55 }]} />
         <TouchableOpacity
-          style={{ position: "absolute", top: Constants.statusBarHeight + 5, left: 0, zIndex: 1 }}
+          style={{ position: "absolute", top: Platform.OS === "ios" ? windowHeight / 13.5 : 15, right: 15, zIndex: 1 }}
           onPress={() => handleModalWebView()}
         >
-          <Image
-            source={IconClose}
-            style={{ width: 50, height: 50 }}
-            resizeMode={"center"}
-          />
+          <Icon name={"close"} size={25} />
         </TouchableOpacity>
         <WebView
           source={{ uri: `${addCardUrl}` }}
@@ -295,37 +292,37 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 : null
             }
           </View>
+          <View style={styles.buttonContainer}>
+            <TextCustom
+              text={lang[countryCode].yourPaymentInformationIsSecureWithUs}
+              color={Manatee}
+              fontSize={12}
+              fontWeight={"400"}
+              marginBottom={10}
+            />
+            <ButtonCustom
+              text={lang[countryCode].add.toUpperCase()}
+              backgroundColor={Fiord}
+              color={MySin}
+              width={"100%"}
+              click={handleAddBalance}
+              fontSize={18}
+              fontWeight={"700"}
+              icon={IconCard}
+              iconWidth={18}
+              iconHeight={18}
+              paddingTop={Platform.OS === "ios" ? 14 : 8}
+              paddingBottom={Platform.OS === "ios" ? 14 : 8}
+              marginBottom={20}
+              iconPositionLeft={false}
+              borderRadius={10}
+              borderColor={White}
+              borderWidth={1}
+              disabled={loader}
+            />
+          </View>
         </KeyboardAvoidingView>
       </DismissKeyboard>
-      <View style={styles.buttonContainer}>
-        <TextCustom
-          text={lang[countryCode].yourPaymentInformationIsSecureWithUs}
-          color={Manatee}
-          fontSize={12}
-          fontWeight={"400"}
-          marginBottom={10}
-        />
-        <ButtonCustom
-          text={lang[countryCode].add.toUpperCase()}
-          backgroundColor={Fiord}
-          color={MySin}
-          width={"100%"}
-          click={handleAddBalance}
-          fontSize={18}
-          fontWeight={"700"}
-          icon={IconCard}
-          iconWidth={18}
-          iconHeight={18}
-          paddingTop={Platform.OS === "ios" ? 14 : 8}
-          paddingBottom={Platform.OS === "ios" ? 14 : 8}
-          marginBottom={20}
-          iconPositionLeft={false}
-          borderRadius={10}
-          borderColor={White}
-          borderWidth={1}
-          disabled={loader}
-        />
-      </View>
     </View>
   )
 }

@@ -14,6 +14,7 @@ import { store } from "./src/store"
 import { API_URL, Google_Key } from "./src/shared/Const"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
 import axios from "axios"
+// import AsyncStorage from "@react-native-async-storage/async-storage"
 // import ImgSplashScreenRu from './src/assets/images/img-splashscreen-ru.png'
 // import ImgSplashScreenEn from './src/assets/images/img-splashscreen-en.png'
 
@@ -42,7 +43,7 @@ export default function App() {
   const [countryCode, setCountryCode] = useState("en")
   const [sumKW, setSumKW] = useState("")
 
-  const handleCheck = () => setCheck(true)
+  const handleCheck = async () => setCheck(true)
 
   const handleHideTabBar = (bool) => setShowTabBar(bool)
 

@@ -14,7 +14,7 @@ import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { SelectCustom } from "../../../components/UI/SelectCustom"
 import { GetCarModal } from "../../../store/actionsCreators/CarModalApiActionCreator"
 import { API_URL } from "../../../shared/Const"
-import { regName } from "../../../shared/MockData"
+// import { regName } from "../../../shared/MockData"
 import IconCheck from "../../../assets/icon/check2.png"
 import IconPassword from "../../../assets/icon/password3.png"
 import IconArrowDown from "../../../assets/icon/dropdown.png"
@@ -33,13 +33,13 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
   const [nameErrorMessage] = useState(lang[countryCode].wrongName)
   const [loader, setLoader] = useState(false)
   const [auto, setAuto] = useState(null)
-  const [autoId, setAutoId] = useState(null)
+  const [autoId, setAutoId] = useState("")
   const [autoMaxLength, setAutoMaxLength] = useState(null)
   const [autoData, setAutoData] = useState([])
   const [autoDataError, setAutoDataError] = useState(false)
   const [autoDataErrorMessage] = useState(lang[countryCode].chooseAuto)
   const [autoModal, setAutoModal] = useState(null)
-  const [autoModalId, setAutoModalId] = useState(null)
+  const [autoModalId, setAutoModalId] = useState("")
   const [autoModalData, setAutoModalData] = useState([])
   const [autoModalError, setAutoModalError] = useState(false)
   const [autoModalErrorMessage] = useState(lang[countryCode].chooseModal)
@@ -78,9 +78,15 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
   }, [carModalData])
 
   useEffect(() => {
-    if(route.params.user) {
+    if (route.params.user) {
+      console.log("route.params.user.car_make_name", route.params.user.car_make_name)
+      console.log("route.params.user.car_model_name", route.params.user.car_model_name)
+      console.log("route.params.user.car_make_id", route.params.user.car_make_id)
+      console.log("route.params.user.car_model_id", route.params.user.car_model_id)
       setAuto(route.params.user.car_make_name)
       setAutoModal(route.params.user.car_model_name)
+      setAutoId(route.params.user.car_make_id)
+      setAutoModalId(route.params.user.car_model_id)
     }
   }, [route.params.user])
 
@@ -109,27 +115,41 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
 
   const handleSave = async () => {
     const Token = await AsyncStorage.getItem("token")
-    if (regName(name)) {
-      setNameError(false)
-      if (Token !== null) {
-        setLoader(true)
-        await axios.post(`${API_URL}/users/update-profile?access-token=${Token}`,
-          { full_name: name },
-          { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-        )
-          .then(res => {
-            setLoader(false)
-            if (res.status === 200) {
-              navigation.goBack()
-            }
-          })
-          .catch(e => {
-            setLoader(false)
-            console.log("e", e)
-          })
+    if (name.length > 0) {
+      if (auto !== null) {
+        setAutoDataError(false)
+        if (autoModal !== null) {
+          setAutoModalError(false)
+          setNameError(false)
+          if (Token !== null) {
+            setLoader(true)
+            await axios.post(`${API_URL}/users/update-profile?access-token=${Token}`,
+              {
+                full_name: name,
+                car_make_id: autoId,
+                car_model_id: autoModalId
+              },
+              { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+            )
+              .then(res => {
+                console.log("res", res.data)
+                setLoader(false)
+                if (res.status === 200) {
+                  navigation.goBack()
+                }
+              })
+              .catch(e => {
+                setLoader(false)
+                console.log("e handleSave", e)
+              })
+          }
+        } else {
+          setAutoModalError(true)
+        }
+      } else {
+        setAutoDataError(true)
       }
-    }
-    else {
+    } else {
       setNameError(true)
     }
   }

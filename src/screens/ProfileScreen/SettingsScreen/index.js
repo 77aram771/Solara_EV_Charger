@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Linking, Platform, ScrollView, View } from "react-native"
+import { Linking, ScrollView, View } from "react-native"
 import * as WebBrowser from "expo-web-browser"
 import { styles } from "./style"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
@@ -19,17 +19,13 @@ import IconIns from "../../../assets/icon/instagram.png"
 import IconViber from "../../../assets/icon/icon-viber.png"
 import IconTelegram from "../../../assets/icon/icon-telegram.png"
 
-const url = (Platform.OS === 'android')
-  ? 'viber//:1-408-555-1212?body=yourMessage'
-  : 'viber:1-408-555-1212'
-
 export const SettingsScreen = ({ navigation }) => {
 
   const { countryCode } = useContext(Context)
 
-  const handlePressButtonAsync = async (uri) => {
-    await WebBrowser.openBrowserAsync(uri)
-  }
+  const handlePressButtonAsync = async (uri) => await WebBrowser.openBrowserAsync(uri)
+
+  const handleLink = async (url) => await Linking.openURL(url)
 
   return (
     <View style={styles.container}>
@@ -225,7 +221,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => alert("Need url from Viber")}
+            click={() => handleLink('viber://add?number=+37444577555')}
             fontSize={18}
             fontWeight={"400"}
             icon={IconViber}
@@ -243,7 +239,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => alert("Need url from Telegram")}
+            click={() => handleLink('https://t.me/+37444577555')}
             fontSize={18}
             fontWeight={"400"}
             icon={IconTelegram}
