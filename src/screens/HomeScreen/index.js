@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { ActivityIndicator, Image, Platform, TouchableOpacity, View } from "react-native"
+import { Image, Platform, TouchableOpacity, View } from "react-native"
 import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -25,6 +25,7 @@ import IconBook from "../../assets/icon/reserve.png"
 import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
+import IconClose from '../../assets/icon/cancel.png'
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -43,6 +44,7 @@ export const HomeScreen = ({ navigation }) => {
   const [loaderStart, setLoaderStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
   const [modalRedirect, setModalRedirect] = useState(false)
+  const [check, setCheck] = useState(true)
   const [cordinate, setCordinate] = useState({
     latitude: location !== null ? location?.coords?.latitude : 40,
     longitude: location !== null ? location?.coords?.longitude : 45,
@@ -65,13 +67,16 @@ export const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     return navigation.addListener("focus", async () => {
-      handleHideTabBar(true)
       const transactionId = await AsyncStorage.getItem("transaction_id")
       if (transactionId !== null) {
         await handleCheckChargeProgress()
       }
     })
   }, [navigation])
+
+  useEffect( () => {
+    handleHideTabBar(check)
+  }, [check])
 
   useEffect(() => {
     if (location !== null) {
@@ -209,6 +214,12 @@ export const HomeScreen = ({ navigation }) => {
     setQrItem(null)
   }
 
+  // const handleCheck = async () => setCheck(!check)
+
+  // if (check) {
+  //   return <WelcomeScreen handleCheck={handleCheck} />
+  // }
+
   return (
     <View style={styles.container}>
       <Popup
@@ -335,7 +346,7 @@ export const HomeScreen = ({ navigation }) => {
                         borderRadius={5}
                         borderColor={Fiord}
                         borderWidth={2}
-                        icon={IconBook}
+                        icon={IconClose}
                         iconWidth={15}
                         iconHeight={15}
                         iconPositionLeft={false}

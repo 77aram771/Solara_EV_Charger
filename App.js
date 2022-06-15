@@ -34,7 +34,6 @@ export default function App() {
 
   const customTextProps = { style: { fontFamily: "Roboto_400Regular" } }
 
-  const [check, setCheck] = useState(false)
   const [location, setLocation] = useState(null)
   const [setErrorMsg] = useState(null)
   const [userAddress, setUserAddress] = useState("")
@@ -42,8 +41,6 @@ export default function App() {
   const [load, setLoad] = useState(true)
   const [countryCode, setCountryCode] = useState("en")
   const [sumKW, setSumKW] = useState("")
-
-  const handleCheck = async () => setCheck(true)
 
   const handleHideTabBar = (bool) => setShowTabBar(bool)
 
@@ -106,13 +103,11 @@ export default function App() {
       return (
         <Context.Provider
           value={{
-            check: check,
             location: location,
             userAddress: userAddress,
             showTabBar: showTabBar,
             countryCode: countryCode,
             sumKW: sumKW,
-            handleCheck: () => handleCheck(),
             handleHideTabBar: (bool) => handleHideTabBar(bool),
             handleCountryCode: (code) => handleCountryCode(code),
             handleLocationUser: () => handleLocationUser()

@@ -1,15 +1,11 @@
-import React, { useContext } from "react"
+import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar } from "expo-status-bar"
 import { AppearanceProvider } from "react-native-appearance"
-import Context from "../../Context"
-import { WelcomeScreen } from "../screens/WelcomeScreen"
 import { MyDrawer } from "./DrawerStack"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 
 function RootNavigation() {
-
-  const { check } = useContext(Context)
 
   return (
     <SafeAreaProvider>
@@ -22,11 +18,7 @@ function RootNavigation() {
           hideTransitionAnimation={"slide"}
         />
         <NavigationContainer>
-          {
-            !check
-              ? <MyDrawer />
-              : <WelcomeScreen />
-          }
+          <MyDrawer />
         </NavigationContainer>
       </AppearanceProvider>
     </SafeAreaProvider>

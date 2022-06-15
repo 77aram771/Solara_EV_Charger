@@ -15,7 +15,7 @@ import IconVisa from "../../../assets/icon/card/visa.png"
 import IconMastercard from "../../../assets/icon/card/mastercard.png"
 import IconDiscover from "../../../assets/icon/card/discover.png"
 import ImgLight from "../../../assets/icon/priceunit.png"
-import { TitleCustom } from "../../../components/UI/TitleCustom";
+import { TitleCustom } from "../../../components/UI/TitleCustom"
 
 export const HistoryScreen = ({ navigation }) => {
 

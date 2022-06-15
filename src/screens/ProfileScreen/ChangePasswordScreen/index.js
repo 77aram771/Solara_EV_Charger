@@ -12,7 +12,7 @@ import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { regPassword } from "../../../shared/MockData"
 import { API_URL } from "../../../shared/Const"
-import { TextCustom } from "../../../components/UI/TextCustom";
+import { TextCustom } from "../../../components/UI/TextCustom"
 
 export const ChangePasswordScreen = ({ navigation }) => {
 

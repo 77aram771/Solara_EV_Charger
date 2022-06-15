@@ -46,7 +46,7 @@ export const SignUpScreen = ({ navigation }) => {
   const [phoneErrorMessage] = useState(lang[countryCode].wrongPhone)
   const [password, setPassword] = useState("")
   const [passwordError, setPasswordError] = useState(false)
-  const [passwordErrorMessage] = useState(lang[countryCode].wrongPassword)
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState(lang[countryCode].wrongPassword)
   const [auto, setAuto] = useState(null)
   const [autoId, setAutoId] = useState(null)
   const [autoMaxLength, setAutoMaxLength] = useState(null)
@@ -138,6 +138,10 @@ export const SignUpScreen = ({ navigation }) => {
   const handlePassword = (value) => {
     setPassword(value)
     setPasswordError(false)
+
+    if(value) {
+      setPasswordErrorMessage('asd')
+    }
   }
 
   const handleAuto = (value) => {

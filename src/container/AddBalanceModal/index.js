@@ -180,11 +180,18 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
         visible={modalVisible}
         onRequestClose={handleModalWebView}
       >
-        <View style={[{
-          width: windowWidth,
-          backgroundColor: "#00a789",
-          height: Constants.statusBarHeight
-        }, Platform.OS === "ios" ? { marginTop: 55 } : { paddingTop: 55 }]} />
+        <View
+          style={
+            [
+              {
+                width: windowWidth,
+                backgroundColor: "#00a789",
+                height: Constants.statusBarHeight
+              },
+              Platform.OS === "ios" ? { marginTop: 55 } : { paddingTop: 55 }
+            ]
+          }
+        />
         <TouchableOpacity
           style={{ position: "absolute", top: Platform.OS === "ios" ? windowHeight / 13.5 : 15, right: 15, zIndex: 1 }}
           onPress={() => handleModalWebView()}
