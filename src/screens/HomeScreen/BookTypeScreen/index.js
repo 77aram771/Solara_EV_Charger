@@ -43,7 +43,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLoaderGetUser(true)
     if (Token !== null) {
       await axios.get(
-        `${API_URL}/users/get-profile?access-token=${Token}`,
+        `${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
@@ -101,7 +101,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
     await axios.post(
-      `${API_URL}/charge-box/start?access-token=${Token}`,
+      `${API_URL}/charge-box/start?access-token=${Token}&language=${countryCode}`,
       {
         connector_id: route?.params?.item?.id,
         from_percent: checkMin,

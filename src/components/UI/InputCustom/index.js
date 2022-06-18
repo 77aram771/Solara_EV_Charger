@@ -31,7 +31,8 @@ export const InputCustom = ({
           style={[styles.input, {
             borderColor: error ? SunsetOrange : BrightGray,
             backgroundColor,
-            height: numberOfLines && 100
+            height: numberOfLines && 100,
+            paddingRight: icon ? 60 : 0
           }]}
           value={value}
           onChangeText={value => handle(value)}

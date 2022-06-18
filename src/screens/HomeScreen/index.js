@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { Image, Platform, TouchableOpacity, View } from "react-native"
+import { Image, Modal, Platform, TouchableOpacity, View } from "react-native"
 import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -20,12 +20,15 @@ import IconDirection from "../../assets/icon/direction1.png"
 import IconDirection2 from "../../assets/icon/direction2.png"
 import IconDirection3 from "../../assets/icon/direction3.png"
 import IconFilter from "../../assets/icon/filtr1.png"
+import IconList from "../../assets/icon/icon-list.png"
 import IconQr from "../../assets/icon/icon-qr.png"
 import IconBook from "../../assets/icon/reserve.png"
 import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
-import IconClose from '../../assets/icon/cancel.png'
+import IconClose from "../../assets/icon/cancel.png"
+// import { AddBalanceModal } from "../../container/AddBalanceModal"
+import { ChargerList } from "../../container/ChargerList"
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -45,6 +48,7 @@ export const HomeScreen = ({ navigation }) => {
   const [checkAddress, setCheckAddress] = useState("")
   const [modalRedirect, setModalRedirect] = useState(false)
   const [check, setCheck] = useState(true)
+  const [modalVisible, setModalVisible] = useState(false)
   const [cordinate, setCordinate] = useState({
     latitude: location !== null ? location?.coords?.latitude : 40,
     longitude: location !== null ? location?.coords?.longitude : 45,
@@ -62,11 +66,12 @@ export const HomeScreen = ({ navigation }) => {
   })
 
   const chargeBoxesData = useSelector(state => state?.ChargeBoxesDataReducer.data)
-  // const chargeBoxesLoader = useSelector(state => state?.ChargeBoxesDataReducer.loading)
+  const chargeBoxesLoader = useSelector(state => state?.ChargeBoxesDataReducer.loading)
   // const chargeBoxesError = useSelector(state => state?.ChargeBoxesDataReducer.error)
 
   useEffect(() => {
     return navigation.addListener("focus", async () => {
+      handleHideTabBar(true)
       const transactionId = await AsyncStorage.getItem("transaction_id")
       if (transactionId !== null) {
         await handleCheckChargeProgress()
@@ -74,7 +79,7 @@ export const HomeScreen = ({ navigation }) => {
     })
   }, [navigation])
 
-  useEffect( () => {
+  useEffect(() => {
     handleHideTabBar(check)
   }, [check])
 
@@ -91,7 +96,7 @@ export const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=37&title=&language=${countryCode}`))
-    dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&min=7&max=60&language=${countryCode}`))
+    handleChargeBoxesData()
   }, [countryCode])
 
   useLayoutEffect(() => {
@@ -155,6 +160,10 @@ export const HomeScreen = ({ navigation }) => {
       })
   }
 
+  const handleChargeBoxesData = () => {
+    dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&min=7&max=60&language=${countryCode}`))
+  }
+
   const getCurrentPosition = async () => {
     if (location === null) {
       await handleLocationUser()
@@ -167,6 +176,7 @@ export const HomeScreen = ({ navigation }) => {
     e.stopPropagation()
     setItemId(id)
     setQrItem(null)
+    setModalVisible(false)
   }
 
   const handleQRData = async (id) => {
@@ -214,6 +224,8 @@ export const HomeScreen = ({ navigation }) => {
     setQrItem(null)
   }
 
+  const handleModal = () => setModalVisible(!modalVisible)
+
   // const handleCheck = async () => setCheck(!check)
 
   // if (check) {
@@ -230,6 +242,21 @@ export const HomeScreen = ({ navigation }) => {
         options={options}
         appsWhiteList={["google-maps", "apple-maps", "waze", "yandex", "yandex-maps"]}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleModal}
+      >
+        <ChargerList
+          handleModal={handleModal}
+          data={data}
+          loader={chargeBoxesLoader}
+          handleData={handleChargeBoxesData}
+          countryCode={countryCode}
+          handleItemId={handleItemId}
+        />
+      </Modal>
       {
         start
           ? (
@@ -272,9 +299,13 @@ export const HomeScreen = ({ navigation }) => {
           )
           : (
             <>
+              <TouchableOpacity onPress={handleModal} style={styles.chargeListBox}>
+                <Image source={IconList} style={{ width: 22, height: 22, marginRight: 10 }} />
+                <TextCustom text={lang[countryCode].chargersList} color={Fiord} fontSize={16} fontWeight={"700"} />
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.filterBox}>
                 <Image source={IconFilter} style={{ width: 22, height: 22, marginRight: 10 }} />
-                <TextCustom text={lang[countryCode].filter} color={Fiord} fontSize={20} fontWeight={"700"} />
+                <TextCustom text={lang[countryCode].filter} color={Fiord} fontSize={16} fontWeight={"700"} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate("QRScanner", {

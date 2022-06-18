@@ -132,6 +132,8 @@ export const lang = {
     theOldPasswordIsTheSameAsTheNewPassword: 'Հին գաղտնաբառը նույնն է, ինչ նոր գաղտնաբառը',
     chooseAuto: 'Ընտրեք մեքենա',
     chooseModal: 'Ընտրեք մոդել',
+    search: 'Որոնել',
+    chargersList: 'Լիցքավորիչների ցուցակ'
   },
   ru: {
     H: "ч",
@@ -265,6 +267,8 @@ export const lang = {
     theOldPasswordIsTheSameAsTheNewPassword: 'Старый пароль совпадает с новым паролем',
     chooseAuto: 'Выбратье авто',
     chooseModal: 'Выбратье модел',
+    search: 'Поиск',
+    chargersList: 'Список зарядных устройств'
   },
   en: {
     H: "h",
@@ -338,7 +342,7 @@ export const lang = {
     phone: "Phone",
     email: "Email",
     mail: "Mail",
-    enter: "Enter",
+    enter: "Login",
     exit: "Exit",
     balance: "Balance",
     password: "Password",
@@ -398,5 +402,7 @@ export const lang = {
     theOldPasswordIsTheSameAsTheNewPassword: 'Тhe old password is the same as the new password',
     chooseAuto: 'Choose auto',
     chooseModal: 'Choose modal',
+    search: 'Search',
+    chargersList: 'Chargers List'
   }
 }

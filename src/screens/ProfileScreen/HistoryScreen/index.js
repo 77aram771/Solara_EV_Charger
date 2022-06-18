@@ -41,7 +41,7 @@ export const HistoryScreen = ({ navigation }) => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}`,
+      await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
@@ -59,7 +59,7 @@ export const HistoryScreen = ({ navigation }) => {
   const handleGetChargingData = async () => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}`,
+      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {

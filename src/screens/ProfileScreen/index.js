@@ -49,7 +49,7 @@ export const ProfileScreen = ({ navigation }) => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
       setLogin(true)
-      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}`,
+      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode}&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => setUser(res.data))
