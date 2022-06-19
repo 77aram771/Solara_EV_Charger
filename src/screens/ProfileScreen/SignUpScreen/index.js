@@ -137,11 +137,43 @@ export const SignUpScreen = ({ navigation }) => {
 
   const handlePassword = (value) => {
     setPassword(value)
-    setPasswordError(false)
 
-    if(value) {
-      setPasswordErrorMessage('asd')
+    const passwordInputValue = value.trim()
+    const uppercaseRegExp = /(?=.*?[A-Z])/
+    const lowercaseRegExp = /(?=.*?[a-z])/
+    const digitsRegExp = /(?=.*?[0-9])/
+    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/
+    const minLengthRegExp = /.{8,}/
+    const passwordLength = value.length
+    const uppercasePassword = uppercaseRegExp.test(passwordInputValue)
+    const lowercasePassword = lowercaseRegExp.test(passwordInputValue)
+    const digitsPassword = digitsRegExp.test(passwordInputValue)
+    const specialCharPassword = specialCharRegExp.test(passwordInputValue)
+    const minLengthPassword = minLengthRegExp.test(passwordInputValue)
+    let errMsg
+
+    if (passwordLength === 0) {
+      setPasswordError(false)
+    } else if (!uppercasePassword) {
+      errMsg = lang[countryCode].atLeastOneUppercase
+      setPasswordError(true)
+    } else if (!lowercasePassword) {
+      errMsg = lang[countryCode].atLeastOneLowercase
+      setPasswordError(true)
+    } else if (!digitsPassword) {
+      errMsg = lang[countryCode].atLeastOneDigit
+      setPasswordError(true)
+    } else if (!specialCharPassword) {
+      errMsg = lang[countryCode].atLeastOneSpecialCharacters
+      setPasswordError(true)
+    } else if (!minLengthPassword) {
+      errMsg = lang[countryCode].atLeastMinimumCharacters
+      setPasswordError(true)
+    } else {
+      errMsg = ""
+      setPasswordError(false)
     }
+    setPasswordErrorMessage(errMsg)
   }
 
   const handleAuto = (value) => {
@@ -284,7 +316,7 @@ export const SignUpScreen = ({ navigation }) => {
               <InputCustom
                 placeholder={lang[countryCode].password}
                 value={password}
-                handle={value => handlePassword(value)}
+                handle={(value) => handlePassword(value)}
                 placeholderTextColor={Manatee}
                 secureTextEntry={true}
                 error={passwordError}

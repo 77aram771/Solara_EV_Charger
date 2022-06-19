@@ -64,7 +64,6 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
             ...res?.data?.data
           ]
         )
-        console.log("res?.data?.data[0]?.id", res?.data?.data)
         if (res?.data?.data.length > 0) {
           setCardId(res?.data?.data[0]?.id)
         }

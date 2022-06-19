@@ -173,7 +173,7 @@ export const BookScreen = ({ navigation, route }) => {
       <HeaderCustom
         handleBack={() => navigation.goBack()}
         backgroundColor={MySin}
-        text={route.params?.data[route.params.itemId]?.title}
+        text={route?.params?.data[route?.params?.itemId]?.title}
       />
       <ScrollView
         style={{ marginBottom: 60, top: -10, flex: 1 }}
@@ -227,7 +227,7 @@ export const BookScreen = ({ navigation, route }) => {
           </SwiperFlatList>
         </View>
         <View style={styles.bookInfoBox}>
-          <InfoBoxCustom itemId={route.params.itemId} isBook={route.params.isBook} data={route.params?.data} />
+          <InfoBoxCustom itemId={route?.params?.itemId} isBook={route?.params?.isBook} data={route?.params?.data} />
           <View style={styles.typeBox}>
             <View style={[styles.typeItem, { paddingLeft: 20, borderTopWidth: 0 }]}>
               <View style={{ flexDirection: "row", width: "55%" }}>
@@ -259,7 +259,7 @@ export const BookScreen = ({ navigation, route }) => {
               </View>
             </View>
             {
-              route.params?.data[route.params?.itemId]?.connectors.map((item, index) => {
+              route?.params?.data[route?.params?.itemId]?.connectors.map((item, index) => {
                 return (
                   <TouchableOpacity
                     onPress={() => handlePort(item)}
@@ -489,7 +489,7 @@ export const BookScreen = ({ navigation, route }) => {
                 color={MySin}
                 width={"100%"}
                 click={() => {
-                  route.params.handleStart()
+                  route?.params.handleStart()
                   navigation.goBack()
                 }}
                 fontSize={18}

@@ -9,6 +9,8 @@ import { lang } from "../../shared/Lang"
 import IconClose from "../../assets/icon/cancel.png"
 import IconSearch from "../../assets/icon/icon-search.png"
 import IconCloseYellow from "../../assets/icon/icon-close-yellow.png"
+import IconDirection2 from "../../assets/icon/direction2.png"
+import IconBook from "../../assets/icon/reserve.png"
 
 export const ChargerList = ({
   data,
@@ -16,10 +18,13 @@ export const ChargerList = ({
   handleData,
   countryCode,
   handleModal,
-  handleItemId
+  handleItemId,
+  handleStart,
+  navigation,
 }) => {
 
   const [chargerListData, setChargerListData] = useState(null)
+
   const [value, setValue] = useState("")
 
   useEffect(() => {
@@ -52,46 +57,100 @@ export const ChargerList = ({
 
   const RenderChargerItem = ({ title, address, pin, connectors, index }) => {
     return (
-      <TouchableOpacity
-        onPress={(e) => handleItemId(e, index)}
+      <View
         style={{
-          width: windowWidth,
+          width: "100%",
           marginBottom: 15,
           paddingBottom: 10,
           flexDirection: "row",
           borderBottomWidth: 1,
-          borderBottomColor: BrightGray
+          borderBottomColor: BrightGray,
+          justifyContent: "space-between",
+          alignItems: "center"
         }}
       >
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image source={{ uri: pin }} style={{ width: 50, height: 50, marginRight: 10 }} />
-        </View>
-        <View>
-          <TitleCustom textAlign={"left"} text={title} fontSize={14} color={Fiord} marginBottom={5} />
-          <TitleCustom textAlign={"left"} text={address} fontSize={14} color={Fiord} marginBottom={5} />
-          <View
-            style={{
-              width: "100%",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              flexDirection: "row",
-              marginBottom: 5
-            }}
-          >
-            {
-              connectors.map(item => {
-                return (
-                  <Image
-                    source={{ uri: item?.status_image }}
-                    style={{ width: 20, height: 20, marginRight: 10 }}
-                    key={item.id}
-                  />
-                )
-              })
-            }
+        <View style={{ width: "50%", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start" }}>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={{ uri: pin }} style={{ width: 50, height: 50, marginRight: 10 }} />
+          </View>
+          <View>
+            <TitleCustom textAlign={"left"} text={title} fontSize={14} color={Fiord} marginBottom={5} />
+            <TitleCustom textAlign={"left"} text={address} fontSize={14} color={Fiord} marginBottom={5} />
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                flexDirection: "row",
+                marginBottom: 5
+              }}
+            >
+              {
+                connectors.map(item => {
+                  return (
+                    <Image
+                      source={{ uri: item?.status_image }}
+                      style={{ width: 20, height: 20, marginRight: 10 }}
+                      key={item.id}
+                    />
+                  )
+                })
+              }
+            </View>
           </View>
         </View>
-      </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "30%",
+            height: "100%"
+          }}
+        >
+          <TouchableOpacity
+            onPress={(e) => {
+              handleModal()
+              handleItemId(e, index)
+              setTimeout(() => {
+                navigation.navigate("Book", {
+                  itemId: index,
+                  isBook: true,
+                  data: chargerListData,
+                  handleStart: () => handleStart()
+                })
+              }, 100)
+            }}
+            style={{
+              width: "47%",
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 2,
+              borderColor: Fiord
+            }}
+          >
+            <Image source={IconBook} style={{ width: 25, height: 25 }} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={(e) => {
+              handleItemId(e, index)
+              setTimeout(() => {
+                handleStart()
+              }, 100)
+            }}
+            style={{
+              backgroundColor: Fiord,
+              width: "47%",
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Image source={IconDirection2} style={{ width: 25, height: 25 }} />
+          </TouchableOpacity>
+        </View>
+      </View>
     )
   }
 
@@ -108,7 +167,7 @@ export const ChargerList = ({
       }}
     >
       <View style={{
-        width: windowWidth / 1.1,
+        width: "90%",
         justifyContent: "flex-end",
         alignItems: "flex-end",
         paddingTop: 20,
@@ -118,7 +177,7 @@ export const ChargerList = ({
           <Image source={IconCloseYellow} style={{ width: 20, height: 20 }} />
         </TouchableOpacity>
       </View>
-      <View style={{ width: windowWidth / 1.1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ width: "90%", justifyContent: "center", alignItems: "center" }}>
         <InputCustom
           placeholder={lang[countryCode].search}
           value={value}
@@ -151,9 +210,8 @@ export const ChargerList = ({
             index={index}
           />
         )}
-        style={{ width: windowWidth / 1.1 }}
+        style={{ width: "90%" }}
         contentContainerStyle={{
-          width: "100%",
           marginTop: 30,
           paddingBottom: 60,
           justifyContent: "flex-start",

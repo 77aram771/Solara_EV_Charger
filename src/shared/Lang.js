@@ -129,11 +129,16 @@ export const lang = {
     iAgreeWithTheRules: "Համաձայն եմ կանոնների հետ",
     car: "Մեքենա",
     make: "Մակնիշ",
-    theOldPasswordIsTheSameAsTheNewPassword: 'Հին գաղտնաբառը նույնն է, ինչ նոր գաղտնաբառը',
-    chooseAuto: 'Ընտրեք մեքենա',
-    chooseModal: 'Ընտրեք մոդել',
-    search: 'Որոնել',
-    chargersList: 'Լիցքավորիչների ցուցակ'
+    theOldPasswordIsTheSameAsTheNewPassword: "Հին գաղտնաբառը նույնն է, ինչ նոր գաղտնաբառը",
+    chooseAuto: "Ընտրեք մեքենա",
+    chooseModal: "Ընտրեք մոդել",
+    search: "Որոնել",
+    list: "Ցուցակ",
+    atLeastOneUppercase: "Առնվազն մեկ մեծատառ",
+    atLeastOneLowercase: "Առնվազն մեկ փոքրատառ",
+    atLeastOneDigit: "Առնվազն մեկ թվանշան",
+    atLeastOneSpecialCharacters: "Առնվազն մեկ Հատուկ նիշ",
+    atLeastMinimumCharacters: "Առնվազն 8 նիշ"
   },
   ru: {
     H: "ч",
@@ -264,11 +269,16 @@ export const lang = {
     iAgreeWithTheRules: "Я согласен с правилами",
     car: "Машина",
     make: "Марка",
-    theOldPasswordIsTheSameAsTheNewPassword: 'Старый пароль совпадает с новым паролем',
-    chooseAuto: 'Выбратье авто',
-    chooseModal: 'Выбратье модел',
-    search: 'Поиск',
-    chargersList: 'Список зарядных устройств'
+    theOldPasswordIsTheSameAsTheNewPassword: "Старый пароль совпадает с новым паролем",
+    chooseAuto: "Выбратье авто",
+    chooseModal: "Выбратье модел",
+    search: "Поиск",
+    list: "Список",
+    atLeastOneUppercase: "Хотя бы один верхний регистр",
+    atLeastOneLowercase: "Хотя бы один нижний регистр",
+    atLeastOneDigit: "Хотя бы одна цифра",
+    atLeastOneSpecialCharacters: "Хотя бы один специальный символ",
+    atLeastMinimumCharacters: "Минимум 8 символов"
   },
   en: {
     H: "h",
@@ -399,10 +409,15 @@ export const lang = {
     iAgreeWithTheRules: "I agree with the rules",
     car: "Car",
     make: "Make",
-    theOldPasswordIsTheSameAsTheNewPassword: 'Тhe old password is the same as the new password',
-    chooseAuto: 'Choose auto',
-    chooseModal: 'Choose modal',
-    search: 'Search',
-    chargersList: 'Chargers List'
+    theOldPasswordIsTheSameAsTheNewPassword: "Тhe old password is the same as the new password",
+    chooseAuto: "Choose auto",
+    chooseModal: "Choose modal",
+    search: "Search",
+    list: "List",
+    atLeastOneUppercase: "At least one Uppercase",
+    atLeastOneLowercase: "At least one Lowercase",
+    atLeastOneDigit: "At least one digit",
+    atLeastOneSpecialCharacters: "At least one special characters",
+    atLeastMinimumCharacters: "At least minimum 8 characters"
   }
 }

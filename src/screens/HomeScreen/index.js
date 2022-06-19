@@ -173,6 +173,7 @@ export const HomeScreen = ({ navigation }) => {
   }
 
   const handleItemId = async (e, id) => {
+    console.log("id", id)
     e.stopPropagation()
     setItemId(id)
     setQrItem(null)
@@ -206,12 +207,13 @@ export const HomeScreen = ({ navigation }) => {
       setStart(!start)
     }
     setLoaderStart(false)
-
+    setModalVisible(false)
   }
 
   const handleRedirect = async () => {
     // await showLocation(options)
     setModalRedirect(!modalRedirect)
+    setModalVisible(false)
   }
 
   const handleReady = (result) => {
@@ -254,7 +256,9 @@ export const HomeScreen = ({ navigation }) => {
           loader={chargeBoxesLoader}
           handleData={handleChargeBoxesData}
           countryCode={countryCode}
+          handleStart={handleStart}
           handleItemId={handleItemId}
+          navigation={navigation}
         />
       </Modal>
       {
@@ -299,14 +303,16 @@ export const HomeScreen = ({ navigation }) => {
           )
           : (
             <>
-              <TouchableOpacity onPress={handleModal} style={styles.chargeListBox}>
-                <Image source={IconList} style={{ width: 22, height: 22, marginRight: 10 }} />
-                <TextCustom text={lang[countryCode].chargersList} color={Fiord} fontSize={16} fontWeight={"700"} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.filterBox}>
-                <Image source={IconFilter} style={{ width: 22, height: 22, marginRight: 10 }} />
-                <TextCustom text={lang[countryCode].filter} color={Fiord} fontSize={16} fontWeight={"700"} />
-              </TouchableOpacity>
+              <View style={styles.box}>
+                <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.filterBox}>
+                  <Image source={IconFilter} style={{ width: 22, height: 22, marginRight: 10 }} />
+                  <TextCustom text={lang[countryCode].filter} color={Fiord} fontSize={16} fontWeight={"700"} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleModal} style={styles.chargeListBox}>
+                  <Image source={IconList} style={{ width: 22, height: 22, marginRight: 10 }} />
+                  <TextCustom text={lang[countryCode].list} color={Fiord} fontSize={16} fontWeight={"700"} />
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate("QRScanner", {
                   handleQRData: (id) => handleQRData(id)

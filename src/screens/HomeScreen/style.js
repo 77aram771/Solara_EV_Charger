@@ -9,6 +9,13 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  box: {
+    position: "absolute",
+    top: windowHeight / 10,
+    left: 20,
+    zIndex: 10,
+    flexDirection: 'row'
+  },
   chargeListBox: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -17,10 +24,6 @@ export const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 12,
     backgroundColor: White,
-    position: "absolute",
-    top: windowHeight / 10,
-    left: 20,
-    zIndex: 10
   },
   filterBox: {
     flexDirection: "row",
@@ -30,10 +33,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 12,
     backgroundColor: White,
-    position: "absolute",
-    top: windowHeight / 6.5,
-    left: 20,
-    zIndex: 10
+    marginRight: 15
   },
   qrBox: {
     position: "absolute",

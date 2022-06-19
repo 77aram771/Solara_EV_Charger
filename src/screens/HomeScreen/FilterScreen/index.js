@@ -122,7 +122,6 @@ export const FilterScreen = ({ navigation }) => {
       dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode}`))
     }
     navigation.closeDrawer()
-    console.log("customUrl", `${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}min=${checkMin}&max=${checkMax}&language=${countryCode}`)
   }
 
   return (

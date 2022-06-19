@@ -79,10 +79,6 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params.user) {
-      console.log("route.params.user.car_make_name", route.params.user.car_make_name)
-      console.log("route.params.user.car_model_name", route.params.user.car_model_name)
-      console.log("route.params.user.car_make_id", route.params.user.car_make_id)
-      console.log("route.params.user.car_model_id", route.params.user.car_model_id)
       setAuto(route.params.user.car_make_name)
       setAutoModal(route.params.user.car_model_name)
       setAutoId(route.params.user.car_make_id)
@@ -132,7 +128,6 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
               { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
             )
               .then(res => {
-                console.log("res", res.data)
                 setLoader(false)
                 if (res.status === 200) {
                   navigation.goBack()
@@ -140,7 +135,6 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
               })
               .catch(e => {
                 setLoader(false)
-                console.log("e handleSave", e)
               })
           }
         } else {

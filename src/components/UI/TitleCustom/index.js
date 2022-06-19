@@ -16,8 +16,6 @@ export const TitleCustom = ({
   return (
     <Text
       style={{
-        width: "100%",
-        flexWrap: "wrap",
         color,
         fontFamily: "Roboto_700Bold",
         fontSize,

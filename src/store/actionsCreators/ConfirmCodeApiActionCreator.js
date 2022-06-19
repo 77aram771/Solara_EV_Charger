@@ -9,7 +9,6 @@ export const PostConfirmCode = (url, body) => (dispatch) => {
       axios
         .post(url, body, { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } })
         .then(response => {
-          console.log('response PostConfirmCode', response)
           AsyncStorage.setItem("token", response?.data?.access_token)
           dispatch(fetchSuccess(response))
         })
