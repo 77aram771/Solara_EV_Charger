@@ -28,8 +28,9 @@ import IconPassword from "../../../assets/icon/password1.png"
 import IconLogin from "../../../assets/icon/login.png"
 import IconEyeClose from "../../../assets/icon/icon-dont-eye.png"
 import IconEye from "../../../assets/icon/icon-eye.png"
+import { API_URL } from "../../../shared/Const";
 
-export const SignInScreen = ({ navigation, route }) => {
+export const SignInScreen = ({ navigation }) => {
 
   const { countryCode } = useContext(Context)
 
@@ -74,11 +75,18 @@ export const SignInScreen = ({ navigation, route }) => {
 
   const handleShowPassword = () => setShowPassword(!showPassword)
 
+  const handleLogIn = async (email, password) => {
+    dispatch(AuthSignIn(`${API_URL}/auth/sign-in`, {
+      email,
+      password
+    }))
+  }
+
   const handleEnter = async () => {
     if (email.length > 0 && regEmail.test(email)) {
       setEmailError(false)
       if (password.length >= 6) {
-        await route.params.handleLogIn(email, password)
+        await handleLogIn(email, password)
         setPasswordError(false)
       } else {
         setPasswordError(true)

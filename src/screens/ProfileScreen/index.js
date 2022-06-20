@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { View, Image, ImageBackground, Platform, Modal, ActivityIndicator } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { styles } from "./style"
@@ -10,7 +10,6 @@ import { AddBalanceModal } from "../../container/AddBalanceModal"
 import { lang } from "../../shared/Lang"
 import { API_URL, windowHeight, windowWidth } from "../../shared/Const"
 import { TextCustom } from "../../components/UI/TextCustom"
-import { AuthSignIn } from "../../store/actionsCreators/AuthApiActionCreator"
 import Context from "../../../Context"
 import IconUserLogin from "../../assets/icon/menu-user1.png"
 import IconMenu from "../../assets/icon/menu-setting1.png"
@@ -27,8 +26,6 @@ import ImgLight from "../../assets/icon/priceunit1.png"
 export const ProfileScreen = ({ navigation }) => {
 
   const { countryCode, handleHideTabBar } = useContext(Context)
-
-  const dispatch = useDispatch()
 
   const userData = useSelector(state => state?.AuthReducer.data)
   const userLoader = useSelector(state => state?.AuthReducer.loading)
@@ -65,13 +62,6 @@ export const ProfileScreen = ({ navigation }) => {
 
   const handleModal = () => setModalVisible(!modalVisible)
 
-  const handleLogIn = async (email, password) => {
-    dispatch(AuthSignIn(`${API_URL}/auth/sign-in`, {
-      email,
-      password
-    }))
-  }
-
   const handleLogOut = async () => {
     await AsyncStorage.removeItem("token")
     setLogin(false)
@@ -93,7 +83,8 @@ export const ProfileScreen = ({ navigation }) => {
             ? (
               userLoader
                 ? (
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: windowWidth, height: windowHeight}}>
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center", width: windowWidth, height: windowHeight }}>
                     <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
                   </View>
                 )
@@ -296,10 +287,7 @@ export const ProfileScreen = ({ navigation }) => {
                     color={MineShaft}
                     borderWidth={1}
                     borderRadius={18}
-                    click={() => navigation.navigate("SignIn", {
-                      login,
-                      handleLogIn: (email, password) => handleLogIn(email, password)
-                    })}
+                    click={() => navigation.navigate("SignIn")}
                     fontSize={18}
                     fontWeight={"400"}
                     icon={IconUserLogin}
