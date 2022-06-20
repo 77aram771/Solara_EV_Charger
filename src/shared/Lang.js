@@ -138,7 +138,9 @@ export const lang = {
     atLeastOneLowercase: "Առնվազն մեկ փոքրատառ",
     atLeastOneDigit: "Առնվազն մեկ թվանշան",
     atLeastOneSpecialCharacters: "Առնվազն մեկ Հատուկ նիշ",
-    atLeastMinimumCharacters: "Առնվազն 8 նիշ"
+    atLeastMinimumCharacters: "Առնվազն 8 նիշ",
+    permissionToAccessLocationWasDenied: "Գտնվելու վայրի թույլտվությունը մերժվել է",
+    permissionToAccessCameraWasDenied: "Տեսախցիկի թույլտվությունը մերժվել է"
   },
   ru: {
     H: "ч",
@@ -278,7 +280,9 @@ export const lang = {
     atLeastOneLowercase: "Хотя бы один нижний регистр",
     atLeastOneDigit: "Хотя бы одна цифра",
     atLeastOneSpecialCharacters: "Хотя бы один специальный символ",
-    atLeastMinimumCharacters: "Минимум 8 символов"
+    atLeastMinimumCharacters: "Минимум 8 символов",
+    permissionToAccessLocationWasDenied: "Разрешение на доступ к местоположению было отклонено",
+    permissionToAccessCameraWasDenied: "Разрешение на доступ к камере было отклонено"
   },
   en: {
     H: "h",
@@ -418,6 +422,8 @@ export const lang = {
     atLeastOneLowercase: "At least one Lowercase",
     atLeastOneDigit: "At least one digit",
     atLeastOneSpecialCharacters: "At least one special characters",
-    atLeastMinimumCharacters: "At least minimum 8 characters"
+    atLeastMinimumCharacters: "At least minimum 8 characters",
+    permissionToAccessLocationWasDenied: "Permission to access location was denied",
+    permissionToAccessCameraWasDenied: "Permission to access camera was denied"
   }
 }

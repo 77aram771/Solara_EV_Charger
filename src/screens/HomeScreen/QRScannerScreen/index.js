@@ -9,10 +9,11 @@ import { finderHeight, finderWidth, viewMinX, viewMinY } from "../../../shared/M
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { Dandelion, Fiord } from "../../../shared/Colors"
+import { lang } from "../../../shared/Lang"
 
 export const QRScannerScreen = ({ navigation, route }) => {
 
-  const { handleHideTabBar } = useContext(Context)
+  const { handleHideTabBar, countryCode } = useContext(Context)
 
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(BarCodeScanner.Constants.Type.back)
@@ -28,6 +29,9 @@ export const QRScannerScreen = ({ navigation, route }) => {
   const permissionFunction = async () => {
     const { status } = await BarCodeScanner.requestPermissionsAsync()
     setHasPermission(status === "granted")
+    if (status !== "granted") {
+      alert(lang[countryCode].permissionToAccessCameraWasDenied)
+    }
   }
 
   const handleBarCodeScanned = async (scanningResult) => {

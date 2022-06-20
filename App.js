@@ -14,6 +14,7 @@ import { store } from "./src/store"
 import { API_URL, Google_Key } from "./src/shared/Const"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
 import axios from "axios"
+import { lang } from "./src/shared/Lang"
 // import AsyncStorage from "@react-native-async-storage/async-storage"
 // import ImgSplashScreenRu from './src/assets/images/img-splashscreen-ru.png'
 // import ImgSplashScreenEn from './src/assets/images/img-splashscreen-en.png'
@@ -35,7 +36,6 @@ export default function App() {
   const customTextProps = { style: { fontFamily: "Roboto_400Regular" } }
 
   const [location, setLocation] = useState(null)
-  const [setErrorMsg] = useState(null)
   const [userAddress, setUserAddress] = useState("")
   const [showTabBar, setShowTabBar] = useState(false)
   const [load, setLoad] = useState(true)
@@ -47,12 +47,6 @@ export default function App() {
   const handleCountryCode = (code) => setCountryCode(code)
 
   setCustomText(customTextProps)
-
-  useEffect(() => {
-    (async () => {
-      await handleLocationUser()
-    })()
-  }, [])
 
   useEffect(() => {
     setTimeout(() => {
@@ -73,13 +67,13 @@ export default function App() {
 
   const handleLocationUser = async () => {
     if (Platform.OS === "android" && !Constants.isDevice) {
-      setErrorMsg("Oops, this will not work on Snack in an Android emulator. Try it on your device!")
+      alert("Oops, this will not work on Snack in an Android emulator. Try it on your device!")
       return
     }
     let { status } = await Location.requestForegroundPermissionsAsync()
     Location.installWebGeolocationPolyfill()
     if (status !== "granted") {
-      setErrorMsg("Permission to access location was denied")
+      alert(lang[countryCode].permissionToAccessLocationWasDenied)
       return
     }
     let location = await Location.getCurrentPositionAsync({})

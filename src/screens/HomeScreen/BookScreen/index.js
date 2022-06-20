@@ -41,7 +41,9 @@ export const BookScreen = ({ navigation, route }) => {
       { id: route?.params?.data[route?.params.itemId].id },
       { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
     )
-      .then(res => setImageData(res?.data?.images))
+      .then(res => {
+        setImageData(res?.data?.images)
+      })
       .catch(e => console.log("e", e.response))
   }
 
