@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { Image, Modal, Platform, TouchableOpacity, View } from "react-native"
+import { Button, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -27,14 +27,14 @@ import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
 import IconClose from "../../assets/icon/cancel.png"
-// import { AddBalanceModal } from "../../container/AddBalanceModal"
 import { ChargerList } from "../../container/ChargerList"
+// import { AddBalanceModal } from "../../container/AddBalanceModal"
 
 export const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode } = useContext(Context)
+  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode, expoPushToken, notification, schedulePushNotification } = useContext(Context)
 
   const _mapView = createRef()
 
@@ -79,9 +79,9 @@ export const HomeScreen = ({ navigation }) => {
     })
   }, [navigation])
 
-  useEffect(() => {
-    handleHideTabBar(check)
-  }, [check])
+  // useEffect(() => {
+  //   handleHideTabBar(check)
+  // }, [check])
 
   useEffect(() => {
     if (location !== null) {
@@ -261,10 +261,31 @@ export const HomeScreen = ({ navigation }) => {
           navigation={navigation}
         />
       </Modal>
+
+      {/* <View */}
+      {/*   style={{ */}
+      {/*     flex: 1, */}
+      {/*     alignItems: 'center', */}
+      {/*     justifyContent: 'space-around', */}
+      {/*   }} */}
+      {/* > */}
+      {/*   <Text>Your expo push token: {expoPushToken}</Text> */}
+      {/*   <View style={{ alignItems: 'center', justifyContent: 'center' }}> */}
+      {/*     <Text>Title: {notification && notification.request.content.title} </Text> */}
+      {/*     <Text>Body: {notification && notification.request.content.body}</Text> */}
+      {/*     <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text> */}
+      {/*   </View> */}
+      {/*   <Button */}
+      {/*     title="Press to schedule a notification" */}
+      {/*     onPress={async () => { */}
+      {/*       await schedulePushNotification(); */}
+      {/*     }} */}
+      {/*   /> */}
+      {/* </View> */}
       {
         start
           ? (
-            <>
+            <View style={styles.boxTop}>
               <View style={styles.addressesBox}>
                 <View style={styles.iconBox}>
                   <Image source={IconLocation} style={{ width: 22, height: 22 }} />
@@ -299,7 +320,7 @@ export const HomeScreen = ({ navigation }) => {
                   />
                 </View>
               </View>
-            </>
+            </View>
           )
           : (
             <>

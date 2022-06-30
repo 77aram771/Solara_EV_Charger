@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 import { windowHeight, windowWidth } from "../../shared/Const"
 import { BrightGray, MineShaft, White, WildSand } from "../../shared/Colors"
 
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     top: windowHeight / 10,
     left: 20,
     zIndex: 10,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   chargeListBox: {
     flexDirection: "row",
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 12,
-    backgroundColor: White,
+    backgroundColor: White
   },
   filterBox: {
     flexDirection: "row",
@@ -90,11 +90,17 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  addressesBox: {
+  boxTop: {
     position: "absolute",
     top: windowHeight / 10,
     zIndex: 10,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start"
+  },
+  addressesBox: {
     width: windowWidth / 1.2,
+    height: 120,
     backgroundColor: White,
     borderRadius: 10,
     paddingTop: 15,
@@ -103,7 +109,12 @@ export const styles = StyleSheet.create({
     paddingRight: 20,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    marginBottom: 30
+  },
+  somethingBox: {
+    flexDirection: "row",
+    width: windowWidth / 1.2
   },
   iconBox: {
     flexDirection: "column",
@@ -127,9 +138,8 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    height: "100%",
-    borderWidth: 1,
-    borderColor: White
+    width: "90%",
+    height: "100%"
   },
   clockBox: {
     flexDirection: "row",
@@ -142,12 +152,5 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10
-  },
-  somethingBox: {
-    flexDirection: "row",
-    position: "absolute",
-    top: Platform.OS === "ios" ? windowHeight / 4 : windowHeight / 3.4,
-    zIndex: 10,
-    width: windowWidth / 1.2
   }
 })

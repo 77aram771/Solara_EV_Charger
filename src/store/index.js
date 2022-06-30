@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from "redux"
 import thunk from "redux-thunk"
-// import { createLogger } from "redux-logger"
 import AuthReducer from "./reducer/AuthReducer"
 import ForgotPasswordReducer from "./reducer/ForgotPasswordReducer"
 import CarMakeReducer from "./reducer/CarMakeReducer"

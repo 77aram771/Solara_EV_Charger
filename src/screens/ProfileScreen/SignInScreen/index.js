@@ -28,7 +28,7 @@ import IconPassword from "../../../assets/icon/password1.png"
 import IconLogin from "../../../assets/icon/login.png"
 import IconEyeClose from "../../../assets/icon/icon-dont-eye.png"
 import IconEye from "../../../assets/icon/icon-eye.png"
-import { API_URL } from "../../../shared/Const";
+import { API_URL } from "../../../shared/Const"
 
 export const SignInScreen = ({ navigation }) => {
 

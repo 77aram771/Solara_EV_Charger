@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Image, Platform } from "react-native"
+import { Image } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { windowHeight } from "../../shared/Const"
 import Context from "../../../Context"
@@ -24,11 +24,10 @@ export const TabNavigator = () => {
       lazy={true}
       initialRouteName={"HomeStack"}
       tabBarOptions={{
-        style: Platform.OS !== "ios" ? {
-            height: windowHeight / 11,
-            paddingBottom: 15
-          }
-          : ""
+        style: {
+          height: windowHeight / 12,
+          paddingBottom: 10
+        }
       }}
     >
       <Tab.Screen

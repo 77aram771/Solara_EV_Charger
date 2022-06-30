@@ -17,7 +17,6 @@ export const TitleCustom = ({
     <Text
       style={{
         color,
-        fontFamily: "Roboto_700Bold",
         fontSize,
         marginBottom,
         marginTop,

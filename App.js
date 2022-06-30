@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { ImageBackground, Platform, LogBox } from "react-native"
 import Constants from "expo-constants"
 import * as Location from "expo-location"
 import Geocoder from "react-native-geocoding"
-import AppLoading from "expo-app-loading"
-import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from "@expo-google-fonts/roboto"
-import { setCustomText } from "react-native-global-props"
+import * as Notifications from "expo-notifications"
+import { Provider } from "react-redux"
+import axios from "axios"
 // import * as SplashScreen from 'expo-splash-screen'
 import Context from "./Context"
 import RootNavigation from "./src/navigation"
-import { Provider } from "react-redux"
 import { store } from "./src/store"
 import { API_URL, Google_Key } from "./src/shared/Const"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
-import axios from "axios"
 import { lang } from "./src/shared/Lang"
+import * as Device from "expo-device";
 // import AsyncStorage from "@react-native-async-storage/async-storage"
 // import ImgSplashScreenRu from './src/assets/images/img-splashscreen-ru.png'
 // import ImgSplashScreenEn from './src/assets/images/img-splashscreen-en.png'
@@ -25,15 +24,15 @@ LogBox.ignoreLogs([
 
 Geocoder.init(Google_Key, { language: "ru" })
 
-export default function App() {
-
-  let [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_500Medium,
-    Roboto_700Bold
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true
   })
+});
 
-  const customTextProps = { style: { fontFamily: "Roboto_400Regular" } }
+export default function App() {
 
   const [location, setLocation] = useState(null)
   const [userAddress, setUserAddress] = useState("")
@@ -42,11 +41,74 @@ export default function App() {
   const [countryCode, setCountryCode] = useState("en")
   const [sumKW, setSumKW] = useState("")
 
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've got mail! 📬",
+        body: "Here is the notification body",
+        data: { data: "goes here" }
+      },
+      trigger: { seconds: 2 }
+    });
+  }
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C"
+      });
+    }
+
+    return token;
+  }
+
   const handleHideTabBar = (bool) => setShowTabBar(bool)
 
   const handleCountryCode = (code) => setCountryCode(code)
-
-  setCustomText(customTextProps)
 
   useEffect(() => {
     setTimeout(() => {
@@ -86,33 +148,31 @@ export default function App() {
       .catch(error => console.warn(error))
   }
 
-  if (!fontsLoaded) {
-    return <AppLoading />
+  if (load) {
+    return (
+      <ImageBackground source={ImgSplashScreenArm} style={{ width: "100%", height: "100%" }} />
+    )
   } else {
-    if (load) {
-      return (
-        <ImageBackground source={ImgSplashScreenArm} style={{ width: "100%", height: "100%" }} />
-      )
-    } else {
-      return (
-        <Context.Provider
-          value={{
-            location: location,
-            userAddress: userAddress,
-            showTabBar: showTabBar,
-            countryCode: countryCode,
-            sumKW: sumKW,
-            handleHideTabBar: (bool) => handleHideTabBar(bool),
-            handleCountryCode: (code) => handleCountryCode(code),
-            handleLocationUser: () => handleLocationUser()
-          }}
-        >
-          <Provider store={store}>
-            <RootNavigation />
-          </Provider>
-        </Context.Provider>
-      )
-    }
-
+    return (
+      <Context.Provider
+        value={{
+          location: location,
+          userAddress: userAddress,
+          showTabBar: showTabBar,
+          countryCode: countryCode,
+          sumKW: sumKW,
+          handleHideTabBar: (bool) => handleHideTabBar(bool),
+          handleCountryCode: (code) => handleCountryCode(code),
+          handleLocationUser: () => handleLocationUser(),
+          schedulePushNotification: () => schedulePushNotification(),
+          expoPushToken: expoPushToken,
+          notification: notification
+        }}
+      >
+        <Provider store={store}>
+          <RootNavigation />
+        </Provider>
+      </Context.Provider>
+    )
   }
 }
