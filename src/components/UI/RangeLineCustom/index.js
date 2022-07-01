@@ -27,19 +27,23 @@ export const RangeLineCustom = ({ percent, min, max, handleMin, handleMax, check
         />
         <TextCustom text={percent ? `${checkMax}%` : `${checkMax} ${lang[countryCode].kw}`} />
       </View>
-      <RangeSlider
-        styleSize={"medium"}
-        min={min !== null ? min : 0}
-        max={max}
-        fromValueOnChange={value => handleMin(value)}
-        toValueOnChange={value => handleMax(value)}
-        knobSize={20}
-        fromKnobColor={Fiord}
-        toKnobColor={Fiord}
-        inRangeBarColor={MySin}
-        outOfRangeBarColor={Manatee}
-        showRangeLabels={false}
-      />
+      {
+        min
+          ? <RangeSlider
+            styleSize={"medium"}
+            min={min !== null ? min : 0}
+            max={max}
+            fromValueOnChange={value => handleMin(value)}
+            toValueOnChange={value => handleMax(value)}
+            knobSize={20}
+            fromKnobColor={Fiord}
+            toKnobColor={Fiord}
+            inRangeBarColor={MySin}
+            outOfRangeBarColor={Manatee}
+            showRangeLabels={false}
+          />
+          : null
+      }
     </View>
   )
 }
