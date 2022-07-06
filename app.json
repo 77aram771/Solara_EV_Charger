@@ -55,7 +55,8 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.voodoo.solara.charging"
+      "package": "com.voodoo.solara.charging",
+      "versionCode": 40
     },
     "web": {
       "favicon": "./assets/icon.png"

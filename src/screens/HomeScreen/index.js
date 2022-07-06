@@ -28,13 +28,14 @@ import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
 import IconClose from "../../assets/icon/cancel.png"
 import { ChargerList } from "../../container/ChargerList"
+// import { WelcomeScreen } from "../WelcomeScreen";
 // import { AddBalanceModal } from "../../container/AddBalanceModal"
 
 export const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode, expoPushToken, notification, schedulePushNotification } = useContext(Context)
+  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode } = useContext(Context)
 
   const _mapView = createRef()
 
@@ -173,7 +174,6 @@ export const HomeScreen = ({ navigation }) => {
   }
 
   const handleItemId = async (e, id) => {
-    console.log("id", id)
     e.stopPropagation()
     setItemId(id)
     setQrItem(null)
@@ -228,7 +228,10 @@ export const HomeScreen = ({ navigation }) => {
 
   const handleModal = () => setModalVisible(!modalVisible)
 
-  // const handleCheck = async () => setCheck(!check)
+  // const handleCheck = async () => {
+  //   // await AsyncStorage.setItem('checkWelcomeScreen', 'false')
+  //   setCheck(!check)
+  // }
 
   // if (check) {
   //   return <WelcomeScreen handleCheck={handleCheck} />
