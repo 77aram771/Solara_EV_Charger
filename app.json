@@ -55,8 +55,12 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       },
+      "config": {
+        "googleMaps": { "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8" }
+      },
       "package": "com.voodoo.solara.charging",
-      "versionCode": 40
+      "versionCode": 41,
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "ACCESS_BACKGROUND_LOCATION", "CAMERA"]
     },
     "web": {
       "favicon": "./assets/icon.png"

@@ -41,7 +41,8 @@ export const Map = ({
       liteMode={false}
       loadingEnabled={false}
       moveOnMarkerPress={false}
-      preserveClusterPressBehavior={false} shouldRasterizeIOS={false}
+      preserveClusterPressBehavior={false}
+      shouldRasterizeIOS={false}
       provider={PROVIDER_GOOGLE}
       style={styles.map}
       onPress={(e) => {
