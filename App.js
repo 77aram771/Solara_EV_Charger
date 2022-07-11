@@ -28,8 +28,16 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
-    shouldSetBadge: true
-  })
+    shouldSetBadge: true,
+  }),
+});
+Notifications.requestPermissionsAsync({
+  ios: {
+    allowAlert: true,
+    allowBadge: true,
+    allowSound: true,
+    allowAnnouncements: true,
+  },
 });
 
 export default function App() {
@@ -71,7 +79,7 @@ export default function App() {
         body: "Here is the notification body",
         data: { data: "goes here" }
       },
-      trigger: { seconds: 2 }
+      trigger: { seconds: 1 }
     });
   }
 

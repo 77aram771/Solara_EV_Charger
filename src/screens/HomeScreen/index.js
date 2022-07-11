@@ -29,13 +29,12 @@ import IconClock from "../../assets/icon/clock.png"
 import IconClose from "../../assets/icon/cancel.png"
 import { ChargerList } from "../../container/ChargerList"
 // import { WelcomeScreen } from "../WelcomeScreen";
-// import { AddBalanceModal } from "../../container/AddBalanceModal"
 
 export const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode } = useContext(Context)
+  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode, notification, expoPushToken, schedulePushNotification } = useContext(Context)
 
   const _mapView = createRef()
 
@@ -270,6 +269,8 @@ export const HomeScreen = ({ navigation }) => {
       {/*     flex: 1, */}
       {/*     alignItems: 'center', */}
       {/*     justifyContent: 'space-around', */}
+      {/*     zIndex: 1111110, */}
+      {/*     backgroundColor: 'red' */}
       {/*   }} */}
       {/* > */}
       {/*   <Text>Your expo push token: {expoPushToken}</Text> */}
