@@ -28,7 +28,7 @@ export const RangeLineCustom = ({ percent, min, max, handleMin, handleMax, check
         <TextCustom text={percent ? `${checkMax}%` : `${checkMax} ${lang[countryCode].kw}`} />
       </View>
       {
-        min
+        max
           ? <RangeSlider
             styleSize={"medium"}
             min={min !== null ? min : 0}

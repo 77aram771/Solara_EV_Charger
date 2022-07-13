@@ -34,7 +34,7 @@ export const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode, notification, expoPushToken, schedulePushNotification } = useContext(Context)
+  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode } = useContext(Context)
 
   const _mapView = createRef()
 
