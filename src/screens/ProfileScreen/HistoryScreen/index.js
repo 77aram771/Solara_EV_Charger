@@ -91,7 +91,7 @@ export const HistoryScreen = ({ navigation }) => {
   const handleItemPress = (index) => flatListRef.current.scrollToIndex({ animated: true, index })
 
   const handleTab = () => {
-    if (data.length > 0 || charging.length > 0) {
+    if (data && data.length > 0 || charging && charging.length > 0) {
       handleItemPress(0)
     }
     setCheck(!check)
@@ -137,7 +137,7 @@ export const HistoryScreen = ({ navigation }) => {
         {
           !check
             ? (
-              data.length > 0
+              data && data.length > 0
                 ? (
                   <View style={styles.titleBox}>
                     <TextCustom
@@ -160,7 +160,7 @@ export const HistoryScreen = ({ navigation }) => {
                 : null
             )
             : (
-              charging.length > 0
+              charging && charging.length > 0
                 ? (
                   <View style={styles.titleBox}>
                     <TextCustom
@@ -186,7 +186,7 @@ export const HistoryScreen = ({ navigation }) => {
         {
           !check
             ? (
-              data.length > 0
+              data && data.length > 0
                 ? (
                   <FlatList
                     ref={flatListRef}
@@ -273,7 +273,7 @@ export const HistoryScreen = ({ navigation }) => {
                 : <TitleCustom text={lang[countryCode].doYouNoHaveHistory} />
             )
             : (
-              charging.length > 0
+              charging && charging.length > 0
                 ? (
                   <FlatList
                     ref={flatListRef}

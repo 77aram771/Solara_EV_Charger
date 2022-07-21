@@ -209,9 +209,21 @@ export const HomeScreen = ({ navigation }) => {
     setModalVisible(false)
   }
 
-  const handleReady = (result) => {
+  const handleReady = async (result) => {
     setKm(result.distance)
     setMin(result.duration)
+    setTimeout(() => {
+      if (_mapView.current !== null) {
+        _mapView.current.fitToCoordinates(result.coordinates, {
+          edgePadding: {
+            right: windowWidth / 3,
+            bottom: windowHeight / 3,
+            left: windowWidth / 3,
+            top: windowHeight / 3
+          }
+        })
+      }
+    }, 2000)
   }
 
   const handleReset = () => {

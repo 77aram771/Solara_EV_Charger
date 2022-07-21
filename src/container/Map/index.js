@@ -1,14 +1,68 @@
 import React from "react"
-import { Image } from "react-native"
+import { Image, Platform } from "react-native"
 import MapView from "react-native-map-clustering"
 import { Geojson, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import MapViewDirections from "react-native-maps-directions"
 import { RenderCluster } from "../../components/UI/RenderCluster"
-import { Google_Key, windowHeight, windowWidth } from "../../shared/Const"
+import { Google_Key, windowWidth } from "../../shared/Const"
 import myPlace from "../../assets/georgia.json"
 import { styles } from "../../screens/HomeScreen/style"
 import { MapStyle } from "../../shared/MapStyle"
 import { Dandelion, MySin, White } from "../../shared/Colors"
+
+const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady }) => {
+  return (
+    <>
+      <Marker
+        onPress={(e) => handleItemId(e, 0)}
+        coordinate={{
+          latitude: data[item].lat,
+          longitude: data[item].lng
+        }}
+      >
+        <Image
+          source={{ uri: data[item].pin }}
+          style={{ width: 35, height: 55 }}
+          resizeMode={"contain"}
+        />
+      </Marker>
+      <MapViewDirections
+        origin={cordinate}
+        waypoints={
+          [
+            {
+              latitude: data[item].lat,
+              longitude: data[item].lng
+            },
+            cordinate
+          ]
+        }
+        destination={
+          {
+            latitude: data[item].lat,
+            longitude: data[item].lng
+          }
+        }
+        language={"en"}
+        apikey={Google_Key}
+        strokeWidth={3}
+        strokeColor={Dandelion}
+        optimizeWaypoints={true}
+        onStart={params => {
+          handleCheckCordinate(params.waypoints[0].latitude, params.waypoints[0].longitude)
+        }}
+        onReady={result => {
+          if (result !== null) {
+            handleReady(result)
+          }
+        }}
+        onError={errorMessage => {
+          console.log("GOT AN ERROR", errorMessage)
+        }}
+      />
+    </>
+  )
+}
 
 export const Map = ({
   start,
@@ -103,13 +157,13 @@ export const Map = ({
                   key={index}
                   stopPropagation={false}
                 >
-                  {/* <Image */}
-                  {/*   source={{ uri: item?.pin }} */}
-                  {/*   style={{ */}
-                  {/*     width: Platform.OS === "ios" ? 50 : 40, */}
-                  {/*     height: Platform.OS === "ios" ? 50 : 40 */}
-                  {/*   }} */}
-                  {/* /> */}
+                  <Image
+                    source={{ uri: item?.pin }}
+                    style={{
+                      width: Platform.OS === "ios" ? 50 : 40,
+                      height: Platform.OS === "ios" ? 50 : 40
+                    }}
+                  />
                 </Marker>
               )
             })
@@ -120,67 +174,14 @@ export const Map = ({
         start
           ? (
             itemId !== null
-              ? (
-                <>
-                  <Marker
-                    onPress={(e) => handleItemId(e, 0)}
-                    coordinate={{
-                      latitude: data[itemId].lat,
-                      longitude: data[itemId].lng
-                    }}
-                  >
-                    <Image
-                      source={{ uri: data[itemId].pin }}
-                      style={{ width: 35, height: 55 }}
-                      resizeMode={"contain"}
-                    />
-                  </Marker>
-                  <MapViewDirections
-                    origin={cordinate}
-                    waypoints={
-                      [
-                        {
-                          latitude: data[itemId].lat,
-                          longitude: data[itemId].lng
-                        },
-                        cordinate
-                      ]
-                    }
-                    destination={
-                      {
-                        latitude: data[itemId].lat,
-                        longitude: data[itemId].lng
-                      }
-                    }
-                    language={"ar"}
-                    apikey={Google_Key}
-                    strokeWidth={3}
-                    strokeColor={Dandelion}
-                    optimizeWaypoints={true}
-                    onStart={params => {
-                      handleCheckCordinate(params.waypoints[0].latitude, params.waypoints[0].longitude)
-                    }}
-                    onReady={result => {
-                      if (result !== null) {
-                        handleReady(result)
-                        if (_mapView.current !== null) {
-                          _mapView.current.fitToCoordinates(result.coordinates, {
-                            edgePadding: {
-                              right: windowWidth / 3,
-                              bottom: windowHeight / 3,
-                              left: windowWidth / 3,
-                              top: windowHeight / 3
-                            }
-                          })
-                        }
-                      }
-                    }}
-                    onError={errorMessage => {
-                      console.log("GOT AN ERROR", errorMessage)
-                    }}
-                  />
-                </>
-              )
+              ?
+              <RenderDirection
+                data={data}
+                cordinate={cordinate}
+                item={itemId}
+                handleCheckCordinate={handleCheckCordinate}
+                handleReady={handleReady}
+              />
               : null
           )
           : null
@@ -189,67 +190,14 @@ export const Map = ({
         start
           ? (
             qrItem !== null
-              ? (
-                <>
-                  <Marker
-                    onPress={(e) => handleItemId(e, 0)}
-                    coordinate={{
-                      latitude: data[qrItem].lat,
-                      longitude: data[qrItem].lng
-                    }}
-                  >
-                    <Image
-                      source={{ uri: data[qrItem].pin }}
-                      style={{ width: 35, height: 55 }}
-                      resizeMode={"contain"}
-                    />
-                  </Marker>
-                  <MapViewDirections
-                    origin={cordinate}
-                    waypoints={
-                      [
-                        {
-                          latitude: data[qrItem].lat,
-                          longitude: data[qrItem].lng
-                        },
-                        cordinate
-                      ]
-                    }
-                    destination={
-                      {
-                        latitude: data[qrItem].lat,
-                        longitude: data[qrItem].lng
-                      }
-                    }
-                    language={"ar"}
-                    apikey={Google_Key}
-                    strokeWidth={3}
-                    strokeColor={Dandelion}
-                    optimizeWaypoints={true}
-                    onStart={params => {
-                      handleCheckCordinate(params.waypoints[0].latitude, params.waypoints[0].longitude)
-                    }}
-                    onReady={result => {
-                      if (result !== null) {
-                        handleReady(result)
-                        if (_mapView.current !== null) {
-                          _mapView.current.fitToCoordinates(result.coordinates, {
-                            edgePadding: {
-                              right: windowWidth / 3,
-                              bottom: windowHeight / 3,
-                              left: windowWidth / 3,
-                              top: windowHeight / 3
-                            }
-                          })
-                        }
-                      }
-                    }}
-                    onError={errorMessage => {
-                      console.log("GOT AN ERROR", errorMessage)
-                    }}
-                  />
-                </>
-              )
+              ?
+              <RenderDirection
+                data={data}
+                cordinate={cordinate}
+                item={qrItem}
+                handleCheckCordinate={handleCheckCordinate}
+                handleReady={handleReady}
+              />
               : null
           )
           : null

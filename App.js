@@ -43,9 +43,10 @@ Notifications.requestPermissionsAsync({
 axios.interceptors.response.use( response => {
   return response;
 }, error => {
+  console.log('error', error)
   if (error.response.status === 401) {
     (async () => {
-      await AsyncStorage.removeItem("token")
+      // await AsyncStorage.removeItem("token")
     })()
   }
   return error;
