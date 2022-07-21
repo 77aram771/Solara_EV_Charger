@@ -38,7 +38,7 @@ export const langData = [
     title: "Հայերեն",
     active: false,
     icon: IconArmenia,
-    countryCode: "hy"
+    countryCode: "ar"
   },
   {
     id: 3,

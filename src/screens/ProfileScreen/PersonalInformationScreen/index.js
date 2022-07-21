@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Platform, ActivityIndicator } from "react-native"
+import { View, Platform, ActivityIndicator, Alert } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
@@ -135,6 +135,13 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
               })
               .catch(e => {
                 setLoader(false)
+                Alert.alert(
+                  `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+                  `${e?.response?.data?.message}`,
+                  [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                  ]
+                );
               })
           }
         } else {

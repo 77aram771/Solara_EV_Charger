@@ -1,5 +1,5 @@
 export const lang = {
-  hy: {
+  ar: {
     H: "ժ",
     M: "մ",
     start: "Սկսել",
@@ -59,8 +59,8 @@ export const lang = {
     faq: "ՀՏՀ",
     Ask: "Հարց տալ",
     appInfo: "Հավելվածի մասին",
-    appInfoText1: "Հայտնի է, որ ընթերցողը, կարդալով հասկանալի տեքստ, չի կարողանա կենտրոնանալ տեքստի ձևավորման վրա: Lorem Ipsum օգտագործելը բացատրվում է նրանով, որ այն բաշխում է բառերը քիչ թե շատ իրականի նման, ի տարբերություն «Բովանդակություն, բովանդակություն» սովորական կրկննության, ինչը ընթերցողի համար հասկանալի է:",
-    appInfoText2: "Շատ համակարգչային տպագրական ծրագրեր և ինտերնետային էջերի խմբագրիչներ այն օգտագործում են որպես իրենց ստանդարտ տեքստային մոդել, և հետևապես, ինտերնետում Lorem Ipsum-ի որոնման արդյունքում կարելի է հայտնաբերել էջեր, որոնք դեռ նոր են կերտվում: Ժամանակի ընթացքում ձևավորվել են Lorem Ipsum-ի տարբեր վերսիաներ` երբեմն ներառելով պատահական տեքստեր, երբեմն էլ հատուկ իմաստ (հումոր և նմանատիպ բովանդակություն):",
+    appInfoText1: "Հայտնի է, որ ընթերցողը, կարդալով հասկանալի տեքստ, չի կարողանա կենտրոնանալ տեքստի ձևավորման վրա: օգտագործելը բացատրվում է նրանով, որ այն բաշխում է բառերը քիչ թե շատ իրականի նման, ի տարբերություն «Բովանդակություն, բովանդակություն» սովորական կրկննության, ինչը ընթերցողի համար հասկանալի է:",
+    appInfoText2: "Շատ համակարգչային տպագրական ծրագրեր և ինտերնետային էջերի խմբագրիչներ այն օգտագործում են որպես իրենց ստանդարտ տեքստային մոդել, և հետևապես, ինտերնետում  որոնման արդյունքում կարելի է հայտնաբերել էջեր, որոնք դեռ նոր են կերտվում: Ժամանակի ընթացքում ձևավորվել են Lorem Ipsum-ի տարբեր վերսիաներ` երբեմն ներառելով պատահական տեքստեր, երբեմն էլ հատուկ իմաստ (հումոր և նմանատիպ բովանդակություն):",
     partner: "Գործընկեր",
     weOnSocial: "Մենք սոց. կայքերում",
     languageSelection: "Ընտրել լեզուն",
@@ -140,7 +140,8 @@ export const lang = {
     atLeastOneSpecialCharacters: "Առնվազն մեկ Հատուկ նիշ",
     atLeastMinimumCharacters: "Առնվազն 8 նիշ",
     permissionToAccessLocationWasDenied: "Գտնվելու վայրի թույլտվությունը մերժվել է",
-    permissionToAccessCameraWasDenied: "Տեսախցիկի թույլտվությունը մերժվել է"
+    permissionToAccessCameraWasDenied: "Տեսախցիկի թույլտվությունը մերժվել է",
+    doYouNoHaveHistory: "Դուք պատմություն չունեք"
   },
   ru: {
     H: "ч",
@@ -201,14 +202,14 @@ export const lang = {
     help: "Помощь",
     faq: "Инфо",
     Ask: "Задать вопрос",
-    appInfo: "Информация о приложении",
+    appInfo: "О приложении",
     appInfoText1: "Читателю известно, что чтение понятно текст, не сможет сфокусироваться на тексте на литье. Использование Лорем Ипсум объясняется тем, что он меньше распределяет слов или вполне реальный, напротив «Контент, контент» — обычное дело повторение, понятное читателю.",
-    appInfoText2: "Многие компьютерные программы для печати и редакторы веб-страниц используют его в качестве стандартной текстовой модели և затем поищите в Интернете Lorem Ipsum В результате вы можете найти страницы, которые все еще только строятся. Формируется со временем разные версии Lorem Ipsum, иногда включая случайные тексты, иногда особый смысл (юмор и подобный содержание):",
-    partner: "Партнер",
+    appInfoText2: "Многие компьютерные программы для печати и редакторы веб-страниц используют его в качестве стандартной текстовой модели և затем поищите в Интернете. В результате вы можете найти страницы, которые все еще только строятся. Формируется со временем разные версии Lorem Ipsum, иногда включая случайные тексты, иногда особый смысл (юмор и подобный содержание):",
+    partner: "Партнеры",
     weOnSocial: "Мы в соц. сетях",
     languageSelection: "Выбор языка",
     question: "Вопрос",
-    send: "Отправлять",
+    send: "Отправить",
     name: "Имя",
     surname: "Фамилия",
     phone: "Телефон",
@@ -246,10 +247,10 @@ export const lang = {
     addNewCard: "Добавить новую карту",
     money: "Деньги",
     yourPaymentInformationIsSecureWithUs: "Ваша платежная информация в безопасности с нами",
-    add: "Добавлять",
+    add: "Добавить",
     save: "Сохранить",
-    inputs: "Входы",
-    outputs: "Выходы",
+    inputs: "Ввод",
+    outputs: "Вывод",
     totalPrice: "Общая цена",
     totalCharge: "Общая зарядка",
     cards: "Карты",
@@ -282,7 +283,8 @@ export const lang = {
     atLeastOneSpecialCharacters: "Хотя бы один специальный символ",
     atLeastMinimumCharacters: "Минимум 8 символов",
     permissionToAccessLocationWasDenied: "Разрешение на доступ к местоположению было отклонено",
-    permissionToAccessCameraWasDenied: "Разрешение на доступ к камере было отклонено"
+    permissionToAccessCameraWasDenied: "Разрешение на доступ к камере было отклонено",
+    doYouNoHaveHistory: "У тебя нет истории"
   },
   en: {
     H: "h",
@@ -346,7 +348,7 @@ export const lang = {
     appInfo: "App Info",
     appInfoText1: "It is known to the reader that reading is understandable text, will not be able to focus on text on molding. Using Lorem Ipsum is explained by the fact that it distributes words less or very real, in contrast \"Content, content\" is common repetition, which is understandable to the reader.",
     appInfoText2: "Many computer printing software and web page editors use it as their standard text model, and then search the internet for Lorem Ipsum As a result, you can find pages that are still are just being built. Formed over time are different versions of Lorem Ipsum, sometimes including random texts, sometimes special meaning (humor and similar content):",
-    partner: "Partner",
+    partner: "Partners",
     weOnSocial: "We on social",
     languageSelection: "Language selection",
     question: "Question",
@@ -424,6 +426,7 @@ export const lang = {
     atLeastOneSpecialCharacters: "At least one special characters",
     atLeastMinimumCharacters: "At least minimum 8 characters",
     permissionToAccessLocationWasDenied: "Permission to access location was denied",
-    permissionToAccessCameraWasDenied: "Permission to access camera was denied"
+    permissionToAccessCameraWasDenied: "Permission to access camera was denied",
+    doYouNoHaveHistory: "You have not history"
   }
 }

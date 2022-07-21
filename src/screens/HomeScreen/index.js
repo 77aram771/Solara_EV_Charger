@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { Button, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
+import { Alert, Button, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { GetCarMake } from "../../store/actionsCreators/CarMakeApiActionCreator"
 import { GetChargeBoxesData } from "../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
 import { Map } from "../../container/Map"
+import { ChargerList } from "../../container/ChargerList"
 import IconDirection from "../../assets/icon/direction1.png"
 import IconDirection2 from "../../assets/icon/direction2.png"
 import IconDirection3 from "../../assets/icon/direction3.png"
@@ -27,14 +28,13 @@ import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
 import IconClose from "../../assets/icon/cancel.png"
-import { ChargerList } from "../../container/ChargerList"
 // import { WelcomeScreen } from "../WelcomeScreen";
 
 export const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode } = useContext(Context)
+  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode, expoPushToken, notification, schedulePushNotification } = useContext(Context)
 
   const _mapView = createRef()
 
@@ -47,7 +47,6 @@ export const HomeScreen = ({ navigation }) => {
   const [loaderStart, setLoaderStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
   const [modalRedirect, setModalRedirect] = useState(false)
-  const [check, setCheck] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [cordinate, setCordinate] = useState({
     latitude: location !== null ? location?.coords?.latitude : 40,
@@ -56,8 +55,8 @@ export const HomeScreen = ({ navigation }) => {
     longitudeDelta: LONGITUDE_DELTA
   })
   const [options, setOptions] = useState({
-    latitude: null,
-    longitude: null,
+    latitude: location !== null ? location?.coords?.latitude : 40,
+    longitude: location !== null ? location?.coords?.longitude : 45,
     googleForceLatLon: false,
     alwaysIncludeGoogle: true,
     appsWhiteList: ["google-maps", "apple-maps", "waze", "yandex", "yandex-maps"],
@@ -99,29 +98,15 @@ export const HomeScreen = ({ navigation }) => {
     handleChargeBoxesData()
   }, [countryCode])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleChargeBoxesData()
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   useLayoutEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
-      if (itemId !== null) {
-        setOptions(prev => {
-          return (
-            {
-              ...prev,
-              latitude: chargeBoxesData[itemId]?.latitude,
-              longitude: chargeBoxesData[itemId]?.longitude
-            }
-          )
-        })
-      } else if (qrItem !== null) {
-        setOptions(prev => {
-          return (
-            {
-              ...prev,
-              latitude: chargeBoxesData[qrItem]?.latitude,
-              longitude: chargeBoxesData[qrItem]?.longitude
-            }
-          )
-        })
-      }
       setData(chargeBoxesData && chargeBoxesData?.data.map(item => {
         item.active = false
         return item
@@ -142,26 +127,35 @@ export const HomeScreen = ({ navigation }) => {
   const handleCheckChargeProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
     const transactionId = await AsyncStorage.getItem("transaction_id")
-    await axios.post(
-      `${API_URL}/charge-box/get-progress?access-token=${Token}`,
-      { transaction_id: Number(transactionId) },
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(async res => {
-        if (res.data.status === "Charging" || res.data.kw > 0) {
-          navigation.navigate("LoadCharge", { bool: true })
-        }
-        if (res.data.status === "Stopped") {
-          await AsyncStorage.removeItem("transaction_id")
-        }
-      })
-      .catch(e => {
-        console.log("e -----------123", e.response.data.message)
-      })
+    if(Token !== null) {
+      await axios.post(
+        `${API_URL}/charge-box/get-progress?access-token=${Token}`,
+        { transaction_id: Number(transactionId) },
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(async res => {
+          if (res.data.status === "Charging" || res.data.kw > 0) {
+            navigation.navigate("LoadCharge", { bool: true })
+          }
+          if (res.data.status === "Stopped") {
+            await AsyncStorage.removeItem("transaction_id")
+          }
+        })
+        .catch(e => {
+          console.log("e -----------123", e.response.data.message)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        })
+    }
   }
 
   const handleChargeBoxesData = () => {
-    dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&min=7&max=60&language=${countryCode}`))
+    dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=1000&min=7&max=60&language=${countryCode}`))
   }
 
   const getCurrentPosition = async () => {
@@ -227,11 +221,25 @@ export const HomeScreen = ({ navigation }) => {
 
   const handleModal = () => setModalVisible(!modalVisible)
 
+  const handleCheckCordinate = (latitude, longitude) => {
+    setOptions(prev => {
+      return (
+        {
+          ...prev,
+          latitude: location?.coords?.latitude,
+          longitude: location?.coords?.longitude,
+          sourceLatitude: latitude,
+          sourceLongitude: longitude
+        }
+      )
+    })
+  }
+
   // const handleCheck = async () => {
   //   // await AsyncStorage.setItem('checkWelcomeScreen', 'false')
   //   setCheck(!check)
   // }
-
+  //
   // if (check) {
   //   return <WelcomeScreen handleCheck={handleCheck} />
   // }
@@ -263,7 +271,6 @@ export const HomeScreen = ({ navigation }) => {
           navigation={navigation}
         />
       </Modal>
-
       {/* <View */}
       {/*   style={{ */}
       {/*     flex: 1, */}
@@ -361,6 +368,7 @@ export const HomeScreen = ({ navigation }) => {
         handleItemId={handleItemId}
         handleReady={handleReady}
         handleReset={handleReset}
+        handleCheckCordinate={handleCheckCordinate}
       />
       <TouchableOpacity
         style={[styles.myLocationButtonOut, {

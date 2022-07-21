@@ -1,9 +1,17 @@
 import React, { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, Image, KeyboardAvoidingView, Modal, Platform, TouchableOpacity, View } from "react-native"
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  TouchableOpacity,
+  View
+} from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { WebView } from "react-native-webview"
-import Icon from "react-native-vector-icons/AntDesign"
 import Constants from "expo-constants"
 import { Fiord, Green, Manatee, MySin, SunsetOrange, White } from "../../shared/Colors"
 import { styles } from "./style"
@@ -19,6 +27,7 @@ import { TextCustom } from "../../components/UI/TextCustom"
 import { DismissKeyboard } from "../../components/DismissKeyboard"
 import ImgLight from "../../assets/icon/priceunit.png"
 import IconCard from "../../assets/icon/icon-card.png"
+import IconClose from "../../assets/icon/icon-close.png";
 
 export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
 
@@ -45,31 +54,33 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
   const getCardData = async () => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
-    await axios.post(
-      `${API_URL}/users/get-cards?access-token=${Token}`,
-      {},
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(res => {
-        setCardsData(
-          [
-            {
-              "id": 3,
-              "title": "Idram"
-            },
-            {
-              "id": 4,
-              "title": "Telcell"
-            },
-            ...res?.data?.data
-          ]
-        )
-        if (res?.data?.data.length > 0) {
-          setCardId(res?.data?.data[0]?.id)
-        }
-        setLoader(false)
-      })
-      .catch(e => console.log("e", e.response))
+    if(Token !== null) {
+      await axios.post(
+        `${API_URL}/users/get-cards?access-token=${Token}`,
+        {},
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(res => {
+          setCardsData(
+            [
+              {
+                "id": 3,
+                "title": "Idram"
+              },
+              {
+                "id": 4,
+                "title": "Telcell"
+              },
+              ...res?.data?.data
+            ]
+          )
+          if (res?.data?.data.length > 0) {
+            setCardId(res?.data?.data[0]?.id)
+          }
+          setLoader(false)
+        })
+        .catch(e => console.log("e", e.response))
+    }
   }
 
   const handleId = (id) => setCardId(id)
@@ -105,6 +116,13 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               setMessage(e?.response?.data?.message)
               setMessageStatus(e?.response?.data?.status)
               setPrice("")
+              Alert.alert(
+                `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+                `${e?.response?.data?.message}`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
             })
         } else if (cardId === 4) {
           setLoader(true)
@@ -132,6 +150,13 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               setMessage(e?.response?.data?.message)
               setMessageStatus(e?.response?.data?.status)
               setPrice("")
+              Alert.alert(
+                `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+                `${e?.response?.data?.message}`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
             })
         } else {
           setLoader(true)
@@ -161,6 +186,13 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               setMessage(e?.response?.data?.message)
               setMessageStatus(e?.response?.data?.status)
               setPrice("")
+              Alert.alert(
+                `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+                `${e?.response?.data?.message}`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
             })
         }
       }
@@ -195,7 +227,11 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           style={{ position: "absolute", top: Platform.OS === "ios" ? windowHeight / 13.5 : 15, right: 15, zIndex: 1 }}
           onPress={() => handleModalWebView()}
         >
-          <Icon name={"close"} size={25} />
+          <Image
+            source={IconClose}
+            style={{ width: 25, height: 25 }}
+            resizeMode={"cover"}
+          />
         </TouchableOpacity>
         <WebView
           source={{ uri: `${addCardUrl}` }}

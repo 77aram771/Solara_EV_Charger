@@ -16,7 +16,7 @@ import IconAbout from "../../../assets/icon/about.png"
 import IconLike from "../../../assets/icon/partner.png"
 import IconFb from "../../../assets/icon/facebook.png"
 import IconIns from "../../../assets/icon/instagram.png"
-import IconViber from "../../../assets/icon/icon-viber.png"
+// import IconViber from "../../../assets/icon/icon-viber.png"
 import IconTelegram from "../../../assets/icon/icon-telegram.png"
 
 export const SettingsScreen = ({ navigation }) => {
@@ -213,24 +213,24 @@ export const SettingsScreen = ({ navigation }) => {
             justifyContent={"center"}
             iconMarginRight={0}
           />
-          <ButtonCustom
-            width={"45%"}
-            height={120}
-            backgroundColor={White}
-            borderColor={Mercurysolid}
-            color={MineShaft}
-            borderWidth={1}
-            borderRadius={18}
-            click={() => handleLink('viber://add?number=+37444577555')}
-            fontSize={18}
-            fontWeight={"400"}
-            icon={IconViber}
-            iconWidth={50}
-            iconHeight={50}
-            marginBottom={20}
-            justifyContent={"center"}
-            iconMarginRight={0}
-          />
+          {/* <ButtonCustom */}
+          {/*   width={"45%"} */}
+          {/*   height={120} */}
+          {/*   backgroundColor={White} */}
+          {/*   borderColor={Mercurysolid} */}
+          {/*   color={MineShaft} */}
+          {/*   borderWidth={1} */}
+          {/*   borderRadius={18} */}
+          {/*   click={() => handleLink('viber://add?number=+37444577555')} */}
+          {/*   fontSize={18} */}
+          {/*   fontWeight={"400"} */}
+          {/*   icon={IconViber} */}
+          {/*   iconWidth={50} */}
+          {/*   iconHeight={50} */}
+          {/*   marginBottom={20} */}
+          {/*   justifyContent={"center"} */}
+          {/*   iconMarginRight={0} */}
+          {/* /> */}
           <ButtonCustom
             width={"45%"}
             height={120}

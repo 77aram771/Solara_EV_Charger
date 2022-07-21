@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Image, ImageBackground, Platform, Modal, ActivityIndicator } from "react-native"
+import { View, Image, ImageBackground, Platform, Modal, ActivityIndicator, Alert } from "react-native"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -51,6 +51,13 @@ export const ProfileScreen = ({ navigation }) => {
       )
         .then(res => setUser(res.data))
         .catch(e => {
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
           if (e?.response?.data?.status === 401) {
             handleLogOut()
           }

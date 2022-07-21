@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, Platform } from "react-native"
+import { Image } from "react-native"
 import MapView from "react-native-map-clustering"
 import { Geojson, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import MapViewDirections from "react-native-maps-directions"
@@ -21,7 +21,8 @@ export const Map = ({
   location,
   handleItemId,
   handleReady,
-  handleReset
+  handleReset,
+  handleCheckCordinate
 }) => {
   return (
     <MapView
@@ -102,13 +103,13 @@ export const Map = ({
                   key={index}
                   stopPropagation={false}
                 >
-                  <Image
-                    source={{ uri: item?.pin }}
-                    style={{
-                      width: Platform.OS === "ios" ? 50 : 40,
-                      height: Platform.OS === "ios" ? 50 : 40
-                    }}
-                  />
+                  {/* <Image */}
+                  {/*   source={{ uri: item?.pin }} */}
+                  {/*   style={{ */}
+                  {/*     width: Platform.OS === "ios" ? 50 : 40, */}
+                  {/*     height: Platform.OS === "ios" ? 50 : 40 */}
+                  {/*   }} */}
+                  {/* /> */}
                 </Marker>
               )
             })
@@ -157,7 +158,7 @@ export const Map = ({
                     strokeColor={Dandelion}
                     optimizeWaypoints={true}
                     onStart={params => {
-                      console.log("params", params)
+                      handleCheckCordinate(params.waypoints[0].latitude, params.waypoints[0].longitude)
                     }}
                     onReady={result => {
                       if (result !== null) {
@@ -226,7 +227,7 @@ export const Map = ({
                     strokeColor={Dandelion}
                     optimizeWaypoints={true}
                     onStart={params => {
-                      console.log("params", params)
+                      handleCheckCordinate(params.waypoints[0].latitude, params.waypoints[0].longitude)
                     }}
                     onReady={result => {
                       if (result !== null) {

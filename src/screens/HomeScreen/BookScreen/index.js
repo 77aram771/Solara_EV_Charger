@@ -36,15 +36,17 @@ export const BookScreen = ({ navigation, route }) => {
 
   const getDetails = async () => {
     const Token = await AsyncStorage.getItem("token")
-    await axios.post(
-      `${API_URL}/charge-box/details?access-token=${Token}`,
-      { id: route?.params?.data[route?.params.itemId].id },
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(res => {
-        setImageData(res?.data?.images)
-      })
-      .catch(e => console.log("e", e.response))
+    if(Token !== null) {
+      await axios.post(
+        `${API_URL}/charge-box/details?access-token=${Token}`,
+        { id: route?.params?.data[route?.params.itemId].id },
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(res => {
+          setImageData(res?.data?.images)
+        })
+        .catch(e => console.log("e", e.response))
+    }
   }
 
   const handleModal = () => setImageModal(!imageModal)
@@ -262,6 +264,7 @@ export const BookScreen = ({ navigation, route }) => {
             </View>
             {
               route?.params?.data[route?.params?.itemId]?.connectors.map((item, index) => {
+                console.log('item', item)
                 return (
                   <TouchableOpacity
                     onPress={() => handlePort(item)}
@@ -277,6 +280,19 @@ export const BookScreen = ({ navigation, route }) => {
                         fontSize={14}
                       />
                       <Image source={{ uri: item?.status_image }} style={{ width: 20, height: 20, marginRight: 10 }} />
+                      {
+                        item?.status === "SuspendedEVSE"
+                          ? (
+                            <TextCustom
+                              text={`${item?.type?.title}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
                       {
                         item?.status === "Faulted"
                           ? (
@@ -345,6 +361,19 @@ export const BookScreen = ({ navigation, route }) => {
                     </View>
                     <View style={{ width: "20%" }}>
                       {
+                        item?.status === "SuspendedEVSE"
+                          ? (
+                            <TextCustom
+                              text={`${item?.power} ${lang[countryCode].kw}`}
+                              marginRight={5}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
+                      {
                         item?.status === "Faulted"
                           ? (
                             <TextCustom
@@ -411,6 +440,18 @@ export const BookScreen = ({ navigation, route }) => {
                       }
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "20%" }}>
+                      {
+                        item?.status === "SuspendedEVSE"
+                          ? (
+                            <TextCustom
+                              text={sumKW}
+                              fontWeight={"400"}
+                              color={"#df364b"}
+                              fontSize={14}
+                            />
+                          )
+                          : null
+                      }
                       {
                         item?.status === "Faulted"
                           ? (

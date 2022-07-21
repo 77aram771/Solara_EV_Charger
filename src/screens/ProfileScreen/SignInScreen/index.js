@@ -141,10 +141,10 @@ export const SignInScreen = ({ navigation }) => {
                   value={password}
                   handle={value => handlePassword(value)}
                   placeholderTextColor={Manatee}
-                  icon={password.length > 1 ? showPassword ? IconEyeClose : IconEye : IconPassword}
+                  icon={password.length > 0 ? showPassword ? IconEyeClose : IconEye : IconPassword}
                   iconWidth={25}
                   iconHeight={25}
-                  iconClick={password.length > 1 ? () => handleShowPassword() : null}
+                  iconClick={password.length > 0 ? () => handleShowPassword() : null}
                   secureTextEntry={showPassword}
                   error={passwordError}
                   errorText={passwordErrorMessage}

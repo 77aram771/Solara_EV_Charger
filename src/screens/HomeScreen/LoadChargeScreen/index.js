@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Image, ImageBackground, Modal, Platform, ScrollView, View } from "react-native"
+import { Alert, Image, ImageBackground, Modal, Platform, ScrollView, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import LottieView from "lottie-react-native"
@@ -29,54 +29,72 @@ export const LoadChargeScreen = ({ navigation, route }) => {
   const handleProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
     const transactionId = await AsyncStorage.getItem("transaction_id")
-    await axios.post(
-      `${API_URL}/charge-box/get-progress?access-token=${Token}`,
-      { transaction_id: Number(transactionId) },
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(res => {
-        setLoader(false)
-        setStatus(res.data.status)
-        setProgress(res.data.progress)
-        if (res.data.status === "Charging" || res.data.kw > 0) {
-          setModalVisible(true)
-        }
-        // else if (res.data.status !== "Charging") {
-        //   setModalVisible(false)
-        //   navigation.goBack()
-        // }
-        console.log("res handleProgress", res.data)
-      })
-      .catch(e => {
-        setLoader(false)
-        console.log("e -----------", e.response.data.message)
-      })
+    if(Token !== null) {
+      await axios.post(
+        `${API_URL}/charge-box/get-progress?access-token=${Token}`,
+        { transaction_id: Number(transactionId) },
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(res => {
+          setLoader(false)
+          setStatus(res.data.status)
+          setProgress(res.data.progress)
+          if (res.data.status === "Charging" || res.data.kw > 0) {
+            setModalVisible(true)
+          }
+          // else if (res.data.status !== "Charging") {
+          //   setModalVisible(false)
+          //   navigation.goBack()
+          // }
+          console.log("res handleProgress", res.data)
+        })
+        .catch(e => {
+          setLoader(false)
+          console.log("e -----------", e.response.data.message)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        })
+    }
   }
 
   const handleStop = async () => {
     const Token = await AsyncStorage.getItem("token")
     const transactionId = await AsyncStorage.getItem("transaction_id")
     console.log("transactionId", transactionId)
-    await axios.post(
-      `${API_URL}/charge-box/stop?access-token=${Token}`,
-      { transaction_id: Number(transactionId) },
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(res => {
-        setTimeout(() => {
+    if(Token !== null) {
+      await axios.post(
+        `${API_URL}/charge-box/stop?access-token=${Token}`,
+        { transaction_id: Number(transactionId) },
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(res => {
+          setTimeout(() => {
+            setLoader(false)
+            if (route?.params?.bool) {
+              navigation.navigate("Home")
+            } else {
+              navigation.navigate("Book")
+            }
+          }, 2000)
+          console.log("res handleStop", res.data)
+        })
+        .catch(e => {
           setLoader(false)
-          if (route?.params?.bool) {
-            navigation.navigate("Home")
-          } else {
-            navigation.navigate("Book")
-          }
-        }, 2000)
-        console.log("res handleStop", res.data)
-      })
-      .catch(e => {
-        setLoader(false)
-        console.log("e -----------", e.response.data.message)
-      })
+          console.log("e -----------", e.response.data.message)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        })
+    }
   }
 
   useEffect(() => {

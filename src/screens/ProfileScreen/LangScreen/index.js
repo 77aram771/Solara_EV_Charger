@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Image, TouchableOpacity, View } from "react-native"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { MineShaft, MySin } from "../../../shared/Colors"
@@ -8,6 +8,7 @@ import { TextCustom } from "../../../components/UI/TextCustom"
 import { langData } from "../../../shared/MockData"
 import Context from "../../../../Context"
 import IconCheck from "../../../assets/icon/icon-check.png"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RenderLangItem = ({ icon, title, active, handle }) => {
   return (
@@ -21,7 +22,7 @@ const RenderLangItem = ({ icon, title, active, handle }) => {
           fontWeight={"700"}
         />
       </View>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
         {
           active
             ? <Image source={IconCheck} style={{ width: 25, height: 25 }} />
@@ -38,10 +39,29 @@ export const LangScreen = ({ navigation }) => {
 
   const [data, setData] = useState(langData)
 
+  useEffect(() => {
+    (async () => {
+      const c = await AsyncStorage.getItem("countryCode")
+      if(c !== null) {
+        handleCountryCode(countryCode)
+        setData(data.map(item => {
+          item.active = false
+          if (item.countryCode === countryCode) {
+            AsyncStorage.setItem("countryCode", item.countryCode)
+            handleCountryCode(item.countryCode)
+            item.active = true
+          }
+          return item
+        }))
+      }
+    })()
+  }, [])
+
   const handleActive = (id) => {
     setData(data.map(item => {
       item.active = false
       if (item.id === id) {
+        AsyncStorage.setItem("countryCode", item.countryCode)
         handleCountryCode(item.countryCode)
         navigation.goBack()
         item.active = true

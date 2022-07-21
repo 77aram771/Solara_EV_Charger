@@ -57,8 +57,7 @@ export const PartnerScreen = ({ navigation }) => {
                   color={MineShaft}
                   borderWidth={1}
                   borderRadius={18}
-                  click={item?.url ? () => handlePressButtonAsync(item.url) : () => {
-                  }}
+                  click={item?.url ? () => handlePressButtonAsync(item.url) : () => {}}
                   fontSize={18}
                   fontWeight={"400"}
                   icon={item?.image}

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react"
-import { FlatList, Image, RefreshControl, TouchableHighlight, TouchableOpacity, View } from "react-native"
+import { Alert, FlatList, Image, RefreshControl, TouchableHighlight, TouchableOpacity, View } from "react-native"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import moment from "moment"
@@ -40,6 +40,7 @@ export const HistoryScreen = ({ navigation }) => {
   const handleGetPaymentsData = async () => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
+    console.log("Token", Token)
     if (Token !== null) {
       await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
@@ -51,7 +52,13 @@ export const HistoryScreen = ({ navigation }) => {
         })
         .catch(e => {
           setLoader(false)
-          console.log("e", e.response)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
         })
     }
   }
@@ -59,7 +66,7 @@ export const HistoryScreen = ({ navigation }) => {
   const handleGetChargingData = async () => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
+      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=d503f62b0d815643e48b2e4b394948127fa0f0c7`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
@@ -70,6 +77,13 @@ export const HistoryScreen = ({ navigation }) => {
         .catch(e => {
           setLoader(false)
           console.log("e", e)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
         })
     }
   }
@@ -256,9 +270,7 @@ export const HistoryScreen = ({ navigation }) => {
                     }
                   />
                 )
-                : (
-                  <TitleCustom text={"Do you no have History"} />
-                )
+                : <TitleCustom text={lang[countryCode].doYouNoHaveHistory} />
             )
             : (
               charging.length > 0
@@ -385,9 +397,7 @@ export const HistoryScreen = ({ navigation }) => {
                     }
                   />
                 )
-                : (
-                  <TitleCustom text={"Do you no have History"} />
-                )
+                : <TitleCustom text={lang[countryCode].doYouNoHaveHistory} />
             )
         }
       </View>

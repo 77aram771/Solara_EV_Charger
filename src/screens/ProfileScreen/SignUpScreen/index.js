@@ -20,6 +20,8 @@ import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import IconSolara from "../../../assets/icon/icon-solara.png"
 import IconLogin from "../../../assets/icon/login.png"
 import IconArrowDown from "../../../assets/icon/dropdown.png"
+import IconEyeClose from "../../../assets/icon/icon-dont-eye.png"
+import IconEye from "../../../assets/icon/icon-eye.png"
 
 export const SignUpScreen = ({ navigation }) => {
 
@@ -60,6 +62,7 @@ export const SignUpScreen = ({ navigation }) => {
   const [autoModalErrorMessage] = useState(lang[countryCode].chooseModal)
   const [isSelected, setSelection] = useState(false)
   const [isSelectedError, setIsSelectedError] = useState(false)
+  const [showPassword, setShowPassword] = useState(true)
 
   useEffect(() => {
     const newArr = []
@@ -257,6 +260,8 @@ export const SignUpScreen = ({ navigation }) => {
     }
   }
 
+  const handleShowPassword = () => setShowPassword(!showPassword)
+
   return (
     <DismissKeyboard>
       <KeyboardAvoidingView
@@ -316,11 +321,16 @@ export const SignUpScreen = ({ navigation }) => {
               <InputCustom
                 placeholder={lang[countryCode].password}
                 value={password}
-                handle={(value) => handlePassword(value)}
+                handle={value => handlePassword(value)}
                 placeholderTextColor={Manatee}
-                secureTextEntry={true}
+                icon={password.length > 0 ? showPassword ? IconEyeClose : IconEye : null}
+                iconWidth={25}
+                iconHeight={25}
+                iconClick={password.length > 0 ? () => handleShowPassword() : null}
+                secureTextEntry={showPassword}
                 error={passwordError}
                 errorText={passwordErrorMessage}
+                disable={true}
               />
               <SelectCustom
                 value={auto}

@@ -12,8 +12,8 @@ export const PostSignUp = (url, body) => (dispatch) => {
           AsyncStorage.setItem("token", response?.data?.access_token)
           dispatch(fetchSuccess(response))
         })
-        .catch(error => {
-          dispatch(fetchError(error.response.data.message))
+        .catch(e => {
+          dispatch(fetchError(e.response.data.message))
         })
     })
   } else {

@@ -9,9 +9,9 @@ export const GetCarMake = (url) => (dispatch) => {
       .then(response => {
         dispatch(fetchSuccess(response.data))
       })
-      .catch(error => {
-        console.log('error', error)
-        dispatch(fetchError(error.response.data.message))
+      .catch(e => {
+        console.log('error', e)
+        dispatch(fetchError(e.response.data.message))
       })
   })
 }

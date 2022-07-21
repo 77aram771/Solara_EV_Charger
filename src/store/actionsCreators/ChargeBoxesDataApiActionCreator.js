@@ -10,8 +10,8 @@ export const GetChargeBoxesData = (url) => (dispatch) => {
         .then(response => {
           dispatch(fetchSuccess(response.data))
         })
-        .catch(error => {
-          dispatch(fetchError(error.response.data.message))
+        .catch(e => {
+          dispatch(fetchError(e.response.data.message))
         })
     })
   } else {

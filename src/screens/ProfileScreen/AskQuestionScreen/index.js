@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { ActivityIndicator, ScrollView, View } from "react-native"
+import { ActivityIndicator, Alert, ScrollView, View } from "react-native"
 import axios from "axios"
 import { styles } from "./style"
 import { Fiord, Green, Manatee, MySin, White } from "../../../shared/Colors"
@@ -84,6 +84,13 @@ export const AskQuestionScreen = ({ navigation, route }) => {
               .catch(e => {
                 console.log("e", e)
                 setLoader(false)
+                Alert.alert(
+                  `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+                  `${e?.response?.data?.message}`,
+                  [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                  ]
+                );
               })
           } else {
             setMailError(true)

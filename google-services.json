@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "66206143567",
+    "project_id": "solara-13862",
+    "storage_bucket": "solara-13862.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66206143567:android:52ffa9114cab01cf01863a",
+        "android_client_info": {
+          "package_name": "com.voodoo.solara.charging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66206143567-ellgbkuto2221melaoqf0dkj739gkuvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvUFDBnIAn02XhHknMrQfau11HNb4tXEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66206143567-ellgbkuto2221melaoqf0dkj739gkuvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

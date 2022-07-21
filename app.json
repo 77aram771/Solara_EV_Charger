@@ -61,6 +61,7 @@
       "config": {
         "googleMaps": { "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8" }
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.voodoo.solara.charging",
       "versionCode": 45,
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA"]

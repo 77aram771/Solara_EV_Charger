@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Platform, Modal, TouchableOpacity, Image, RefreshControl, FlatList } from "react-native"
+import { View, Platform, Modal, TouchableOpacity, Image, RefreshControl, FlatList, Alert } from "react-native"
 import axios from "axios"
 import Constants from "expo-constants"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -49,19 +49,28 @@ export const WalletScreen = ({ navigation }) => {
   const getCardData = async () => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
-    await axios.post(
-      `${API_URL}/users/get-cards?access-token=${Token}`,
-      {},
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(res => {
-        setCardsData(res?.data?.data)
-        setLoader(false)
-      })
-      .catch(e => {
-        setLoader(false)
-        console.log("e", e)
-      })
+    if (Token !== null) {
+      await axios.post(
+        `${API_URL}/users/get-cards?access-token=${Token}`,
+        {},
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(res => {
+          setCardsData(res?.data?.data)
+          setLoader(false)
+        })
+        .catch(e => {
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          setLoader(false)
+          console.log("e", e)
+        })
+    }
   }
 
   const handleAddCard = async () => {
@@ -132,13 +141,13 @@ export const WalletScreen = ({ navigation }) => {
       >
         <View style={{ width: windowWidth, backgroundColor: "#00a789", height: Constants.statusBarHeight }} />
         <TouchableOpacity
-          style={{ position: "absolute", top: Constants.statusBarHeight + 5, right: 0, zIndex: 1 }}
+          style={{ position: "absolute", top: Constants.statusBarHeight + 20, right: 10, zIndex: 1}}
           onPress={() => handleModal()}
         >
           <Image
             source={IconClose}
-            style={{ width: 50, height: 50 }}
-            resizeMode={"center"}
+            style={{ width: 25, height: 25 }}
+            resizeMode={"cover"}
           />
         </TouchableOpacity>
         <WebView

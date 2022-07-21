@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Button, StyleSheet, View } from "react-native"
+import { Alert, Button, StyleSheet, View } from "react-native"
 import axios from "axios"
 import { BarCodeScanner } from "expo-barcode-scanner"
 import BarcodeMask from "react-native-barcode-mask"
@@ -60,6 +60,13 @@ export const QRScannerScreen = ({ navigation, route }) => {
       })
       .catch(e => {
         console.log("e -----", e.response.data.message)
+        Alert.alert(
+          `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+          `${e?.response?.data?.message}`,
+          [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]
+        );
       })
   }
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { FlatList, Image, RefreshControl, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, TouchableOpacity, View } from "react-native"
 import Constants from "expo-constants"
 import { windowHeight, windowWidth } from "../../shared/Const"
-import { BrightGray, Fiord, Manatee, MySin, White } from "../../shared/Colors"
+import { BrightGray, Fiord, Manatee, White } from "../../shared/Colors"
 import { InputCustom } from "../../components/UI/InputCustom"
 import { TitleCustom } from "../../components/UI/TitleCustom"
 import { lang } from "../../shared/Lang"
@@ -14,8 +14,6 @@ import IconBook from "../../assets/icon/reserve.png"
 
 export const ChargerList = ({
   data,
-  loader,
-  handleData,
   countryCode,
   handleModal,
   handleItemId,
@@ -102,7 +100,7 @@ export const ChargerList = ({
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
             width: "30%",
             height: "100%"
@@ -122,12 +120,13 @@ export const ChargerList = ({
               }, 100)
             }}
             style={{
-              width: "47%",
-              height: 50,
+              width: "40%",
+              height: 40,
               justifyContent: "center",
               alignItems: "center",
               borderWidth: 2,
-              borderColor: Fiord
+              borderColor: Fiord,
+              marginRight: 10
             }}
           >
             <Image source={IconBook} style={{ width: 25, height: 25 }} />
@@ -141,8 +140,8 @@ export const ChargerList = ({
             }}
             style={{
               backgroundColor: Fiord,
-              width: "47%",
-              height: 50,
+              width: "40%",
+              height: 40,
               justifyContent: "center",
               alignItems: "center"
             }}
@@ -194,13 +193,13 @@ export const ChargerList = ({
         data={chargerListData}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={loader}
-            onRefresh={handleData}
-            tintColor={MySin}
-          />
-        }
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={loader}
+        //     onRefresh={handleData}
+        //     tintColor={MySin}
+        //   />
+        // }
         renderItem={({ item, index }) => (
           <RenderChargerItem
             address={item.address}

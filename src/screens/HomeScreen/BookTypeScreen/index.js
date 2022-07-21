@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, Image, Platform, ScrollView, View } from "react-native"
+import { ActivityIndicator, Alert, Image, Platform, ScrollView, View } from "react-native"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Context from "../../../../Context"
@@ -60,6 +60,13 @@ export const BookTypeScreen = ({ navigation, route }) => {
         .catch(e => {
           console.log("e --------", e.response)
           setLoaderGetUser(false)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
         })
     }
   }
@@ -100,30 +107,32 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setShowErrorText(false)
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
-    await axios.post(
-      `${API_URL}/charge-box/start?access-token=${Token}&language=${countryCode}`,
-      {
-        connector_id: route?.params?.item?.id,
-        from_percent: checkMin,
-        to_percent: checkMax
-      },
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-    )
-      .then(res => {
-        setLoader(false)
-        AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
-        navigation.navigate("LoadCharge", {
-          chargingLimit: limit,
-          chargingWatt: user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power),
-          price
+    if(Token !== null) {
+      await axios.post(
+        `${API_URL}/charge-box/start?access-token=${Token}&language=${countryCode}`,
+        {
+          connector_id: route?.params?.item?.id,
+          from_percent: checkMin,
+          to_percent: checkMax
+        },
+        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      )
+        .then(res => {
+          setLoader(false)
+          AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
+          navigation.navigate("LoadCharge", {
+            chargingLimit: limit,
+            chargingWatt: user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power),
+            price
+          })
         })
-      })
-      .catch(e => {
-        console.log("e ----------- 8989", e.response.data.message)
-        setLoader(false)
-        setErrorText(e.response.data.message)
-        setShowErrorText(true)
-      })
+        .catch(e => {
+          console.log("e ----------- 8989", e.response.data.message)
+          setLoader(false)
+          setErrorText(e.response.data.message)
+          setShowErrorText(true)
+        })
+    }
   }
 
   return (

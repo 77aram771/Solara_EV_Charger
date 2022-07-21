@@ -127,7 +127,10 @@ export const FilterScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <HeaderCustom
-        handleBack={() => navigation.closeDrawer()}
+        handleBack={() => {
+          navigation.closeDrawer()
+          handleSave()
+        }}
         backgroundColor={MySin}
         text={lang[countryCode].filter}
       />
