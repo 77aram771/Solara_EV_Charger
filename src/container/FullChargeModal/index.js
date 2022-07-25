@@ -12,7 +12,7 @@ import Context from "../../../Context"
 import IconCancel from "../../assets/icon/cancel.png"
 import ImgLight from "../../assets/icon/priceunit.png"
 
-export const FullChargeModal = ({ navigation, handleModal, loader, status, progress, handleStop, sumKW }) => {
+export const FullChargeModal = ({ navigation, handleModal, loader, status, progress, handleStop, sumKW, kw }) => {
 
   const { countryCode } = useContext(Context)
 
@@ -47,7 +47,7 @@ export const FullChargeModal = ({ navigation, handleModal, loader, status, progr
         <View style={styles.infoBox}>
           <View style={styles.infoItem}>
             <TextCustom
-              text={`${lang[countryCode].amount}: ${sumKW * progress} `}
+              text={`${lang[countryCode].amount}: ${sumKW} `}
               color={White}
               fontSize={24}
               fontWeight={"400"}
@@ -56,7 +56,7 @@ export const FullChargeModal = ({ navigation, handleModal, loader, status, progr
           </View>
           <View style={styles.infoItem}>
             <TextCustom
-              text={`${lang[countryCode].charged}: ${progress} ${lang[countryCode].kw}`}
+              text={`${lang[countryCode].charged}: ${sumKW * kw} ${lang[countryCode].kw}`}
               color={White}
               fontSize={24}
               fontWeight={"400"}

@@ -147,7 +147,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       await axios.get(
-        `${API_URL}/data/get-kw-price?language=ru=${countryCode}`,
+        `${API_URL}/data/get-kw-price`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => setSumKW(res?.data?.price))

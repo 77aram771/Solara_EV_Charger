@@ -34,7 +34,16 @@ export const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { location, handleLocationUser, userAddress, handleHideTabBar, countryCode, expoPushToken, notification, schedulePushNotification } = useContext(Context)
+  const {
+    location,
+    handleLocationUser,
+    userAddress,
+    handleHideTabBar,
+    countryCode,
+    expoPushToken,
+    notification,
+    schedulePushNotification
+  } = useContext(Context)
 
   const _mapView = createRef()
 
@@ -98,12 +107,12 @@ export const HomeScreen = ({ navigation }) => {
     handleChargeBoxesData()
   }, [countryCode])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleChargeBoxesData()
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     handleChargeBoxesData()
+  //   }, 10000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useLayoutEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
@@ -127,7 +136,7 @@ export const HomeScreen = ({ navigation }) => {
   const handleCheckChargeProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
     const transactionId = await AsyncStorage.getItem("transaction_id")
-    if(Token !== null) {
+    if (Token !== null) {
       await axios.post(
         `${API_URL}/charge-box/get-progress?access-token=${Token}`,
         { transaction_id: Number(transactionId) },
@@ -154,9 +163,7 @@ export const HomeScreen = ({ navigation }) => {
     }
   }
 
-  const handleChargeBoxesData = () => {
-    dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=1000&min=7&max=60&language=${countryCode}`))
-  }
+  const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60&min=7&max=60&language=${countryCode}`))
 
   const getCurrentPosition = async () => {
     if (location === null) {

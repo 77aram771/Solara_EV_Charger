@@ -284,7 +284,7 @@ export const lang = {
     atLeastMinimumCharacters: "Минимум 8 символов",
     permissionToAccessLocationWasDenied: "Разрешение на доступ к местоположению было отклонено",
     permissionToAccessCameraWasDenied: "Разрешение на доступ к камере было отклонено",
-    doYouNoHaveHistory: "У тебя нет истории"
+    doYouNoHaveHistory: "У вас нет истории"
   },
   en: {
     H: "h",

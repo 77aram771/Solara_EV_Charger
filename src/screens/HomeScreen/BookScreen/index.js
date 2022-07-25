@@ -5,7 +5,7 @@ import axios from "axios"
 import Context from "../../../../Context"
 import { SwiperFlatList } from "react-native-swiper-flatlist"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
-import { Black, Dandelion, Fiord, MineShaft, MySin, White } from "../../../shared/Colors"
+import { Amaranth, Black, Dandelion, Fiord, Mantis, MineShaft, MySin, MySin2, White } from "../../../shared/Colors"
 import { styles } from "./style"
 import { InfoBoxCustom } from "../../../components/UI/InfoBoxCustom"
 import { API_URL, windowHeight, windowWidth } from "../../../shared/Const"
@@ -36,7 +36,7 @@ export const BookScreen = ({ navigation, route }) => {
 
   const getDetails = async () => {
     const Token = await AsyncStorage.getItem("token")
-    if(Token !== null) {
+    if (Token !== null) {
       await axios.post(
         `${API_URL}/charge-box/details?access-token=${Token}`,
         { id: route?.params?.data[route?.params.itemId].id },
@@ -56,12 +56,7 @@ export const BookScreen = ({ navigation, route }) => {
     if (Token === null) {
       setModalVisibleCheckUser(true)
     } else {
-      if (item?.status !== "Faulted") {
-        navigation.navigate("BookType", {
-          item,
-          address: route?.params?.data[route?.params?.itemId].address
-        })
-      } else if (item?.status !== "Finishing") {
+      if (item?.status !== "Faulted" && item?.status !== "Finishing") {
         navigation.navigate("BookType", {
           item,
           address: route?.params?.data[route?.params?.itemId].address
@@ -80,6 +75,52 @@ export const BookScreen = ({ navigation, route }) => {
     setTimeout(() => {
       navigation.navigate("SignIn")
     }, 100)
+  }
+
+  const RenderSection = ({ item, index, color }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => handlePort(item)}
+        style={styles.typeItem}
+      >
+        <View style={{ flexDirection: "row", width: "60%" }}>
+          <TextCustom
+            text={`${++index}.`}
+            marginRight={5}
+            fontWeight={"400"}
+            color={MineShaft}
+            fontSize={14}
+          />
+          <Image source={{ uri: item?.status_image }} style={{ width: 20, height: 20, marginRight: 10 }} />
+          <TextCustom
+            text={`${item?.type?.title}`}
+            marginRight={5}
+            fontWeight={"400"}
+            color={color}
+            fontSize={14}
+          />
+        </View>
+        <View style={{ width: "20%" }}>
+          <TextCustom
+            text={`${item?.power} ${lang[countryCode].kw}`}
+            marginRight={5}
+            fontWeight={"400"}
+            color={color}
+            fontSize={14}
+          />
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", width: "20%" }}>
+          <TextCustom
+            text={sumKW}
+            fontWeight={"400"}
+            color={color}
+            fontSize={14}
+          />
+          <Image source={ImgLight} style={{ width: 13, height: 13, marginRight: 10 }} />
+          <Image source={IconArrow} style={{ width: 10, height: 10 }} />
+        </View>
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -265,258 +306,21 @@ export const BookScreen = ({ navigation, route }) => {
             {
               route?.params?.data[route?.params?.itemId]?.connectors.map((item, index) => {
                 console.log('item', item)
-                return (
-                  <TouchableOpacity
-                    onPress={() => handlePort(item)}
-                    key={item.id}
-                    style={styles.typeItem}
-                  >
-                    <View style={{ flexDirection: "row", width: "60%" }}>
-                      <TextCustom
-                        text={`${++index}.`}
-                        marginRight={5}
-                        fontWeight={"400"}
-                        color={MineShaft}
-                        fontSize={14}
-                      />
-                      <Image source={{ uri: item?.status_image }} style={{ width: 20, height: 20, marginRight: 10 }} />
-                      {
-                        item?.status === "SuspendedEVSE"
-                          ? (
-                            <TextCustom
-                              text={`${item?.type?.title}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Faulted"
-                          ? (
-                            <TextCustom
-                              text={`${item?.type?.title}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Finishing"
-                          ? (
-                            <TextCustom
-                              text={`${item?.type?.title}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Available"
-                          ? (
-                            <TextCustom
-                              text={`${item?.type?.title}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={Fiord}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Preparing"
-                          ? (
-                            <TextCustom
-                              text={`${item?.type?.title}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#fcb82f"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Charging"
-                          ? (
-                            <TextCustom
-                              color={"#5ac951"}
-                              text={`${item?.type?.title}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                    </View>
-                    <View style={{ width: "20%" }}>
-                      {
-                        item?.status === "SuspendedEVSE"
-                          ? (
-                            <TextCustom
-                              text={`${item?.power} ${lang[countryCode].kw}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Faulted"
-                          ? (
-                            <TextCustom
-                              text={`${item?.power} ${lang[countryCode].kw}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Finishing"
-                          ? (
-                            <TextCustom
-                              text={`${item?.power} ${lang[countryCode].kw}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Available"
-                          ? (
-                            <TextCustom
-                              color={Fiord}
-                              text={`${item?.power} ${lang[countryCode].kw}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Preparing"
-                          ? (
-                            <TextCustom
-                              color={"#fcb82f"}
-                              text={`${item?.power} ${lang[countryCode].kw}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Charging"
-                          ? (
-                            <TextCustom
-                              color={"#5ac951"}
-                              text={`${item?.power} ${lang[countryCode].kw}`}
-                              marginRight={5}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                    </View>
-                    <View style={{ flexDirection: "row", alignItems: "center", width: "20%" }}>
-                      {
-                        item?.status === "SuspendedEVSE"
-                          ? (
-                            <TextCustom
-                              text={sumKW}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Faulted"
-                          ? (
-                            <TextCustom
-                              text={sumKW}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Finishing"
-                          ? (
-                            <TextCustom
-                              text={sumKW}
-                              fontWeight={"400"}
-                              color={"#df364b"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Available"
-                          ? (
-                            <TextCustom
-                              color={Fiord}
-                              text={sumKW}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Preparing"
-                          ? (
-                            <TextCustom
-                              color={"#fcb82f"}
-                              text={sumKW}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      {
-                        item?.status === "Charging"
-                          ? (
-                            <TextCustom
-                              color={"#5ac951"}
-                              text={sumKW}
-                              fontWeight={"400"}
-                              fontSize={14}
-                            />
-                          )
-                          : null
-                      }
-                      <Image source={ImgLight} style={{ width: 13, height: 13, marginRight: 10 }} />
-                      <Image source={IconArrow} style={{ width: 10, height: 10 }} />
-                    </View>
-                  </TouchableOpacity>
-                )
+                if (item?.status === "Available") {
+                  return <RenderSection item={item} index={index} color={Fiord} />
+
+                } else if (item?.status === "Charging") {
+                  return <RenderSection item={item} index={index} color={Mantis} />
+
+                } else if (item?.status === "Preparing") {
+                  return <RenderSection item={item} index={index} color={MySin2} />
+
+                } else if (item?.status === "Unavailable") {
+                  return <RenderSection item={item} index={index} color={Fiord} />
+
+                } else {
+                  return <RenderSection item={item} index={index} color={Amaranth} />
+                }
               })
             }
           </View>

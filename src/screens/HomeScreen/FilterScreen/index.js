@@ -69,7 +69,6 @@ export const FilterScreen = ({ navigation }) => {
     setCustomUrl(newUrl)
   }, [filterItems])
 
-
   const handleSwitch = (id) => {
     setFilterData(filterData.map((item) => {
       if (item.id === id) {

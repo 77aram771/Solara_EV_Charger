@@ -25,6 +25,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
   const [showButton, setShowButton] = useState(false)
   const [status, setStatus] = useState("")
   const [progress, setProgress] = useState(0)
+  const [kw, setKw] = useState(0)
 
   const handleProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
@@ -39,18 +40,18 @@ export const LoadChargeScreen = ({ navigation, route }) => {
           setLoader(false)
           setStatus(res.data.status)
           setProgress(res.data.progress)
-          if (res.data.status === "Charging" || res.data.kw > 0) {
+          setKw(res.data.kw)
+          if (res.data.status === "Charging") {
             setModalVisible(true)
           }
-          // else if (res.data.status !== "Charging") {
-          //   setModalVisible(false)
-          //   navigation.goBack()
-          // }
+          else if (res.data.status !== "Charging") {
+            setModalVisible(false)
+            navigation.goBack()
+          }
           console.log("res handleProgress", res.data)
         })
         .catch(e => {
           setLoader(false)
-          console.log("e -----------", e.response.data.message)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -140,6 +141,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
           handleStop={handleStop}
           sumKW={sumKW}
           loader={loader}
+          kw={kw}
         />
       </Modal>
       <HeaderCustom
@@ -156,7 +158,6 @@ export const LoadChargeScreen = ({ navigation, route }) => {
           <TextCustom text={lang[countryCode].yourCarConnecting} color={White} fontSize={20} fontWeight={"400"} />
           <LottieView
             visible={true}
-            // overlayColor="rgba(255,255,255,0.75)"
             source={require("../../../assets/svg/loader.json")}
             style={{
               width: windowWidth / 3,
