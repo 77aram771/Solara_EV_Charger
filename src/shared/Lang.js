@@ -61,7 +61,7 @@ export const lang = {
     appInfo: "Հավելվածի մասին",
     appInfoText1: "Հայտնի է, որ ընթերցողը, կարդալով հասկանալի տեքստ, չի կարողանա կենտրոնանալ տեքստի ձևավորման վրա: օգտագործելը բացատրվում է նրանով, որ այն բաշխում է բառերը քիչ թե շատ իրականի նման, ի տարբերություն «Բովանդակություն, բովանդակություն» սովորական կրկննության, ինչը ընթերցողի համար հասկանալի է:",
     appInfoText2: "Շատ համակարգչային տպագրական ծրագրեր և ինտերնետային էջերի խմբագրիչներ այն օգտագործում են որպես իրենց ստանդարտ տեքստային մոդել, և հետևապես, ինտերնետում  որոնման արդյունքում կարելի է հայտնաբերել էջեր, որոնք դեռ նոր են կերտվում: Ժամանակի ընթացքում ձևավորվել են Lorem Ipsum-ի տարբեր վերսիաներ` երբեմն ներառելով պատահական տեքստեր, երբեմն էլ հատուկ իմաստ (հումոր և նմանատիպ բովանդակություն):",
-    partner: "Գործընկեր",
+    partner: "Գործընկերներ",
     weOnSocial: "Մենք սոց. կայքերում",
     languageSelection: "Ընտրել լեզուն",
     question: "Հարց",
@@ -141,7 +141,9 @@ export const lang = {
     atLeastMinimumCharacters: "Առնվազն 8 նիշ",
     permissionToAccessLocationWasDenied: "Գտնվելու վայրի թույլտվությունը մերժվել է",
     permissionToAccessCameraWasDenied: "Տեսախցիկի թույլտվությունը մերժվել է",
-    doYouNoHaveHistory: "Դուք պատմություն չունեք"
+    doYouNoHaveHistory: "Դուք պատմություն չունեք",
+    doYouNoHaveNotification: "Դուք ծանուցում չունեք",
+    number: "Հ",
   },
   ru: {
     H: "ч",
@@ -284,7 +286,9 @@ export const lang = {
     atLeastMinimumCharacters: "Минимум 8 символов",
     permissionToAccessLocationWasDenied: "Разрешение на доступ к местоположению было отклонено",
     permissionToAccessCameraWasDenied: "Разрешение на доступ к камере было отклонено",
-    doYouNoHaveHistory: "У вас нет истории"
+    doYouNoHaveHistory: "У вас нет истории",
+    doYouNoHaveNotification: "У вас нет уведомление",
+    number: "Н",
   },
   en: {
     H: "h",
@@ -427,6 +431,8 @@ export const lang = {
     atLeastMinimumCharacters: "At least minimum 8 characters",
     permissionToAccessLocationWasDenied: "Permission to access location was denied",
     permissionToAccessCameraWasDenied: "Permission to access camera was denied",
-    doYouNoHaveHistory: "You have not history"
+    doYouNoHaveHistory: "You have not history",
+    doYouNoHaveNotification: "You have not notification",
+    number: "N",
   }
 }

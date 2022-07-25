@@ -33,7 +33,7 @@
     ],
     "name": "Solara_EV_Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -63,7 +63,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.voodoo.solara.charging",
-      "versionCode": 45,
+      "versionCode": 46,
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA"]
     },
     "web": {

@@ -48,6 +48,8 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
   useEffect(() => {
     (async () => {
       await getCardData()
+      console.log('cardId', cardId)
+      setCardId(3)
     })()
   }, [])
 
