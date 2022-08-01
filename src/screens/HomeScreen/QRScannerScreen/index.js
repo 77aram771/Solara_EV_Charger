@@ -8,7 +8,7 @@ import { API_URL, windowWidth } from "../../../shared/Const"
 import { finderHeight, finderWidth, viewMinX, viewMinY } from "../../../shared/MockData"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
-import { Dandelion, Fiord } from "../../../shared/Colors"
+import { Black, Dandelion, Fiord } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
 
 export const QRScannerScreen = ({ navigation, route }) => {
@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     ...StyleSheet.absoluteFillObject,
-    zIndex: 1
+    zIndex: 1,
+    backgroundColor: Black
   },
   title: {
     fontSize: 20,

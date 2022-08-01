@@ -18,7 +18,7 @@ export const ChargerList = ({
   handleModal,
   handleItemId,
   handleStart,
-  navigation,
+  navigation
 }) => {
 
   const [chargerListData, setChargerListData] = useState(null)
@@ -33,13 +33,9 @@ export const ChargerList = ({
 
   const handleFilter = (value) => {
     if (value) {
-      const newData = data.filter(function(item) {
-        const itemData = item.title
-          ? item.title.toUpperCase()
-          : "".toUpperCase()
-        const textData = value.toUpperCase()
-        return itemData.indexOf(textData) > -1
-      });
+      const newData = data.filter((item) => {
+        return item.title.indexOf(value.toUpperCase()) > -1 && item.address.indexOf(value.toUpperCase()) > -1
+      })
       setChargerListData(newData)
       setValue(value)
     } else {

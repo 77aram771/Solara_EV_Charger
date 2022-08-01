@@ -103,16 +103,16 @@ export const HomeScreen = ({ navigation }) => {
   }, [location])
 
   useEffect(() => {
-    dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=37&title=&language=${countryCode}`))
+    dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=37&title`))
     handleChargeBoxesData()
   }, [countryCode])
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     handleChargeBoxesData()
-  //   }, 10000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleChargeBoxesData()
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   useLayoutEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
@@ -143,7 +143,7 @@ export const HomeScreen = ({ navigation }) => {
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(async res => {
-          if (res.data.status === "Charging" || res.data.kw > 0) {
+          if (res.data.status === "Charging") {
             navigation.navigate("LoadCharge", { bool: true })
           }
           if (res.data.status === "Stopped") {
@@ -151,7 +151,6 @@ export const HomeScreen = ({ navigation }) => {
           }
         })
         .catch(e => {
-          console.log("e -----------123", e.response.data.message)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -162,8 +161,7 @@ export const HomeScreen = ({ navigation }) => {
         })
     }
   }
-
-  const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60&min=7&max=60&language=${countryCode}`))
+  const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`))
 
   const getCurrentPosition = async () => {
     if (location === null) {
