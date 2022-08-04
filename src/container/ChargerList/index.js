@@ -26,6 +26,7 @@ export const ChargerList = ({
   const [value, setValue] = useState("")
 
   useEffect(() => {
+
     if (data) {
       setChargerListData(data)
     }

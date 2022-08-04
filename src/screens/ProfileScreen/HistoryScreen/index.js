@@ -46,6 +46,7 @@ export const HistoryScreen = ({ navigation }) => {
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
+          console.log("payments-history res", res?.data?.data)
           setLoader(false)
           setData(res?.data?.data)
           setTotalPrice(res?.data?.total)
@@ -66,17 +67,17 @@ export const HistoryScreen = ({ navigation }) => {
   const handleGetChargingData = async () => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=d503f62b0d815643e48b2e4b394948127fa0f0c7`,
+      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       )
         .then(res => {
+          console.log("charging-history res", res?.data?.data)
           setLoader(false)
           setCharging(res?.data?.data)
           setTotalCharge(res?.data?.total)
         })
         .catch(e => {
           setLoader(false)
-          console.log("e", e)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -88,7 +89,11 @@ export const HistoryScreen = ({ navigation }) => {
     }
   }
 
-  const handleItemPress = (index) => flatListRef.current.scrollToIndex({ animated: true, index })
+  const handleItemPress = (index) => {
+    if (flatListRef.current !== null) {
+      flatListRef.current.scrollToIndex({ animated: true, index })
+    }
+  }
 
   const handleTab = () => {
     if (data && data.length > 0 || charging && charging.length > 0) {

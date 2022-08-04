@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { GetCarMake } from "../../store/actionsCreators/CarMakeApiActionCreator"
 import { GetChargeBoxesData } from "../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
 import { Map } from "../../container/Map"
+import { WelcomeScreen } from "../WelcomeScreen"
 import { ChargerList } from "../../container/ChargerList"
 import IconDirection from "../../assets/icon/direction1.png"
 import IconDirection2 from "../../assets/icon/direction2.png"
@@ -28,7 +29,6 @@ import IconLocation from "../../assets/icon/location.png"
 import IconMenuMap from "../../assets/icon/menu-map1.png"
 import IconClock from "../../assets/icon/clock.png"
 import IconClose from "../../assets/icon/cancel.png"
-// import { WelcomeScreen } from "../WelcomeScreen";
 
 export const HomeScreen = ({ navigation }) => {
 
@@ -55,6 +55,7 @@ export const HomeScreen = ({ navigation }) => {
   const [start, setStart] = useState(false)
   const [loaderStart, setLoaderStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
+  const [check, setCheck] = useState("start")
   const [modalRedirect, setModalRedirect] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [cordinate, setCordinate] = useState({
@@ -76,7 +77,7 @@ export const HomeScreen = ({ navigation }) => {
   const chargeBoxesData = useSelector(state => state?.ChargeBoxesDataReducer.data)
   const chargeBoxesLoader = useSelector(state => state?.ChargeBoxesDataReducer.loading)
   // const chargeBoxesError = useSelector(state => state?.ChargeBoxesDataReducer.error)
-
+  console.log('chargeBoxesData', chargeBoxesData)
   useEffect(() => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(true)
@@ -84,12 +85,9 @@ export const HomeScreen = ({ navigation }) => {
       if (transactionId !== null) {
         await handleCheckChargeProgress()
       }
+      // await handleCheckChargeProgress()
     })
   }, [navigation])
-
-  // useEffect(() => {
-  //   handleHideTabBar(check)
-  // }, [check])
 
   useEffect(() => {
     if (location !== null) {
@@ -159,8 +157,33 @@ export const HomeScreen = ({ navigation }) => {
             ]
           );
         })
+      // await axios.post(
+      //   `${API_URL}/charge-box/get-last?access-token=${Token}`,
+      //   { transaction_id: Number(transactionId) },
+      //   { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      // )
+      //   .then(async res => {
+      //     console.log('res', res)
+      //     // if (res.data.status === "Charging") {
+      //     //   navigation.navigate("LoadCharge", { bool: true })
+      //     // }
+      //     // if (res.data.status === "Stopped") {
+      //     //   await AsyncStorage.removeItem("transaction_id")
+      //     // }
+      //   })
+      //   .catch(e => {
+      //     console.log('e', e)
+      //     Alert.alert(
+      //       `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+      //       `${e?.response?.data?.message}`,
+      //       [
+      //         { text: "OK", onPress: () => console.log("OK Pressed") }
+      //       ]
+      //     );
+      //   })
     }
   }
+
   const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`))
 
   const getCurrentPosition = async () => {
@@ -252,14 +275,34 @@ export const HomeScreen = ({ navigation }) => {
     })
   }
 
-  // const handleCheck = async () => {
-  //   // await AsyncStorage.setItem('checkWelcomeScreen', 'false')
-  //   setCheck(!check)
-  // }
-  //
-  // if (check) {
-  //   return <WelcomeScreen handleCheck={handleCheck} />
-  // }
+  const handleCheck = async () => {
+    await AsyncStorage.setItem("checkWelcomeScreen", "finish")
+    setCheck("finish")
+  }
+
+  useEffect(() => {
+    (async () => {
+      const status = await AsyncStorage.getItem("checkWelcomeScreen")
+      if (status !== null) {
+        // console.log("status", status)
+        // console.log("check", check)
+        setCheck(status)
+        if(status === 'start') {
+          handleHideTabBar(false)
+        }
+        else {
+          handleHideTabBar(true)
+        }
+      }
+      else {
+        await AsyncStorage.setItem("checkWelcomeScreen", "start")
+      }
+    })()
+  }, [check])
+
+  if (check === "start") {
+    return <WelcomeScreen handleCheck={handleCheck} />
+  }
 
   return (
     <View style={styles.container}>

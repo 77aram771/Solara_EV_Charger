@@ -33,7 +33,7 @@
     ],
     "name": "Solara_EV_Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
