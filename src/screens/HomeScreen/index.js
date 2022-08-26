@@ -77,7 +77,7 @@ export const HomeScreen = ({ navigation }) => {
   const chargeBoxesData = useSelector(state => state?.ChargeBoxesDataReducer.data)
   const chargeBoxesLoader = useSelector(state => state?.ChargeBoxesDataReducer.loading)
   // const chargeBoxesError = useSelector(state => state?.ChargeBoxesDataReducer.error)
-  console.log('chargeBoxesData', chargeBoxesData)
+
   useEffect(() => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(true)

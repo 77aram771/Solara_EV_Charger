@@ -10,7 +10,6 @@ export const GetCarMake = (url) => (dispatch) => {
         dispatch(fetchSuccess(response.data))
       })
       .catch(e => {
-        console.log('error', e)
         dispatch(fetchError(e.response.data.message))
       })
   })

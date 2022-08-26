@@ -11,10 +11,10 @@ import RootNavigation from "./src/navigation"
 import { store } from "./src/store"
 import { API_URL, Google_Key } from "./src/shared/Const"
 import { lang } from "./src/shared/Lang"
-import * as Device from "expo-device";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ImgSplashScreenRu from './src/assets/images/img-splashscreen-ru.png'
-import ImgSplashScreenEn from './src/assets/images/img-splashscreen-en.png'
+import * as Device from "expo-device"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import ImgSplashScreenRu from "./src/assets/images/img-splashscreen-ru.png"
+import ImgSplashScreenEn from "./src/assets/images/img-splashscreen-en.png"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
 
 LogBox.ignoreLogs([
@@ -26,9 +26,9 @@ Geocoder.init(Google_Key, { language: "en" })
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
+    shouldPlaySound: false,
+    shouldSetBadge: false
+  })
 });
 
 Notifications.requestPermissionsAsync({
@@ -36,21 +36,22 @@ Notifications.requestPermissionsAsync({
     allowAlert: true,
     allowBadge: true,
     allowSound: true,
-    allowAnnouncements: true,
-  },
+    allowAnnouncements: true
+  }
 });
 
-axios.interceptors.response.use( response => {
-  return response;
-}, error => {
-  console.log('error', error)
-  if (error.response.status === 401) {
-    (async () => {
-      // await AsyncStorage.removeItem("token")
-    })()
-  }
-  return error;
-});
+// axios.interceptors.response.use(response => {
+//   console.log('response', response.data)
+//   return response;
+// }, error => {
+//   console.log('error', error)
+//   if (error.response.status === 401) {
+//     (async () => {
+//       await AsyncStorage.removeItem("token")
+//     })()
+//   }
+//   return error;
+// });
 
 export default function App() {
 
@@ -64,7 +65,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const c = await AsyncStorage.getItem("countryCode")
-      if(c !== null) {
+      if (c !== null) {
         setCountryCode(c)
       }
     })()
@@ -83,7 +84,7 @@ export default function App() {
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      console.log('response', response);
     });
 
     return () => {
@@ -116,8 +117,8 @@ export default function App() {
         alert("Failed to get push token for push notification!");
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log('token', token);
+      token = (await Notifications.getDevicePushTokenAsync()).data;
+      console.log("Notification token", token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -178,19 +179,19 @@ export default function App() {
 
   if (load) {
     return (
-      <View style={{width: "100%", height: "100%"}}>
+      <View style={{ width: "100%", height: "100%" }}>
         {
-          countryCode === 'ru'
+          countryCode === "ru"
             ? <ImageBackground source={ImgSplashScreenRu} style={{ width: "100%", height: "100%" }} />
             : null
         }
         {
-          countryCode === 'en'
+          countryCode === "en"
             ? <ImageBackground source={ImgSplashScreenEn} style={{ width: "100%", height: "100%" }} />
             : null
         }
         {
-          countryCode === 'ar'
+          countryCode === "ar"
             ? <ImageBackground source={ImgSplashScreenArm} style={{ width: "100%", height: "100%" }} />
             : null
         }

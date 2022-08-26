@@ -22,13 +22,13 @@ import { TextCustom } from "../../../components/UI/TextCustom"
 import { AuthSignIn } from "../../../store/actionsCreators/AuthApiActionCreator"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { regEmail } from "../../../shared/MockData"
+import { API_URL } from "../../../shared/Const"
 import IconSolara from "../../../assets/icon/icon-solara.png"
 import IconEmail from "../../../assets/icon/email1.png"
 import IconPassword from "../../../assets/icon/password1.png"
 import IconLogin from "../../../assets/icon/login.png"
 import IconEyeClose from "../../../assets/icon/icon-dont-eye.png"
 import IconEye from "../../../assets/icon/icon-eye.png"
-import { API_URL } from "../../../shared/Const"
 
 export const SignInScreen = ({ navigation }) => {
 

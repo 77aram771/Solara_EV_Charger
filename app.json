@@ -52,6 +52,13 @@
       "bundleIdentifier": "pro.voodoo.solara",
       "config": {
         "googleMapsApiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8"
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan QR for find charger device.",
+        "NSLocationWhenInUseUsageDescription": "This app use location for check user position in map.",
+        "UIBackgroundModes": [
+          "location"
+        ]
       }
     },
     "android": {

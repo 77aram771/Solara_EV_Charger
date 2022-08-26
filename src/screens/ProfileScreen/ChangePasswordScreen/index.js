@@ -84,7 +84,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
                       { text: "OK", onPress: () => console.log("OK Pressed") }
                     ]
                   );
-                  console.log("error", error)
+                  console.log("e", e)
                 })
             }
             setRPasswordError(false)

@@ -202,7 +202,7 @@ export const BookScreen = ({ navigation, route }) => {
         </View>
       </Modal>
       <Modal
-        // animationType="slide"
+        animationType="slide"
         transparent={true}
         visible={modalVisibleCheckUser}
         onRequestClose={handleModalCheckUser}
@@ -305,21 +305,16 @@ export const BookScreen = ({ navigation, route }) => {
             </View>
             {
               route?.params?.data[route?.params?.itemId]?.connectors.map((item, index) => {
-                console.log('item', item)
                 if (item?.status === "Available") {
-                  return <RenderSection item={item} index={index} color={Fiord} />
-
+                  return <RenderSection item={item} key={index} index={index} color={Fiord} />
                 } else if (item?.status === "Charging") {
-                  return <RenderSection item={item} index={index} color={Mantis} />
-
+                  return <RenderSection item={item} key={index} index={index} color={Mantis} />
                 } else if (item?.status === "Preparing") {
-                  return <RenderSection item={item} index={index} color={MySin2} />
-
+                  return <RenderSection item={item} key={index} index={index} color={MySin2} />
                 } else if (item?.status === "Unavailable") {
-                  return <RenderSection item={item} index={index} color={Fiord} />
-
+                  return <RenderSection item={item} key={index} index={index} color={Fiord} />
                 } else {
-                  return <RenderSection item={item} index={index} color={Amaranth} />
+                  return <RenderSection item={item} key={index} index={index} color={Amaranth} />
                 }
               })
             }
