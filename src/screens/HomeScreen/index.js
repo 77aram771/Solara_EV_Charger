@@ -54,7 +54,7 @@ export const HomeScreen = ({ navigation }) => {
   const [min, setMin] = useState("")
   const [start, setStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
-  const [check, setCheck] = useState("start")
+  const [check, setCheck] = useState("finish")
   const [modalRedirect, setModalRedirect] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [cordinate, setCordinate] = useState({
@@ -279,10 +279,9 @@ export const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
+      // await AsyncStorage.removeItem("checkWelcomeScreen")
       const status = await AsyncStorage.getItem("checkWelcomeScreen")
       if (status !== null) {
-        // console.log("status", status)
-        // console.log("check", check)
         setCheck(status)
         if (status === "start") {
           handleHideTabBar(false)
