@@ -5,21 +5,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import moment from "moment"
 import { styles } from "./style"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
+import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { Fiord, Manatee, MineShaft, MySin, White } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
 import { TextCustom } from "../../../components/UI/TextCustom"
-import { API_URL, windowWidth } from "../../../shared/Const"
+import { API_URL, Tokakey, windowWidth } from "../../../shared/Const"
 import IconAmericanExpress from "../../../assets/icon/card/american-express.png"
 import IconVisa from "../../../assets/icon/card/visa.png"
 import IconMastercard from "../../../assets/icon/card/mastercard.png"
 import IconDiscover from "../../../assets/icon/card/discover.png"
 import ImgLight from "../../../assets/icon/priceunit.png"
-import { TitleCustom } from "../../../components/UI/TitleCustom"
 
 export const HistoryScreen = ({ navigation }) => {
 
-  const flatListRef = useRef()
+  const flatListRef1 = useRef()
+  const flatListRef2 = useRef()
 
   const { countryCode } = useContext(Context)
 
@@ -42,8 +43,9 @@ export const HistoryScreen = ({ navigation }) => {
     const Token = await AsyncStorage.getItem("token")
     console.log("Token", Token)
     if (Token !== null) {
+      console.log(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`)
       await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           console.log("payments-history res", res?.data?.data)
@@ -53,6 +55,7 @@ export const HistoryScreen = ({ navigation }) => {
         })
         .catch(e => {
           setLoader(false)
+          console.log('e handleGetPaymentsData', e)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -68,7 +71,7 @@ export const HistoryScreen = ({ navigation }) => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
       await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           console.log("charging-history res", res?.data?.data)
@@ -78,6 +81,7 @@ export const HistoryScreen = ({ navigation }) => {
         })
         .catch(e => {
           setLoader(false)
+          console.log('e handleGetChargingData', e)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -90,14 +94,21 @@ export const HistoryScreen = ({ navigation }) => {
   }
 
   const handleItemPress = (index) => {
-    if (flatListRef.current !== null) {
-      flatListRef.current.scrollToIndex({ animated: true, index })
-    }
+    console.log('index', index)
+    console.log("flatListRef1", flatListRef1)
+    console.log("flatListRef2", flatListRef2)
+
+    // if (flatListRef.current !== null) {
+    //   // flatListRef.current.scrollToIndex({ animated: true, index })
+    // }
   }
 
   const handleTab = () => {
     if (data && data.length > 0 || charging && charging.length > 0) {
       handleItemPress(0)
+    }
+    else {
+      handleItemPress(1)
     }
     setCheck(!check)
   }
@@ -194,7 +205,7 @@ export const HistoryScreen = ({ navigation }) => {
               data && data.length > 0
                 ? (
                   <FlatList
-                    ref={flatListRef}
+                    ref={flatListRef1}
                     keyExtractor={item => item.id}
                     data={data}
                     showsVerticalScrollIndicator={false}
@@ -281,7 +292,7 @@ export const HistoryScreen = ({ navigation }) => {
               charging && charging.length > 0
                 ? (
                   <FlatList
-                    ref={flatListRef}
+                    ref={flatListRef2}
                     keyExtractor={item => item.id}
                     data={charging}
                     showsVerticalScrollIndicator={false}

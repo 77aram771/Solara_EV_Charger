@@ -10,7 +10,7 @@ import { ButtonCustom } from "../../components/UI/ButtonCustom"
 import { lang } from "../../shared/Lang"
 import Context from "../../../Context"
 import { HeaderCustom } from "../../components/UI/HeaderCustom"
-import { API_URL, windowWidth } from "../../shared/Const"
+import { API_URL, Tokakey, windowWidth } from "../../shared/Const"
 import { TextCustom } from "../../components/UI/TextCustom"
 import { SmallModal } from "../../container/SmallModal"
 import { RenderCard } from "../../components/UI/RenderCard"
@@ -53,7 +53,7 @@ export const WalletScreen = ({ navigation }) => {
       await axios.post(
         `${API_URL}/users/get-cards?access-token=${Token}`,
         {},
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setCardsData(res?.data?.data)
@@ -78,7 +78,7 @@ export const WalletScreen = ({ navigation }) => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
       await axios.get(`${API_URL}/users/add-card?access-token=${Token}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setLoader(false)
@@ -101,7 +101,7 @@ export const WalletScreen = ({ navigation }) => {
       await axios.post(
         `${API_URL}/users/delete-card?access-token=${Token}`,
         { id },
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setLoader(false)

@@ -11,7 +11,7 @@ import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { regPassword } from "../../../shared/MockData"
-import { API_URL } from "../../../shared/Const"
+import { API_URL, Tokakey } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
 
 export const ChangePasswordScreen = ({ navigation }) => {
@@ -56,7 +56,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
             if (Token !== null) {
               setLoader(true)
               const myHeaders = new Headers()
-              myHeaders.append("tokakey", "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5")
+              myHeaders.append("tokakey", Tokakey)
 
               const formdata = new FormData()
               formdata.append("current_password", password)

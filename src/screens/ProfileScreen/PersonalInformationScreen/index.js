@@ -13,7 +13,7 @@ import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { SelectCustom } from "../../../components/UI/SelectCustom"
 import { GetCarModal } from "../../../store/actionsCreators/CarModalApiActionCreator"
-import { API_URL } from "../../../shared/Const"
+import { API_URL, Tokakey } from "../../../shared/Const"
 // import { regName } from "../../../shared/MockData"
 import IconCheck from "../../../assets/icon/check2.png"
 import IconPassword from "../../../assets/icon/password3.png"
@@ -125,7 +125,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
                 car_make_id: autoId,
                 car_model_id: autoModalId
               },
-              { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+              { headers: { tokakey: Tokakey } }
             )
               .then(res => {
                 setLoader(false)

@@ -9,7 +9,7 @@ import axios from "axios"
 import Context from "./Context"
 import RootNavigation from "./src/navigation"
 import { store } from "./src/store"
-import { API_URL, Google_Key } from "./src/shared/Const"
+import { API_URL, Google_Key, Tokakey } from "./src/shared/Const"
 import { lang } from "./src/shared/Lang"
 import * as Device from "expo-device"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -149,7 +149,7 @@ export default function App() {
     (async () => {
       await axios.get(
         `${API_URL}/data/get-kw-price`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => setSumKW(res?.data?.price))
         .catch(e => console.log("e", e.response))

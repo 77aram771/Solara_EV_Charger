@@ -1,13 +1,14 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { fetchData, fetchSuccess, fetchError } from "../actions/SignUpApiAction"
+import { Tokakey } from "../../shared/Const"
 
 export const PostConfirmCode = (url, body) => (dispatch) => {
   dispatch(fetchData())
   if (url !== null) {
     return new Promise(async () => {
       axios
-        .post(url, body, { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } })
+        .post(url, body, { headers: { tokakey: Tokakey } })
         .then(response => {
           AsyncStorage.setItem("token", response?.data?.access_token)
           dispatch(fetchSuccess(response))

@@ -1,4 +1,6 @@
+import { Alert } from "react-native"
 import axios from "axios"
+import { Tokakey } from "../../shared/Const"
 import { fetchData, fetchSuccess, fetchError } from "../actions/ChargeBoxesDataApiAction"
 
 export const GetChargeBoxesData = (url) => (dispatch) => {
@@ -6,13 +8,20 @@ export const GetChargeBoxesData = (url) => (dispatch) => {
   if (url !== null) {
     return new Promise(async () => {
       axios
-        .get(url, { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } })
+        .get(url, { headers: { tokakey: Tokakey } })
         .then(response => {
           dispatch(fetchSuccess(response.data))
         })
         .catch(e => {
           console.log('e', e)
           dispatch(fetchError(e.response.data.message))
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
         })
     })
   } else {

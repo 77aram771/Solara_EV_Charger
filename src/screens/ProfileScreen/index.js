@@ -8,7 +8,7 @@ import { Fiord, Mercurysolid, MineShaft, MySin, White } from "../../shared/Color
 import { ButtonCustom } from "../../components/UI/ButtonCustom"
 import { AddBalanceModal } from "../../container/AddBalanceModal"
 import { lang } from "../../shared/Lang"
-import { API_URL, windowHeight, windowWidth } from "../../shared/Const"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../shared/Const"
 import { TextCustom } from "../../components/UI/TextCustom"
 import Context from "../../../Context"
 import IconUserLogin from "../../assets/icon/menu-user1.png"
@@ -47,7 +47,7 @@ export const ProfileScreen = ({ navigation }) => {
     if (Token !== null) {
       setLogin(true)
       await axios.get(`${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode}&language=${countryCode}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => setUser(res.data))
         .catch(e => {

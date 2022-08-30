@@ -146,7 +146,8 @@ export const Map = ({
       {
         !start
           ? (
-            data && data.map((item, index) => {
+            Platform.OS === "ios"
+              ? data && data.map((item, index) => {
               return (
                 <Marker
                   onPress={(e) => handleItemId(e, index)}
@@ -160,10 +161,24 @@ export const Map = ({
                   <Image
                     source={{ uri: item?.pin }}
                     style={{
-                      width: Platform.OS === "ios" ? 50 : 40,
-                      height: Platform.OS === "ios" ? 50 : 40
+                      width: 50,
+                      height: 50
                     }}
                   />
+                </Marker>
+              )
+            })
+              : data && data.map((item, index) => {
+              return (
+                <Marker
+                  onPress={(e) => handleItemId(e, index)}
+                  coordinate={{
+                    latitude: Number(item?.lat),
+                    longitude: Number(item?.lng)
+                  }}
+                  key={index}
+                >
+
                 </Marker>
               )
             })

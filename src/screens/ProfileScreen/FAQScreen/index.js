@@ -7,7 +7,7 @@ import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
 import { AccordionCustom } from "../../../components/UI/AccordionCustom"
-import { API_URL } from "../../../shared/Const"
+import { API_URL, Tokakey } from "../../../shared/Const"
 
 export const FAQScreen = ({ navigation }) => {
 
@@ -19,7 +19,7 @@ export const FAQScreen = ({ navigation }) => {
     (async () => {
       await axios.get(
         `${API_URL}/faq/?page=1&per-page=20&title=&language=${countryCode}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setData(res.data.data)

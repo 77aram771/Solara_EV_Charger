@@ -4,7 +4,7 @@ import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { styles } from "./style"
-import { API_URL, windowHeight, windowWidth } from "../../shared/Const"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../shared/Const"
 import Context from "../../../Context"
 import { Fiord, MineShaft, MySin, White } from "../../shared/Colors"
 import { TextCustom } from "../../components/UI/TextCustom"
@@ -53,7 +53,6 @@ export const HomeScreen = ({ navigation }) => {
   const [km, setKm] = useState(Number)
   const [min, setMin] = useState("")
   const [start, setStart] = useState(false)
-  const [loaderStart, setLoaderStart] = useState(false)
   const [checkAddress, setCheckAddress] = useState("")
   const [check, setCheck] = useState("start")
   const [modalRedirect, setModalRedirect] = useState(false)
@@ -82,10 +81,10 @@ export const HomeScreen = ({ navigation }) => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(true)
       const transactionId = await AsyncStorage.getItem("transaction_id")
+      console.log("transactionId", transactionId)
       if (transactionId !== null) {
         await handleCheckChargeProgress()
       }
-      // await handleCheckChargeProgress()
     })
   }, [navigation])
 
@@ -133,46 +132,23 @@ export const HomeScreen = ({ navigation }) => {
 
   const handleCheckChargeProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
-    const transactionId = await AsyncStorage.getItem("transaction_id")
+    // Jamanakin senc einq stanum zaryadka drac meqenayi status@ u ID minchev poxinq zapros@ /charge-box/get-last?access-token=${Token}
+    // const transactionId = await AsyncStorage.getItem("transaction_id")
     if (Token !== null) {
-      await axios.post(
-        `${API_URL}/charge-box/get-progress?access-token=${Token}`,
-        { transaction_id: Number(transactionId) },
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-      )
-        .then(async res => {
-          if (res.data.status === "Charging") {
-            navigation.navigate("LoadCharge", { bool: true })
-          }
-          if (res.data.status === "Stopped") {
-            await AsyncStorage.removeItem("transaction_id")
-          }
-        })
-        .catch(e => {
-          Alert.alert(
-            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
-            `${e?.response?.data?.message}`,
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-          );
-        })
       // await axios.post(
-      //   `${API_URL}/charge-box/get-last?access-token=${Token}`,
+      //   `${API_URL}/charge-box/get-progress?access-token=${Token}`,
       //   { transaction_id: Number(transactionId) },
       //   { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
       // )
       //   .then(async res => {
-      //     console.log('res', res)
-      //     // if (res.data.status === "Charging") {
-      //     //   navigation.navigate("LoadCharge", { bool: true })
-      //     // }
-      //     // if (res.data.status === "Stopped") {
-      //     //   await AsyncStorage.removeItem("transaction_id")
-      //     // }
+      //     if (res?.data.status === "Charging") {
+      //       navigation.navigate("LoadCharge", { bool: true })
+      //     }
+      //     if (res?.data.status === "Stopped") {
+      //       await AsyncStorage.removeItem("transaction_id")
+      //     }
       //   })
       //   .catch(e => {
-      //     console.log('e', e)
       //     Alert.alert(
       //       `${e?.response?.data?.name} ${e?.response?.data?.status}`,
       //       `${e?.response?.data?.message}`,
@@ -181,6 +157,30 @@ export const HomeScreen = ({ navigation }) => {
       //       ]
       //     );
       //   })
+      await axios.get(
+        `${API_URL}/charge-box/get-last?access-token=${Token}`,
+        { headers: { tokakey: Tokakey } }
+      )
+        .then(async res => {
+          console.log("res--------", res?.data)
+          if (res?.data?.status === "Charging") {
+            navigation.navigate("LoadCharge", { bool: true })
+            await AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
+
+          } else if (res?.data?.status === "Stopped") {
+            await AsyncStorage.removeItem("transaction_id")
+          }
+        })
+        .catch(e => {
+          console.log("e---------", e)
+          Alert.alert(
+            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+            `${e?.response?.data?.message}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+        })
     }
   }
 
@@ -222,12 +222,9 @@ export const HomeScreen = ({ navigation }) => {
   const handleStart = async () => {
     if (location === null) {
       await handleLocationUser()
-      setLoaderStart(true)
     } else {
-      setLoaderStart(false)
       setStart(!start)
     }
-    setLoaderStart(false)
     setModalVisible(false)
   }
 
@@ -287,14 +284,12 @@ export const HomeScreen = ({ navigation }) => {
         // console.log("status", status)
         // console.log("check", check)
         setCheck(status)
-        if(status === 'start') {
+        if (status === "start") {
           handleHideTabBar(false)
-        }
-        else {
+        } else {
           handleHideTabBar(true)
         }
-      }
-      else {
+      } else {
         await AsyncStorage.setItem("checkWelcomeScreen", "start")
       }
     })()

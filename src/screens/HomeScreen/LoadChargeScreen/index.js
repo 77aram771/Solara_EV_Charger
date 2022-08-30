@@ -11,7 +11,7 @@ import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { FullChargeModal } from "../../../container/FullChargeModal"
-import { API_URL, windowHeight, windowWidth } from "../../../shared/Const"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../../shared/Const"
 import IconCancel from "../../../assets/icon/cancel.png"
 import ImgLoadBackground from "../../../assets/images/img-load-background.jpeg"
 import ImgLight from "../../../assets/icon/priceunit1.png"
@@ -71,7 +71,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
       await axios.post(
         `${API_URL}/charge-box/stop?access-token=${Token}`,
         { transaction_id: Number(transactionId) },
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setTimeout(() => {

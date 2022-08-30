@@ -8,7 +8,7 @@ import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { Amaranth, Black, Dandelion, Fiord, Mantis, MineShaft, MySin, MySin2, White } from "../../../shared/Colors"
 import { styles } from "./style"
 import { InfoBoxCustom } from "../../../components/UI/InfoBoxCustom"
-import { API_URL, windowHeight, windowWidth } from "../../../shared/Const"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
@@ -40,7 +40,7 @@ export const BookScreen = ({ navigation, route }) => {
       await axios.post(
         `${API_URL}/charge-box/details?access-token=${Token}`,
         { id: route?.params?.data[route?.params.itemId].id },
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setImageData(res?.data?.images)

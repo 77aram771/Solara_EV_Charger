@@ -4,7 +4,7 @@ import axios from "axios"
 import { BarCodeScanner } from "expo-barcode-scanner"
 import BarcodeMask from "react-native-barcode-mask"
 import Context from "../../../../Context"
-import { API_URL, windowWidth } from "../../../shared/Const"
+import { API_URL, Tokakey, windowWidth } from "../../../shared/Const"
 import { finderHeight, finderWidth, viewMinX, viewMinY } from "../../../shared/MockData"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
@@ -50,7 +50,7 @@ export const QRScannerScreen = ({ navigation, route }) => {
     await axios.post(
       `${API_URL}/charge-box/details-by-title`,
       { title: title },
-      { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+      { headers: { tokakey: Tokakey } }
     )
       .then(res => {
         if (res.status === 200) {

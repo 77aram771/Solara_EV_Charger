@@ -1,11 +1,12 @@
 import axios from "axios"
 import { fetchData, fetchSuccess, fetchError } from "../actions/CarMakeApiAction"
+import { Tokakey } from "../../shared/Const"
 
 export const GetCarMake = (url) => (dispatch) => {
   dispatch(fetchData())
   return new Promise(async () => {
     axios
-      .get(url, { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } })
+      .get(url, { headers: { tokakey: Tokakey } })
       .then(response => {
         dispatch(fetchSuccess(response.data))
       })

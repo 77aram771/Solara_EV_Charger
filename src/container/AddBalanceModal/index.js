@@ -22,7 +22,7 @@ import { HeaderCustom } from "../../components/UI/HeaderCustom"
 import { PaginationCarousel } from "../../components/UI/PaginationCarousel"
 import { paddingHorizontal } from "../../shared/GlobalStyle"
 import { InputCustom } from "../../components/UI/InputCustom"
-import { API_URL, windowHeight, windowWidth } from "../../shared/Const"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../shared/Const"
 import { TextCustom } from "../../components/UI/TextCustom"
 import { DismissKeyboard } from "../../components/DismissKeyboard"
 import ImgLight from "../../assets/icon/priceunit.png"
@@ -60,7 +60,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
       await axios.post(
         `${API_URL}/users/get-cards?access-token=${Token}`,
         {},
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setCardsData(
@@ -98,7 +98,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           await axios.post(
             `${API_URL}/users/fill-wallet-idram?access-token=${Token}`,
             { amount: price },
-            { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+            { headers: { tokakey: Tokakey } }
           )
             .then(res => {
               if (res.status === 200) {
@@ -132,7 +132,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           await axios.post(
             `${API_URL}/users/fill-wallet-telcell?access-token=${Token}`,
             { amount: price },
-            { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+            { headers: { tokakey: Tokakey } }
           )
             .then(res => {
               if (res.status === 200) {
@@ -169,7 +169,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               user_card_id: cardId,
               amount: price
             },
-            { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+            { headers: { tokakey: Tokakey } }
           )
             .then(res => {
               if (res.status === 200) {

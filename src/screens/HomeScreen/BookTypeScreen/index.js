@@ -10,7 +10,7 @@ import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { Fiord, MineShaft, MySin, SunsetOrange, White } from "../../../shared/Colors"
 import { styles } from "./style"
 import { lang } from "../../../shared/Lang"
-import { API_URL, windowWidth } from "../../../shared/Const"
+import { API_URL, Tokakey, windowWidth } from "../../../shared/Const"
 import IconCharge from "../../../assets/icon/charge.png"
 import ImgLight from "../../../assets/icon/priceunit.png"
 
@@ -44,7 +44,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     if (Token !== null) {
       await axios.get(
         `${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setUser(res.data)
@@ -115,7 +115,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
           from_percent: checkMin,
           to_percent: checkMax
         },
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setLoader(false)

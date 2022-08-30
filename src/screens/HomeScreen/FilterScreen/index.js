@@ -13,7 +13,7 @@ import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { FilterItem } from "../../../components/UI/FilterItem"
 import { RangeLineCustom } from "../../../components/UI/RangeLineCustom"
 import { CheckItem } from "../../../components/UI/CheckItem"
-import { API_URL } from "../../../shared/Const"
+import { API_URL, Tokakey } from "../../../shared/Const"
 import { GetChargeBoxesData } from "../../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
 import IconFilter from "../../../assets/icon/filtr2.png"
 
@@ -43,14 +43,14 @@ export const FilterScreen = ({ navigation }) => {
     (async () => {
       setLoader(true)
       await axios.get(`${API_URL}/connector-types/?page=1&per-page=20&title=&language=${countryCode}`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setLoader(false)
           setFilterData(res.data.data)
         })
       await axios.get(`${API_URL}/data/get-min-max-kw`,
-        { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
+        { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setMin(res?.data?.min)
