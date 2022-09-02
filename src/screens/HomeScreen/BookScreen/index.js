@@ -35,18 +35,15 @@ export const BookScreen = ({ navigation, route }) => {
   }, [navigation])
 
   const getDetails = async () => {
-    const Token = await AsyncStorage.getItem("token")
-    if (Token !== null) {
-      await axios.post(
-        `${API_URL}/charge-box/details?access-token=${Token}`,
-        { id: route?.params?.data[route?.params.itemId].id },
-        { headers: { tokakey: Tokakey } }
-      )
-        .then(res => {
-          setImageData(res?.data?.images)
-        })
-        .catch(e => console.log("e", e.response))
-    }
+    await axios.post(
+      `${API_URL}/charge-box/details`,
+      { id: route?.params?.data[route?.params.itemId].id },
+      { headers: { tokakey: Tokakey } }
+    )
+      .then(res => {
+        setImageData(res?.data?.images)
+      })
+      .catch(e => console.log("e", e.response))
   }
 
   const handleModal = () => setImageModal(!imageModal)
