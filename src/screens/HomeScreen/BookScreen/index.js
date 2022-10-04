@@ -58,7 +58,7 @@ export const BookScreen = ({ navigation, route }) => {
   const handleModal = () => setImageModal(!imageModal)
 
   const handlePort = async (item) => {
-    console.log('item?.status', item?.status)
+    console.log("item?.status", item?.status)
     const Token = await AsyncStorage.getItem("token")
     if (Token === null) {
       setModalVisibleCheckUser(true)
@@ -244,42 +244,46 @@ export const BookScreen = ({ navigation, route }) => {
             paginationActiveColor={Dandelion}
             paginationStyle={{
               position: "absolute",
-              bottom: 85,
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
+              bottom: 85
             }}
             paginationStyleItem={{
               width: 14,
               height: 14
             }}
+            contentContainerStyle={{
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
           >
-            <TouchableOpacity onPress={handleModal}>
-              {
-                loader
-                  ? null
-                  : (
-                    imageData !== null
-                      ? (
-                        imageData && imageData.map((item, index) => {
-                          return (
+            {
+              loader
+                ? null
+                : (
+                  imageData !== null
+                    ? (
+                      imageData && imageData.map((item, index) => {
+                        return (
+                          <TouchableOpacity onPress={handleModal} key={index}>
                             <Image
                               source={{ uri: item }}
                               style={{ width: windowWidth, height: windowHeight / 3 }}
-                              key={index}
                               resizeMode={"cover"}
                             />
-                          )
-                        })
-                      )
-                      : (
-                        <Image
-                          source={ImgDefault}
-                          style={{ width: windowWidth, height: windowHeight / 3 }}
-                          resizeMode={"cover"}
-                        />
-                      ))
-              }
-            </TouchableOpacity>
+                          </TouchableOpacity>
+                        )
+                      })
+                    )
+                    : (
+                      <Image
+                        source={ImgDefault}
+                        style={{ width: windowWidth, height: windowHeight / 3 }}
+                        resizeMode={"cover"}
+                      />
+                    ))
+            }
           </SwiperFlatList>
         </View>
         <View style={styles.bookInfoBox}>
