@@ -10,7 +10,7 @@ import { styles } from "../../screens/HomeScreen/style"
 import { MapStyle } from "../../shared/MapStyle"
 import { Dandelion, MySin, White } from "../../shared/Colors"
 
-const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady }) => {
+const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady, handleItemId }) => {
   return (
     <>
       <Marker
@@ -169,6 +169,7 @@ export const Map = ({
               )
             })
               : data && data.map((item, index) => {
+              // console.log("uri: item?.pin", item?.pin)
               return (
                 <Marker
                   onPress={(e) => handleItemId(e, index)}
@@ -177,8 +178,15 @@ export const Map = ({
                     longitude: Number(item?.lng)
                   }}
                   key={index}
+                  // image={{ uri: item?.pin }}
                 >
-
+                  <Image
+                    source={{ uri: item?.pin }}
+                    style={{
+                      width: 50,
+                      height: 50
+                    }}
+                  />
                 </Marker>
               )
             })
@@ -196,6 +204,7 @@ export const Map = ({
                 item={itemId}
                 handleCheckCordinate={handleCheckCordinate}
                 handleReady={handleReady}
+                handleItemId={handleItemId}
               />
               : null
           )
@@ -212,6 +221,7 @@ export const Map = ({
                 item={qrItem}
                 handleCheckCordinate={handleCheckCordinate}
                 handleReady={handleReady}
+                handleItemId={handleItemId}
               />
               : null
           )

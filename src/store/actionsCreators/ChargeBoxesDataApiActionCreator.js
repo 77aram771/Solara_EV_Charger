@@ -13,7 +13,6 @@ export const GetChargeBoxesData = (url) => (dispatch) => {
           dispatch(fetchSuccess(response.data))
         })
         .catch(e => {
-          console.log('e', e)
           dispatch(fetchError(e.response.data.message))
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,

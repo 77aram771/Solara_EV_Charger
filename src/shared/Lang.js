@@ -121,7 +121,7 @@ export const lang = {
     delete: "Ջնջել",
     stop: "Դադարել",
     amount: "Գումարը",
-    charged: "Լիցքավորված",
+    charged: "Լիցքավորվաում",
     charging: "Լիցքավորում է",
     stationName: "Կայանի անվանումը",
     dateAndTime: "Ամսաթիվ և ժամ",
@@ -145,6 +145,7 @@ export const lang = {
     doYouNoHaveHistory: "Դուք պատմություն չունեք",
     doYouNoHaveNotification: "Դուք ծանուցում չունեք",
     number: "Հ",
+    thePortIsBusyOrUnavailable: "Միացման կետը զբաղված է կամ անհասանելի է"
   },
   ru: {
     H: "ч",
@@ -158,7 +159,7 @@ export const lang = {
     sliderTitle3: "Включите электромобиль и начните зарядку",
     sliderText3: "Оплата по окончании начисления будет производиться автоматически через приложение",
     sliderTitle4: "Просмотр электронной почты зарядка автомобиля на смартфоне",
-    sliderText4: "Вы можете контролировать свою электронную почту в любое время. Заряжайте автомобиль прямо из приложения для смартфона и Когда зарядка будет завершена, вы получите уведомление",
+    sliderText4: "Вы можете контролировать свою электронную почту в любое время. Заряжайте автомобиль прямо из приложения для смартфона и Когда зарядка будет завершена, вы получите уведомления",
     filter: "Фильтр",
     book: "Бронировать",
     direction: "Направление",
@@ -199,7 +200,7 @@ export const lang = {
     settings: "Настройки",
     otherSections: "Другие разделы",
     notifications: "Уведомления",
-    notification: "Уведомление",
+    notification: "Уведомления",
     getNotification: "Получать уведомления",
     lang: "Язык",
     help: "Помощь",
@@ -289,8 +290,9 @@ export const lang = {
     permissionToAccessLocationWasDenied: "Разрешение на доступ к местоположению было отклонено",
     permissionToAccessCameraWasDenied: "Разрешение на доступ к камере было отклонено",
     doYouNoHaveHistory: "У вас нет истории",
-    doYouNoHaveNotification: "У вас нет уведомление",
+    doYouNoHaveNotification: "У вас нет уведомления",
     number: "Н",
+    thePortIsBusyOrUnavailable: "Порт занят или недоступен"
   },
   en: {
     H: "h",
@@ -437,5 +439,6 @@ export const lang = {
     doYouNoHaveHistory: "You have not history",
     doYouNoHaveNotification: "You have not notification",
     number: "N",
+    thePortIsBusyOrUnavailable: "The port is Busy or Unavailable"
   }
 }

@@ -52,13 +52,13 @@ export const LoadChargeScreen = ({ navigation, route }) => {
         })
         .catch(e => {
           setLoader(false)
-          Alert.alert(
-            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
-            `${e?.response?.data?.message}`,
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-          );
+          // Alert.alert(
+          //   `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+          //   `${e?.response?.data?.message}`,
+          //   [
+          //     { text: "OK", onPress: () => console.log("OK Pressed") }
+          //   ]
+          // );
         })
     }
   }
@@ -87,13 +87,13 @@ export const LoadChargeScreen = ({ navigation, route }) => {
         .catch(e => {
           setLoader(false)
           console.log("e -----------", e.response.data.message)
-          Alert.alert(
-            `${e?.response?.data?.name} ${e?.response?.data?.status}`,
-            `${e?.response?.data?.message}`,
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-          );
+          // Alert.alert(
+          //   `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+          //   `${e?.response?.data?.message}`,
+          //   [
+          //     { text: "OK", onPress: () => console.log("OK Pressed") }
+          //   ]
+          // );
         })
     }
   }

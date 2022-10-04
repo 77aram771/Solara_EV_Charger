@@ -1,5 +1,14 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { Alert, Button, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
+import {
+  Alert,
+  // Button,
+  // Text,
+  Image,
+  Modal,
+  Platform,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { Popup } from "react-native-map-link"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
@@ -39,10 +48,10 @@ export const HomeScreen = ({ navigation }) => {
     handleLocationUser,
     userAddress,
     handleHideTabBar,
-    countryCode,
-    expoPushToken,
-    notification,
-    schedulePushNotification
+    countryCode
+    // expoPushToken,
+    // notification,
+    // schedulePushNotification
   } = useContext(Context)
 
   const _mapView = createRef()
@@ -81,7 +90,6 @@ export const HomeScreen = ({ navigation }) => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(true)
       const transactionId = await AsyncStorage.getItem("transaction_id")
-      console.log("transactionId", transactionId)
       if (transactionId !== null) {
         await handleCheckChargeProgress()
       }
@@ -107,9 +115,9 @@ export const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleChargeBoxesData()
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [])
 
   useLayoutEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
@@ -155,7 +163,7 @@ export const HomeScreen = ({ navigation }) => {
       //       [
       //         { text: "OK", onPress: () => console.log("OK Pressed") }
       //       ]
-      //     );
+      //     )
       //   })
       await axios.get(
         `${API_URL}/charge-box/get-last?access-token=${Token}`,
@@ -179,7 +187,7 @@ export const HomeScreen = ({ navigation }) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
         })
     }
   }
@@ -214,7 +222,7 @@ export const HomeScreen = ({ navigation }) => {
     }
     setTimeout(() => {
       if (_mapView.current !== null) {
-        getCurrentPosition(newData)
+        getCurrentPosition()
       }
     }, 2000)
   }
@@ -223,6 +231,7 @@ export const HomeScreen = ({ navigation }) => {
     if (location === null) {
       await handleLocationUser()
     } else {
+      await getCurrentPosition()
       setStart(!start)
     }
     setModalVisible(false)
@@ -279,7 +288,6 @@ export const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      // await AsyncStorage.removeItem("checkWelcomeScreen")
       const status = await AsyncStorage.getItem("checkWelcomeScreen")
       if (status !== null) {
         setCheck(status)
@@ -343,7 +351,7 @@ export const HomeScreen = ({ navigation }) => {
       {/*   <Button */}
       {/*     title="Press to schedule a notification" */}
       {/*     onPress={async () => { */}
-      {/*       await schedulePushNotification(); */}
+      {/*       await schedulePushNotification() */}
       {/*     }} */}
       {/*   /> */}
       {/* </View> */}
@@ -400,9 +408,7 @@ export const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("QRScanner", {
-                  handleQRData: (id) => handleQRData(id)
-                })}
+                onPress={() => navigation.navigate("QRScanner", { handleQRData: (id) => handleQRData(id) })}
                 style={styles.qrBox}
               >
                 <Image source={IconQr} style={{ width: 40, height: 40 }} />
@@ -436,7 +442,7 @@ export const HomeScreen = ({ navigation }) => {
                 ? windowHeight / 17
                 : windowHeight / 20
         }]}
-        onPress={() => getCurrentPosition(cordinate)}
+        onPress={() => getCurrentPosition()}
       >
         <Image source={IconDirection} style={{ width: 25, height: 25 }} />
       </TouchableOpacity>

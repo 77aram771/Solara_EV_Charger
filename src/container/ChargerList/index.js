@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { FlatList, Image, TouchableOpacity, View } from "react-native"
 import Constants from "expo-constants"
 import { windowHeight, windowWidth } from "../../shared/Const"
@@ -21,23 +21,27 @@ export const ChargerList = ({
   navigation
 }) => {
 
-  const [chargerListData, setChargerListData] = useState(null)
+  const [chargerListData, setChargerListData] = useState(data)
 
   const [value, setValue] = useState("")
 
-  useEffect(() => {
-
-    if (data) {
-      setChargerListData(data)
-    }
-  }, [data])
-
   const handleFilter = (value) => {
     if (value) {
-      const newData = data.filter((item) => {
-        return item.title.indexOf(value.toUpperCase()) > -1 && item.address.indexOf(value.toUpperCase()) > -1
+      const newDataTitle = data.filter(function(item) {
+        const itemData = item?.title
+          ? item?.title.toUpperCase()
+          : "".toUpperCase()
+        const textData = value.toUpperCase()
+        return itemData.indexOf(textData) > -1
       })
-      setChargerListData(newData)
+      const newDataAddress = data.filter(function(item) {
+        const itemData = item?.address
+          ? item?.address.toUpperCase()
+          : "".toUpperCase()
+        const textData = value.toUpperCase()
+        return itemData.indexOf(textData) > -1
+      })
+      setChargerListData([...newDataTitle, ...newDataAddress])
       setValue(value)
     } else {
       setChargerListData(data)
@@ -86,7 +90,7 @@ export const ChargerList = ({
                     <Image
                       source={{ uri: item?.status_image }}
                       style={{ width: 20, height: 20, marginRight: 10 }}
-                      key={item.id}
+                      key={item?.id}
                     />
                   )
                 })
@@ -162,13 +166,15 @@ export const ChargerList = ({
         alignItems: "center"
       }}
     >
-      <View style={{
-        width: "90%",
-        justifyContent: "flex-end",
-        alignItems: "flex-end",
-        paddingTop: 20,
-        marginBottom: 30
-      }}>
+      <View
+        style={{
+          width: "90%",
+          justifyContent: "flex-end",
+          alignItems: "flex-end",
+          paddingTop: 20,
+          marginBottom: 30
+        }}
+      >
         <TouchableOpacity onPress={handleModal}>
           <Image source={IconCloseYellow} style={{ width: 20, height: 20 }} />
         </TouchableOpacity>
@@ -186,23 +192,16 @@ export const ChargerList = ({
         />
       </View>
       <FlatList
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => index}
         data={chargerListData}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        // refreshControl={
-        //   <RefreshControl
-        //     refreshing={loader}
-        //     onRefresh={handleData}
-        //     tintColor={MySin}
-        //   />
-        // }
         renderItem={({ item, index }) => (
           <RenderChargerItem
-            address={item.address}
-            connectors={item.connectors}
-            title={item.title}
-            pin={item.pin}
+            address={item?.address}
+            connectors={item?.connectors}
+            title={item?.title}
+            pin={item?.pin}
             index={index}
           />
         )}

@@ -26,40 +26,50 @@ export const BookScreen = ({ navigation, route }) => {
   const [imageData, setImageData] = useState(null)
   const [imageModal, setImageModal] = useState(false)
   const [modalVisibleCheckUser, setModalVisibleCheckUser] = useState(false)
+  const [loader, setLoader] = useState(true)
 
   useEffect(() => {
-    return navigation.addListener("focus", async () => {
-      await getDetails()
+    return navigation.addListener("focus", () => {
+      setImageData(null)
+      // setLoader(false)
+      getDetails()
       handleHideTabBar(false)
     })
   }, [navigation])
 
-  const getDetails = async () => {
-    await axios.post(
+  const getDetails = () => {
+    setLoader(true)
+    axios.post(
       `${API_URL}/charge-box/details`,
       { id: route?.params?.data[route?.params.itemId].id },
       { headers: { tokakey: Tokakey } }
     )
       .then(res => {
+        setLoader(false)
+        console.log("res?.data?.images", res?.data?.images)
         setImageData(res?.data?.images)
       })
-      .catch(e => console.log("e", e.response))
+      .catch(e => {
+        setLoader(false)
+        console.log("e", e.response)
+      })
   }
 
   const handleModal = () => setImageModal(!imageModal)
 
   const handlePort = async (item) => {
+    console.log('item?.status', item?.status)
     const Token = await AsyncStorage.getItem("token")
     if (Token === null) {
       setModalVisibleCheckUser(true)
     } else {
-      if (item?.status !== "Faulted" && item?.status !== "Finishing") {
+      if (item?.status === "Available" || item?.status === "Preparing") {
         navigation.navigate("BookType", {
           item,
           address: route?.params?.data[route?.params?.itemId].address
         })
       } else {
-        alert("The port is Faulted or Finishing")
+        alert(lang[countryCode].thePortIsBusyOrUnavailable)
       }
     }
   }
@@ -159,6 +169,8 @@ export const BookScreen = ({ navigation, route }) => {
             paginationActiveColor={Dandelion}
             paginationStyle={{
               position: "absolute",
+              justifyContent: "center",
+              alignItems: "center",
               bottom: 85
             }}
             paginationStyleItem={{
@@ -166,13 +178,16 @@ export const BookScreen = ({ navigation, route }) => {
               height: 14
             }}
             contentContainerStyle={{
-              alignSelf: "center"
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
             {
-              imageData
-                ? (
-                  imageData.length > 0
+              loader
+                ? null
+                : (
+                  imageData !== null
                     ? (
                       imageData && imageData.map((item, index) => {
                         return (
@@ -191,9 +206,7 @@ export const BookScreen = ({ navigation, route }) => {
                         style={{ width: windowWidth, height: windowHeight / 3 }}
                         resizeMode={"cover"}
                       />
-                    )
-                )
-                : null
+                    ))
             }
           </SwiperFlatList>
         </View>
@@ -231,7 +244,9 @@ export const BookScreen = ({ navigation, route }) => {
             paginationActiveColor={Dandelion}
             paginationStyle={{
               position: "absolute",
-              bottom: 85
+              bottom: 85,
+              justifyContent: "center",
+              alignItems: "center"
             }}
             paginationStyleItem={{
               width: 14,
@@ -240,9 +255,10 @@ export const BookScreen = ({ navigation, route }) => {
           >
             <TouchableOpacity onPress={handleModal}>
               {
-                imageData
-                  ? (
-                    imageData.length > 0
+                loader
+                  ? null
+                  : (
+                    imageData !== null
                       ? (
                         imageData && imageData.map((item, index) => {
                           return (
@@ -261,9 +277,7 @@ export const BookScreen = ({ navigation, route }) => {
                           style={{ width: windowWidth, height: windowHeight / 3 }}
                           resizeMode={"cover"}
                         />
-                      )
-                  )
-                  : null
+                      ))
               }
             </TouchableOpacity>
           </SwiperFlatList>
@@ -302,6 +316,7 @@ export const BookScreen = ({ navigation, route }) => {
             </View>
             {
               route?.params?.data[route?.params?.itemId]?.connectors.map((item, index) => {
+                // console.log('item', item)
                 if (item?.status === "Available") {
                   return <RenderSection item={item} key={index} index={index} color={Fiord} />
                 } else if (item?.status === "Charging") {
@@ -309,7 +324,7 @@ export const BookScreen = ({ navigation, route }) => {
                 } else if (item?.status === "Preparing") {
                   return <RenderSection item={item} key={index} index={index} color={MySin2} />
                 } else if (item?.status === "Unavailable") {
-                  return <RenderSection item={item} key={index} index={index} color={Fiord} />
+                  return <RenderSection item={item} key={index} index={index} color={Amaranth} />
                 } else {
                   return <RenderSection item={item} key={index} index={index} color={Amaranth} />
                 }

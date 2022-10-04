@@ -41,14 +41,13 @@ export const HistoryScreen = ({ navigation }) => {
   const handleGetPaymentsData = async () => {
     setLoader(true)
     const Token = await AsyncStorage.getItem("token")
-    console.log("Token", Token)
     if (Token !== null) {
-      console.log(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`)
-      await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
+      await axios.get(`${API_URL}/users/payments-history/?page=1&per-page=200&access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
-          console.log("payments-history res", res?.data?.data)
+          console.log('handleGetPaymentsData res', res?.data)
+          // console.log("payments-history res", res?.data?.data)
           setLoader(false)
           setData(res?.data?.data)
           setTotalPrice(res?.data?.total)
@@ -70,11 +69,10 @@ export const HistoryScreen = ({ navigation }) => {
   const handleGetChargingData = async () => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
-      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=20&access-token=${Token}&language=${countryCode}`,
+      await axios.get(`${API_URL}/users/charging-history/?page=1&per-page=200&access-token=${Token}&language=${countryCode}`,
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
-          console.log("charging-history res", res?.data?.data)
           setLoader(false)
           setCharging(res?.data?.data)
           setTotalCharge(res?.data?.total)
