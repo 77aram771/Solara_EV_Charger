@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Linking, ScrollView, View } from "react-native"
-import * as WebBrowser from "expo-web-browser"
+// import * as WebBrowser from "expo-web-browser"
 import { styles } from "./style"
 import { TitleCustom } from "../../../components/UI/TitleCustom"
 import { lang } from "../../../shared/Lang"
@@ -16,14 +16,14 @@ import IconAbout from "../../../assets/icon/about.png"
 import IconLike from "../../../assets/icon/partner.png"
 import IconFb from "../../../assets/icon/facebook.png"
 import IconIns from "../../../assets/icon/instagram.png"
-// import IconViber from "../../../assets/icon/icon-viber.png"
 import IconTelegram from "../../../assets/icon/icon-telegram.png"
+// import IconViber from "../../../assets/icon/icon-viber.png"
 
 export const SettingsScreen = ({ navigation }) => {
 
   const { countryCode } = useContext(Context)
 
-  const handlePressButtonAsync = async (uri) => await WebBrowser.openBrowserAsync(uri)
+  // const handlePressButtonAsync = async (uri) => await WebBrowser.openBrowserAsync(uri)
 
   const handleLink = async (url) => await Linking.openURL(url)
 
@@ -185,7 +185,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => handlePressButtonAsync("https://www.facebook.com/solaraArmenia/")}
+            click={() => handleLink("https://www.facebook.com/solaraArmenia/")}
             fontSize={18}
             fontWeight={"400"}
             icon={IconFb}
@@ -203,7 +203,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => handlePressButtonAsync("https://www.instagram.com/solara.am/")}
+            click={() => handleLink("https://www.instagram.com/solara.am/")}
             fontSize={18}
             fontWeight={"400"}
             icon={IconIns}

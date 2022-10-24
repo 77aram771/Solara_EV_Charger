@@ -61,8 +61,8 @@ export const PartnerScreen = ({ navigation }) => {
                   fontSize={18}
                   fontWeight={"400"}
                   icon={item?.image}
-                  iconWidth={50}
-                  iconHeight={50}
+                  iconWidth={70}
+                  iconHeight={70}
                   iconUri={true}
                   marginBottom={20}
                   justifyContent={"center"}
