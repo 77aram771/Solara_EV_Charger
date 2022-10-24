@@ -140,7 +140,7 @@ export const Map = ({
       <Geojson
         geojson={myPlace}
         strokeColor={Dandelion}
-        fillColor={"rgba(0,0,0,0.0)"}
+        fillColor={"transparent"}
         strokeWidth={4}
       />
       {

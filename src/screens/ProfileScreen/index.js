@@ -103,7 +103,7 @@ export const ProfileScreen = ({ navigation }) => {
                         resizeMode={"contain"}
                         style={{
                           width: windowWidth / 3,
-                          height: windowHeight / 6,
+                          height: windowHeight / 8,
                           marginBottom: 10
                         }}
                       />
@@ -146,7 +146,8 @@ export const ProfileScreen = ({ navigation }) => {
                         borderWidth={1}
                         borderRadius={18}
                         click={() => navigation.navigate("PersonalInformation", {
-                          user
+                          user,
+                          handleLogOut: () => handleLogOut()
                         })}
                         fontSize={15}
                         fontWeight={"400"}

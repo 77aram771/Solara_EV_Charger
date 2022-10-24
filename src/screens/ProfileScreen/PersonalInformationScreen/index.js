@@ -160,14 +160,19 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
   const handleDeleteAccount = async () => {
     const Token = await AsyncStorage.getItem("token")
     if(Token) {
-      await axios.get(
-        `${API_URL}/users/delete`,
+      await axios.delete(
+        `${API_URL}/users/delete?access-token=${Token}`,
+        // `${API_URL}/users/delete`,
         { headers: { tokakey: Tokakey } }
       )
-        .then(res => {
+        .then(async res => {
           console.log("res", res)
+          if(res?.data?.data?.status === 200) {
+            await route.params.handleLogOut()
+            await navigation.goBack()
+          }
         })
-        .catch(e => console.log("e", e.response))
+        .catch(e => console.log("e", e?.response?.status))
     }
     handleOpen()
   }
@@ -185,9 +190,9 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
         onRequestClose={handleOpen}
       >
         <SmallModal
-          handleFirstButton={handleDeleteAccount}
+          handleFirstButton={handleOpen}
           titleFirstButton={lang[countryCode].cancel}
-          handleSecondButton={handleOpen}
+          handleSecondButton={handleDeleteAccount}
           titleSecondButton={lang[countryCode].delete}
           title={lang[countryCode].аreYouWantToDeleteYourAccount}
         />

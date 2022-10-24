@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     },
     headerBoxUser: {
         width: windowWidth,
-        height: Constants.statusBarHeight + windowHeight / 2.7,
+        height: Constants.statusBarHeight + windowHeight / 3,
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingBottom: windowHeight / 30
