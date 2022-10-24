@@ -55,7 +55,7 @@
       },
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan QR for find charger device.",
-        "NSLocationWhenInUseUsageDescription": "This app use location for check user position in map."
+        "NSLocationWhenInUseUsageDescription": "This app use location for check user position in map to find near EvCharge Station."
       }
     },
     "android": {
@@ -66,7 +66,7 @@
         "googleMaps": { "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8" }
       },
       "package": "com.voodoo.solara.charging",
-      "versionCode": 49,
+      "versionCode": 50,
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA", "NOTIFICATIONS"],
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true

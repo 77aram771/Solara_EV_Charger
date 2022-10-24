@@ -145,7 +145,9 @@ export const lang = {
     doYouNoHaveHistory: "Դուք պատմություն չունեք",
     doYouNoHaveNotification: "Դուք ծանուցում չունեք",
     number: "Հ",
-    thePortIsBusyOrUnavailable: "Միացման կետը զբաղված է կամ անհասանելի է"
+    thePortIsBusyOrUnavailable: "Միացման կետը զբաղված է կամ անհասանելի է",
+    deleteAccount: "Ջնջել Օգտատերին",
+    аreYouWantToDeleteYourAccount: "Դուք ուզում եք ջնջել ձեր հաշիվը",
   },
   ru: {
     H: "ч",
@@ -292,7 +294,9 @@ export const lang = {
     doYouNoHaveHistory: "У вас нет истории",
     doYouNoHaveNotification: "У вас нет уведомления",
     number: "Н",
-    thePortIsBusyOrUnavailable: "Порт занят или недоступен"
+    thePortIsBusyOrUnavailable: "Порт занят или недоступен",
+    deleteAccount: "Удалить аккаунт",
+    аreYouWantToDeleteYourAccount: "Вы хотите удалить свой аккаунт?",
   },
   en: {
     H: "h",
@@ -439,6 +443,8 @@ export const lang = {
     doYouNoHaveHistory: "You have not history",
     doYouNoHaveNotification: "You have not notification",
     number: "N",
-    thePortIsBusyOrUnavailable: "The port is Busy or Unavailable"
+    thePortIsBusyOrUnavailable: "The port is Busy or Unavailable",
+    deleteAccount: "Delete account",
+    аreYouWantToDeleteYourAccount: "Are you want to delete your account?",
   }
 }

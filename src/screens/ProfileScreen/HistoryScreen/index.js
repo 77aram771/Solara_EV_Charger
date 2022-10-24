@@ -46,7 +46,7 @@ export const HistoryScreen = ({ navigation }) => {
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
-          console.log('handleGetPaymentsData res', res?.data)
+          console.log("handleGetPaymentsData res", res?.data)
           // console.log("payments-history res", res?.data?.data)
           setLoader(false)
           setData(res?.data?.data)
@@ -54,7 +54,7 @@ export const HistoryScreen = ({ navigation }) => {
         })
         .catch(e => {
           setLoader(false)
-          console.log('e handleGetPaymentsData', e)
+          console.log("e handleGetPaymentsData", e)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -79,7 +79,7 @@ export const HistoryScreen = ({ navigation }) => {
         })
         .catch(e => {
           setLoader(false)
-          console.log('e handleGetChargingData', e)
+          console.log("e handleGetChargingData", e)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -104,8 +104,7 @@ export const HistoryScreen = ({ navigation }) => {
   const handleTab = () => {
     if (data && data.length > 0 || charging && charging.length > 0) {
       handleItemPress(0)
-    }
-    else {
+    } else {
       handleItemPress(1)
     }
     setCheck(!check)
@@ -264,12 +263,18 @@ export const HistoryScreen = ({ navigation }) => {
                                 <Image source={IconDiscover} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
                               }
                             </View>
-                            <TextCustom
-                              text={`Card number: ${item?.card?.title}`}
-                              color={MineShaft}
-                              fontSize={14}
-                              fontWeight={"500"}
-                            />
+                            {
+                              item?.card
+                                ? (
+                                  <TextCustom
+                                    text={`Card number: ${item?.card?.title}`}
+                                    color={MineShaft}
+                                    fontSize={14}
+                                    fontWeight={"500"}
+                                  />
+                                )
+                                : null
+                            }
                           </View>
                         </View>
                       )

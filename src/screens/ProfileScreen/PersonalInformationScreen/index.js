@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Platform, ActivityIndicator, Alert } from "react-native"
+import { View, Platform, ActivityIndicator, Alert, Modal } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { styles } from "./style"
-import { Fiord, Manatee, MySin, Silver, White } from "../../../shared/Colors"
+import { Amaranth, Fiord, Manatee, MySin, Silver, White, WildSand } from "../../../shared/Colors"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
@@ -18,6 +18,7 @@ import { API_URL, Tokakey } from "../../../shared/Const"
 import IconCheck from "../../../assets/icon/check2.png"
 import IconPassword from "../../../assets/icon/password3.png"
 import IconArrowDown from "../../../assets/icon/dropdown.png"
+import { SmallModal } from "../../../container/SmallModal";
 
 export const PersonalInformationScreen = ({ navigation, route }) => {
 
@@ -43,6 +44,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
   const [autoModalData, setAutoModalData] = useState([])
   const [autoModalError, setAutoModalError] = useState(false)
   const [autoModalErrorMessage] = useState(lang[countryCode].chooseModal)
+  const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
     const newArr = []
@@ -155,8 +157,41 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
     }
   }
 
+  const handleDeleteAccount = async () => {
+    const Token = await AsyncStorage.getItem("token")
+    if(Token) {
+      await axios.get(
+        `${API_URL}/users/delete`,
+        { headers: { tokakey: Tokakey } }
+      )
+        .then(res => {
+          console.log("res", res)
+        })
+        .catch(e => console.log("e", e.response))
+    }
+    handleOpen()
+  }
+
+  const handleOpen = () => {
+    setModalVisible(!modalVisible)
+  }
+
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleOpen}
+      >
+        <SmallModal
+          handleFirstButton={handleDeleteAccount}
+          titleFirstButton={lang[countryCode].cancel}
+          handleSecondButton={handleOpen}
+          titleSecondButton={lang[countryCode].delete}
+          title={lang[countryCode].аreYouWantToDeleteYourAccount}
+        />
+      </Modal>
       <HeaderCustom
         text={lang[countryCode].personalInformation}
         backgroundColor={MySin}
@@ -264,6 +299,23 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
         iconPositionLeft={false}
         borderRadius={12}
         borderColor={Fiord}
+        borderWidth={1}
+        disabled={loader}
+      />
+      <ButtonCustom
+        text={lang[countryCode].deleteAccount}
+        backgroundColor={Amaranth}
+        color={WildSand}
+        width={"100%"}
+        marginTop={5}
+        marginBottom={20}
+        paddingTop={Platform.OS === "ios" ? 14 : 8}
+        paddingBottom={Platform.OS === "ios" ? 14 : 8}
+        click={handleOpen}
+        fontSize={18}
+        fontWeight={"700"}
+        borderRadius={12}
+        borderColor={Amaranth}
         borderWidth={1}
         disabled={loader}
       />
