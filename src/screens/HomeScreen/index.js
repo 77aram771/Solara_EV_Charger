@@ -48,7 +48,7 @@ export const HomeScreen = ({ navigation }) => {
     handleLocationUser,
     userAddress,
     handleHideTabBar,
-    countryCode
+    countryCode,
     // expoPushToken,
     // notification,
     // schedulePushNotification
@@ -140,31 +140,7 @@ export const HomeScreen = ({ navigation }) => {
 
   const handleCheckChargeProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
-    // Jamanakin senc einq stanum zaryadka drac meqenayi status@ u ID minchev poxinq zapros@ /charge-box/get-last?access-token=${Token}
-    // const transactionId = await AsyncStorage.getItem("transaction_id")
     if (Token !== null) {
-      // await axios.post(
-      //   `${API_URL}/charge-box/get-progress?access-token=${Token}`,
-      //   { transaction_id: Number(transactionId) },
-      //   { headers: { tokakey: "f9cbdcf0b9bc49ec15e2098127a0052997b5fda5" } }
-      // )
-      //   .then(async res => {
-      //     if (res?.data.status === "Charging") {
-      //       navigation.navigate("LoadCharge", { bool: true })
-      //     }
-      //     if (res?.data.status === "Stopped") {
-      //       await AsyncStorage.removeItem("transaction_id")
-      //     }
-      //   })
-      //   .catch(e => {
-      //     Alert.alert(
-      //       `${e?.response?.data?.name} ${e?.response?.data?.status}`,
-      //       `${e?.response?.data?.message}`,
-      //       [
-      //         { text: "OK", onPress: () => console.log("OK Pressed") }
-      //       ]
-      //     )
-      //   })
       await axios.get(
         `${API_URL}/charge-box/get-last?access-token=${Token}`,
         { headers: { tokakey: Tokakey } }
@@ -213,13 +189,13 @@ export const HomeScreen = ({ navigation }) => {
     const qrItemIndex = data.findIndex(item => item.id === id)
     setQrItem(qrItemIndex)
     setItemId(null)
-    const qrItem = data.find(item => item.id === id)
-    const newData = {
-      latitude: qrItem?.lat,
-      longitude: qrItem?.lng,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA
-    }
+    // const qrItem = data.find(item => item.id === id)
+    // const newData = {
+    //   latitude: qrItem?.lat,
+    //   longitude: qrItem?.lng,
+    //   latitudeDelta: LATITUDE_DELTA,
+    //   longitudeDelta: LONGITUDE_DELTA
+    // }
     setTimeout(() => {
       if (_mapView.current !== null) {
         getCurrentPosition()

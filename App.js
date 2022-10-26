@@ -3,7 +3,7 @@ import { ImageBackground, Platform, LogBox, View } from "react-native"
 import Constants from "expo-constants"
 import * as Location from "expo-location"
 import Geocoder from "react-native-geocoding"
-// import * as Notifications from "expo-notifications"
+import * as Notifications from "expo-notifications"
 import { Provider } from "react-redux"
 import axios from "axios"
 import Context from "./Context"
@@ -11,7 +11,7 @@ import RootNavigation from "./src/navigation"
 import { store } from "./src/store"
 import { API_URL, Google_Key, Tokakey } from "./src/shared/Const"
 import { lang } from "./src/shared/Lang"
-// import * as Device from "expo-device"
+import * as Device from "expo-device"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import ImgSplashScreenRu from "./src/assets/images/img-splashscreen-ru.png"
 import ImgSplashScreenEn from "./src/assets/images/img-splashscreen-en.png"
@@ -23,22 +23,22 @@ LogBox.ignoreLogs([
 
 Geocoder.init(Google_Key, { language: "en" })
 
-// Notifications.setNotificationHandler({
-//   handleNotification: async () => ({
-//     shouldShowAlert: true,
-//     shouldPlaySound: false,
-//     shouldSetBadge: false
-//   })
-// });
-//
-// Notifications.requestPermissionsAsync({
-//   ios: {
-//     allowAlert: true,
-//     allowBadge: true,
-//     allowSound: true,
-//     allowAnnouncements: true
-//   }
-// });
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false
+  })
+});
+
+Notifications.requestPermissionsAsync({
+  ios: {
+    allowAlert: true,
+    allowBadge: true,
+    allowSound: true,
+    allowAnnouncements: true
+  }
+});
 
 // axios.interceptors.response.use(response => {
 //   console.log('response', response.data)
@@ -73,67 +73,70 @@ export default function App() {
 
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
-  // const notificationListener = useRef();
-  // const responseListener = useRef();
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-  //
-  //   notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-  //     setNotification(notification);
-  //   });
-  //
-  //   responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-  //     console.log('response', response);
-  //   });
-  //
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(notificationListener.current);
-  //     Notifications.removeNotificationSubscription(responseListener.current);
-  //   };
-  // }, []);
-  //
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => {
+      // console.log('expoPushToken', token)
+      setExpoPushToken(token)
+    });
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log('response', response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
   async function schedulePushNotification() {
-    // await Notifications.scheduleNotificationAsync({
-    //   content: {
-    //     title: "You've got mail! 📬",
-    //     body: "Here is the notification body",
-    //     data: { data: "goes here" }
-    //   },
-    //   trigger: { seconds: 1 }
-    // });
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've got mail! 📬",
+        body: "Here is the notification body",
+        data: { data: "goes here" }
+      },
+      trigger: { seconds: 1 }
+    });
   }
-  //
-  // async function registerForPushNotificationsAsync() {
-  //   let token;
-  //   if (Device.isDevice) {
-  //     const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  //     let finalStatus = existingStatus;
-  //     if (existingStatus !== "granted") {
-  //       const { status } = await Notifications.requestPermissionsAsync();
-  //       finalStatus = status;
-  //     }
-  //     if (finalStatus !== "granted") {
-  //       alert("Failed to get push token for push notification!");
-  //       return;
-  //     }
-  //     token = (await Notifications.getDevicePushTokenAsync()).data;
-  //     console.log("Notification token", token);
-  //   } else {
-  //     alert("Must use physical device for Push Notifications");
-  //   }
-  //
-  //   if (Platform.OS === "android") {
-  //     await Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //       lightColor: "#FF231F7C"
-  //     });
-  //   }
-  //
-  //   return token;
-  // }
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      // console.log("Notification token", token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C"
+      });
+    }
+    // console.log('token', token)
+    return token;
+  }
 
   const handleHideTabBar = (bool) => setShowTabBar(bool)
 

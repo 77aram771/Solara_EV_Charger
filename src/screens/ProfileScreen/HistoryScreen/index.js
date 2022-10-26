@@ -46,7 +46,7 @@ export const HistoryScreen = ({ navigation }) => {
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
-          console.log("handleGetPaymentsData res", res?.data)
+          // console.log("handleGetPaymentsData res", res?.data)
           // console.log("payments-history res", res?.data?.data)
           setLoader(false)
           setData(res?.data?.data)
@@ -208,6 +208,8 @@ export const HistoryScreen = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => {
+                      console.log("pay_type", item?.pay_type)
+                      console.log("payment_type", item?.payment_type)
                       return (
                         <View style={styles.itemContainer}>
                           <View>

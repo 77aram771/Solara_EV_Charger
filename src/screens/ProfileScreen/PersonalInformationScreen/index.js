@@ -13,12 +13,11 @@ import { InputCustom } from "../../../components/UI/InputCustom"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { SelectCustom } from "../../../components/UI/SelectCustom"
 import { GetCarModal } from "../../../store/actionsCreators/CarModalApiActionCreator"
+import { SmallModal } from "../../../container/SmallModal"
 import { API_URL, Tokakey } from "../../../shared/Const"
-// import { regName } from "../../../shared/MockData"
 import IconCheck from "../../../assets/icon/check2.png"
 import IconPassword from "../../../assets/icon/password3.png"
 import IconArrowDown from "../../../assets/icon/dropdown.png"
-import { SmallModal } from "../../../container/SmallModal";
 
 export const PersonalInformationScreen = ({ navigation, route }) => {
 
@@ -162,12 +161,10 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
     if(Token) {
       await axios.delete(
         `${API_URL}/users/delete?access-token=${Token}`,
-        // `${API_URL}/users/delete`,
         { headers: { tokakey: Tokakey } }
       )
         .then(async res => {
-          console.log("res", res)
-          if(res?.data?.data?.status === 200) {
+          if(res?.status === 200) {
             await route.params.handleLogOut()
             await navigation.goBack()
           }
@@ -177,9 +174,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
     handleOpen()
   }
 
-  const handleOpen = () => {
-    setModalVisible(!modalVisible)
-  }
+  const handleOpen = () => setModalVisible(!modalVisible)
 
   return (
     <View style={styles.container}>

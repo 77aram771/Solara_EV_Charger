@@ -32,7 +32,7 @@ import IconEye from "../../../assets/icon/icon-eye.png"
 
 export const SignInScreen = ({ navigation }) => {
 
-  const { countryCode } = useContext(Context)
+  const { countryCode, expoPushToken } = useContext(Context)
 
   const dispatch = useDispatch()
 
@@ -78,8 +78,8 @@ export const SignInScreen = ({ navigation }) => {
   const handleLogIn = async (email, password) => {
     dispatch(AuthSignIn(`${API_URL}/auth/sign-in`, {
       email,
-      password
-    }))
+      password,
+    }, expoPushToken))
   }
 
   const handleEnter = async () => {
