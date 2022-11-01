@@ -21,8 +21,9 @@ export const styles = StyleSheet.create({
     marginBottom: 5
   },
   topTitleBox: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center"
   },
   infoBottomBox: {

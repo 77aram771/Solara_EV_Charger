@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react"
 import { Image, Modal, Platform, ScrollView, TouchableOpacity, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
+import { WebView } from "react-native-webview"
+import Constants from "expo-constants"
 import Context from "../../../../Context"
 import { SwiperFlatList } from "react-native-swiper-flatlist"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
@@ -25,6 +27,8 @@ export const BookScreen = ({ navigation, route }) => {
 
   const [imageData, setImageData] = useState(null)
   const [imageModal, setImageModal] = useState(false)
+  const [image3DData, setImage3DData] = useState(null)
+  const [image3DModal, setImage3DModal] = useState(false)
   const [modalVisibleCheckUser, setModalVisibleCheckUser] = useState(false)
   const [loader, setLoader] = useState(true)
 
@@ -46,7 +50,7 @@ export const BookScreen = ({ navigation, route }) => {
     )
       .then(res => {
         setLoader(false)
-        console.log("res?.data?.images", res?.data?.images)
+        setImage3DData(res?.data["360_url"])
         setImageData(res?.data?.images)
       })
       .catch(e => {
@@ -56,6 +60,8 @@ export const BookScreen = ({ navigation, route }) => {
   }
 
   const handleModal = () => setImageModal(!imageModal)
+
+  const handleModal360 = () => setImage3DModal(!image3DModal)
 
   const handlePort = async (item) => {
     console.log("item?.status", item?.status)
@@ -214,6 +220,33 @@ export const BookScreen = ({ navigation, route }) => {
       <Modal
         animationType="slide"
         transparent={true}
+        visible={image3DModal}
+        onRequestClose={handleModal360}
+      >
+        <WebView
+          source={image3DData ? { uri: `${image3DData}` } : { uri: `https://expo.dev` }}
+          style={{ flex: 1, marginTop: Constants.statusBarHeight }}
+        />
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            right: 5,
+            top: windowHeight / 15,
+            width: 50,
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 100000
+          }}
+          onPress={handleModal360}
+          activeOpacity={0}
+        >
+          <Image source={ImgClose} style={{ width: 25, height: 25 }} />
+        </TouchableOpacity>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
         visible={modalVisibleCheckUser}
         onRequestClose={handleModalCheckUser}
       >
@@ -287,7 +320,13 @@ export const BookScreen = ({ navigation, route }) => {
           </SwiperFlatList>
         </View>
         <View style={styles.bookInfoBox}>
-          <InfoBoxCustom itemId={route?.params?.itemId} isBook={route?.params?.isBook} data={route?.params?.data} />
+          <InfoBoxCustom
+            itemId={route?.params?.itemId}
+            isBook={route?.params?.isBook}
+            data={route?.params?.data}
+            image3DData={image3DData}
+            handleModal360={handleModal360}
+          />
           <View style={styles.typeBox}>
             <View style={[styles.typeItem, { paddingLeft: 20, borderTopWidth: 0 }]}>
               <View style={{ flexDirection: "row", width: "55%" }}>

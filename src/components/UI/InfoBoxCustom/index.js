@@ -11,8 +11,9 @@ import IconPhone from "../../../assets/icon/phone1.png"
 import IconCheckActive from "../../../assets/icon/icon-check.png"
 import IconMapMarker from "../../../assets/icon/mapmarket.png"
 import IconFreeNot from "../../../assets/icon/free-not.png"
+import Img360 from "../../../assets/icon/icon-360-degrees.png"
 
-export const InfoBoxCustom = ({ itemId, isBook, data }) => {
+export const InfoBoxCustom = ({ itemId, isBook, data, image3DData, handleModal360 }) => {
 
   const { countryCode } = useContext(Context)
 
@@ -28,7 +29,7 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
           {
             data[itemId]?.active
               ? (
-                <>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
                     source={IconFreeNot}
                     style={{ width: 20, height: 20, marginRight: 7 }}
@@ -39,11 +40,11 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
                     fontSize={14}
                     fontWeight={"400"}
                   />
-                </>
+                </View>
 
               )
               : (
-                <>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
                     source={IconCheckActive}
                     style={{ width: 20, height: 20, marginRight: 7 }}
@@ -54,8 +55,14 @@ export const InfoBoxCustom = ({ itemId, isBook, data }) => {
                     fontSize={14}
                     fontWeight={"400"}
                   />
-                </>
+                </View>
               )
+          }
+          {
+            image3DData &&
+            <TouchableOpacity onPress={handleModal360}>
+              <Image source={Img360} style={{ width: 35, height: 35 }} />
+            </TouchableOpacity>
           }
         </View>
       </View>

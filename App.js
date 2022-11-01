@@ -26,8 +26,8 @@ Geocoder.init(Google_Key, { language: "en" })
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false
+    shouldPlaySound: true,
+    shouldSetBadge: true
   })
 });
 
@@ -77,10 +77,7 @@ export default function App() {
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => {
-      // console.log('expoPushToken', token)
-      setExpoPushToken(token)
-    });
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
@@ -95,17 +92,6 @@ export default function App() {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: "Here is the notification body",
-        data: { data: "goes here" }
-      },
-      trigger: { seconds: 1 }
-    });
-  }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -212,9 +198,7 @@ export default function App() {
           handleHideTabBar: (bool) => handleHideTabBar(bool),
           handleCountryCode: (code) => handleCountryCode(code),
           handleLocationUser: () => handleLocationUser(),
-          schedulePushNotification: () => schedulePushNotification(),
           expoPushToken: expoPushToken,
-          notification: notification
         }}
       >
         <Provider store={store}>

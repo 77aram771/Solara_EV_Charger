@@ -1,8 +1,6 @@
 import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
 import {
   Alert,
-  // Button,
-  // Text,
   Image,
   Modal,
   Platform,
@@ -49,9 +47,6 @@ export const HomeScreen = ({ navigation }) => {
     userAddress,
     handleHideTabBar,
     countryCode,
-    // expoPushToken,
-    // notification,
-    // schedulePushNotification
   } = useContext(Context)
 
   const _mapView = createRef()
@@ -146,7 +141,6 @@ export const HomeScreen = ({ navigation }) => {
         { headers: { tokakey: Tokakey } }
       )
         .then(async res => {
-          console.log("res--------", res?.data)
           if (res?.data?.status === "Charging") {
             navigation.navigate("LoadCharge", { bool: true })
             await AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
@@ -156,7 +150,6 @@ export const HomeScreen = ({ navigation }) => {
           }
         })
         .catch(e => {
-          console.log("e---------", e)
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
             `${e?.response?.data?.message}`,
@@ -309,28 +302,6 @@ export const HomeScreen = ({ navigation }) => {
           navigation={navigation}
         />
       </Modal>
-      {/* <View */}
-      {/*   style={{ */}
-      {/*     flex: 1, */}
-      {/*     alignItems: 'center', */}
-      {/*     justifyContent: 'space-around', */}
-      {/*     zIndex: 1111110, */}
-      {/*     backgroundColor: 'red' */}
-      {/*   }} */}
-      {/* > */}
-      {/*   <Text>Your expo push token: {expoPushToken}</Text> */}
-      {/*   <View style={{ alignItems: 'center', justifyContent: 'center' }}> */}
-      {/*     <Text>Title: {notification && notification.request.content.title} </Text> */}
-      {/*     <Text>Body: {notification && notification.request.content.body}</Text> */}
-      {/*     <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text> */}
-      {/*   </View> */}
-      {/*   <Button */}
-      {/*     title="Press to schedule a notification" */}
-      {/*     onPress={async () => { */}
-      {/*       await schedulePushNotification() */}
-      {/*     }} */}
-      {/*   /> */}
-      {/* </View> */}
       {
         start
           ? (
