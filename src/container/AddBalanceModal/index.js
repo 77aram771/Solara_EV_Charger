@@ -101,12 +101,12 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
             { headers: { tokakey: Tokakey } }
           )
             .then(res => {
-              if (res.status === 200) {
+              if (res?.status === 200) {
                 setShowMessage(true)
                 setAddCardUrl(res?.data?.url)
                 setModalVisible(true)
               }
-              setMessageStatus(res.status)
+              setMessageStatus(res?.status)
               setMessage("")
               setLoader(false)
               setPrice("")
@@ -130,17 +130,17 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
           setLoader(true)
           setShowMessage(false)
           await axios.post(
-            `${API_URL}/users/fill-wallet-telcell?access-token=${Token}`,
+            `${API_URL}/users/fill-wallet-telcell?access-token=${Token}}`,
             { amount: price },
             { headers: { tokakey: Tokakey } }
           )
             .then(res => {
-              if (res.status === 200) {
+              if (res?.status === 200) {
                 setShowMessage(true)
                 setAddCardUrl(res?.data?.url)
                 setModalVisible(true)
               }
-              setMessageStatus(res.status)
+              setMessageStatus(res?.status)
               setMessage("")
               setLoader(false)
               setPrice("")
@@ -172,10 +172,10 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
             { headers: { tokakey: Tokakey } }
           )
             .then(res => {
-              if (res.status === 200) {
+              if (res?.status === 200) {
                 setShowMessage(true)
               }
-              setMessageStatus(res.status)
+              setMessageStatus(res?.status)
               setMessage("")
               setLoader(false)
               setPrice("")

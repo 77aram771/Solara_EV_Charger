@@ -53,9 +53,9 @@ export const QRScannerScreen = ({ navigation, route }) => {
       { headers: { tokakey: Tokakey } }
     )
       .then(res => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           navigation.goBack()
-          route.params.handleQRData(res.data.id)
+          route.params.handleQRData(res?.data?.id)
         }
       })
       .catch(e => {

@@ -12,18 +12,17 @@ export const AuthSignIn = (url, body, expoPushToken) => (dispatch) => {
       axios
         .post(url, body)
         .then(response => {
-          console.log("expoPushToken", expoPushToken)
-          console.log("response?.data?.access_token", response?.data?.access_token)
           axios.post(
             `${API_URL}/users/register-device?access-token=${response?.data?.access_token}`,
             { device_id: expoPushToken, is_ios: Platform.OS === "ios" ? 1 : 0 },
             { headers: { tokakey: Tokakey } }
           )
             .then(res => {
-              // console.log("res =============>>>>>>>>>", res)
+              console.log("res =============>>>>>>>>>", res?.data)
             })
             .catch(e => console.log("e", e.response))
           AsyncStorage.setItem("token", response?.data?.access_token)
+          AsyncStorage.setItem("userData", JSON.stringify(response?.data))
           dispatch(fetchSuccess(response.data))
         })
         .catch(e => {

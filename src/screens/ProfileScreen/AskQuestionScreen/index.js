@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, Alert, ScrollView, View } from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { styles } from "./style"
 import { Fiord, Green, Manatee, MySin, White } from "../../../shared/Colors"
@@ -14,17 +15,17 @@ import { API_URL, Tokakey } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { regEmail, regName, regPhone } from "../../../shared/MockData"
 
-export const AskQuestionScreen = ({ navigation, route }) => {
+export const AskQuestionScreen = ({ navigation }) => {
 
   const { countryCode } = useContext(Context)
 
-  const [name, setName] = useState(route?.params?.userData?.full_name)
+  const [name, setName] = useState("")
   const [nameError, setNameError] = useState(false)
   const [nameErrorMessage] = useState(lang[countryCode].error)
-  const [phone, setPhone] = useState(route?.params?.userData?.phone_number)
+  const [phone, setPhone] = useState("")
   const [phoneError, setPhoneError] = useState(false)
   const [phoneErrorMessage] = useState(lang[countryCode].wrongPhone)
-  const [email, setEmail] = useState(route?.params?.userData?.email)
+  const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState(false)
   const [emailErrorMessage] = useState(lang[countryCode].wrongЕmail)
   const [mail, setMail] = useState("")
@@ -32,6 +33,18 @@ export const AskQuestionScreen = ({ navigation, route }) => {
   const [mailErrorMessage] = useState(lang[countryCode].wrongЕmail)
   const [loader, setLoader] = useState(false)
   const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    return navigation.addListener("focus", async () => {
+      const UserData = await AsyncStorage.getItem("userData")
+      const data = JSON.parse(UserData)
+      if(UserData !== null) {
+        setName(data?.full_name)
+        setPhone(data?.phone_number)
+        setEmail(data?.email)
+      }
+    })
+  }, [navigation])
 
   const handleName = (value) => {
     setName(value)
@@ -77,7 +90,7 @@ export const AskQuestionScreen = ({ navigation, route }) => {
             )
               .then(res => {
                 setLoader(false)
-                if (res.status) {
+                if (res?.status) {
                   setMessage("Thanks for Question")
                 }
               })

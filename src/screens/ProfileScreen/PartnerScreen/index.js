@@ -19,11 +19,11 @@ export const PartnerScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       await axios.get(
-        `${API_URL}/partners/?page=1&per-page=20&title=&language=${countryCode}`,
+        `${API_URL}/partners/?page=1&per-page=20000&title=&language=${countryCode === "ar" ? "hy" : countryCode}`,
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
-          setData(res.data.data)
+          setData(res?.data?.data)
         })
     })()
   }, [])

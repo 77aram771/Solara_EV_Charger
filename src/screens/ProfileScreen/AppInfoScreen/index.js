@@ -33,7 +33,7 @@ export const AppInfoScreen = ({navigation}) => {
                         resizeMode={"center"}
                     />
                     <TitleCustom
-                        text={lang[countryCode].otherSections}
+                        text={lang[countryCode].appInfo}
                         fontSize={22}
                         color={Fiord}
                         marginBottom={20}
@@ -46,13 +46,6 @@ export const AppInfoScreen = ({navigation}) => {
                         fontSize={16}
                         textAlign={'left'}
                         marginBottom={20}
-                    />
-                    <TextCustom
-                        text={`${lang[countryCode].appInfoText1}`}
-                        fontWeight={'400'}
-                        color={MineShaft}
-                        fontSize={16}
-                        textAlign={'left'}
                     />
                 </View>
             </ScrollView>

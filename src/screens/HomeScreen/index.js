@@ -103,16 +103,16 @@ export const HomeScreen = ({ navigation }) => {
   }, [location])
 
   useEffect(() => {
-    dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=37&title`))
+    dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=500&title`))
     handleChargeBoxesData()
   }, [countryCode])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleChargeBoxesData()
-    }, 10000)
-    return () => clearInterval(interval)
-  }, [])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     handleChargeBoxesData()
+  //   }, 10000)
+  //   return () => clearInterval(interval)
+  // }, [])
 
   useLayoutEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
@@ -143,7 +143,7 @@ export const HomeScreen = ({ navigation }) => {
         .then(async res => {
           if (res?.data?.status === "Charging") {
             navigation.navigate("LoadCharge", { bool: true })
-            await AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
+            await AsyncStorage.setItem("transaction_id", res?.data?.transaction_id.toString())
 
           } else if (res?.data?.status === "Stopped") {
             await AsyncStorage.removeItem("transaction_id")
@@ -161,7 +161,7 @@ export const HomeScreen = ({ navigation }) => {
     }
   }
 
-  const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`))
+  const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60000&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`))
 
   const getCurrentPosition = async () => {
     if (location === null) {

@@ -105,7 +105,7 @@ export const WalletScreen = ({ navigation }) => {
       )
         .then(res => {
           setLoader(false)
-          if (res.status === 200) {
+          if (res?.status === 200) {
             getCardData()
           }
           handleModalDeleteModal()

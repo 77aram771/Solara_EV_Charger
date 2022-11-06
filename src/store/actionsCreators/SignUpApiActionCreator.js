@@ -9,7 +9,7 @@ export const PostSignUp = (url, body) => (dispatch) => {
       axios
         .post(url, body)
         .then(response => {
-          AsyncStorage.setItem("token", response?.data?.access_token)
+          AsyncStorage.setItem("token", response?.data)
           dispatch(fetchSuccess(response))
         })
         .catch(e => {

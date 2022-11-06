@@ -87,7 +87,7 @@ export const ProfileStack = () => {
         component={AskQuestionScreen}
         options={{
           headerTitle: "",
-          headerTransparent: true
+          headerTransparent: true,
         }}
       />
       <Profile.Screen

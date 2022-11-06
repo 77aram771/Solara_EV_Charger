@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Alert, Image, ImageBackground, Modal, Platform, ScrollView, View } from "react-native"
+import { Image, ImageBackground, Modal, Platform, ScrollView, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import LottieView from "lottie-react-native"
@@ -38,20 +38,21 @@ export const LoadChargeScreen = ({ navigation, route }) => {
       )
         .then(res => {
           setLoader(false)
-          setStatus(res.data.status)
-          setProgress(res.data.progress)
-          setKw(res.data.kw)
-          if (res.data.status === "Charging") {
+          setStatus(res?.data?.status)
+          setProgress(res?.data?.progress)
+          setKw(res?.data?.kw)
+          if (res?.data?.status === "Charging") {
             setModalVisible(true)
           }
-          else if (res.data.status !== "Charging") {
+          else if (res?.data?.status !== "Charging") {
             setModalVisible(false)
             navigation.goBack()
           }
-          console.log("res handleProgress", res.data)
+          console.log("res handleProgress", res?.data)
         })
         .catch(e => {
           setLoader(false)
+          console.log('e', e?.data)
           // Alert.alert(
           //   `${e?.response?.data?.name} ${e?.response?.data?.status}`,
           //   `${e?.response?.data?.message}`,
@@ -82,7 +83,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
               navigation.navigate("Book")
             }
           }, 2000)
-          console.log("res handleStop", res.data)
+          console.log("res handleStop", res?.data)
         })
         .catch(e => {
           setLoader(false)

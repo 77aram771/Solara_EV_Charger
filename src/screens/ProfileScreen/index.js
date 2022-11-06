@@ -27,7 +27,6 @@ export const ProfileScreen = ({ navigation }) => {
 
   const { countryCode, handleHideTabBar } = useContext(Context)
 
-  const userData = useSelector(state => state?.AuthReducer.data)
   const userLoader = useSelector(state => state?.AuthReducer.loading)
 
   const [notificationActive, setNotificationActive] = useState(false)
@@ -46,10 +45,10 @@ export const ProfileScreen = ({ navigation }) => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
       setLogin(true)
-      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode}&language=${countryCode}`,
+      await axios.get(`${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode === "ar" ? "hy" : countryCode}`,
         { headers: { tokakey: Tokakey } }
       )
-        .then(res => setUser(res.data))
+        .then(res => setUser(res?.data))
         .catch(e => {
           Alert.alert(
             `${e?.response?.data?.name} ${e?.response?.data?.status}`,
@@ -70,6 +69,19 @@ export const ProfileScreen = ({ navigation }) => {
   const handleModal = () => setModalVisible(!modalVisible)
 
   const handleLogOut = async () => {
+    const Token = await AsyncStorage.getItem("token")
+    if (Token !== null) {
+      console.log(`${API_URL}/users/register-device?access-token=${Token}`)
+      axios.post(
+        `${API_URL}/users/register-device?access-token=${Token}`,
+        { device_id: '1', is_ios: Platform.OS === "ios" ? 1 : 0 },
+        { headers: { tokakey: Tokakey } }
+      )
+        .then(res => {
+          console.log("res =============>>>>>>>>>", res?.data)
+        })
+        .catch(e => console.log("e", e.data))
+    }
     await AsyncStorage.removeItem("token")
     setLogin(false)
   }
@@ -169,7 +181,7 @@ export const ProfileScreen = ({ navigation }) => {
                         color={MineShaft}
                         borderWidth={1}
                         borderRadius={18}
-                        click={() => navigation.navigate("AskQuestion", { userData })}
+                        click={() => navigation.navigate("AskQuestion")}
                         fontSize={15}
                         fontWeight={"400"}
                         icon={IconEmail}

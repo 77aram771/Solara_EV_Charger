@@ -60,7 +60,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (auto) {
-      dispatch(GetCarModal(`${API_URL}/car-model/?page=1&per-page=${autoMaxLength}&car_make_id=${autoId}&title=${auto}&language=${countryCode}`))
+      dispatch(GetCarModal(`${API_URL}/car-model/?page=1&per-page=${autoMaxLength}&car_make_id=${autoId}&title=${auto}&language=${countryCode === "ar" ? "hy" : countryCode}`))
     }
   }, [auto])
 
@@ -130,7 +130,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
             )
               .then(res => {
                 setLoader(false)
-                if (res.status === 200) {
+                if (res?.status === 200) {
                   navigation.goBack()
                 }
               })

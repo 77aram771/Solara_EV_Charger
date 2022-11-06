@@ -64,7 +64,6 @@ export const BookScreen = ({ navigation, route }) => {
   const handleModal360 = () => setImage3DModal(!image3DModal)
 
   const handlePort = async (item) => {
-    console.log("item?.status", item?.status)
     const Token = await AsyncStorage.getItem("token")
     if (Token === null) {
       setModalVisibleCheckUser(true)

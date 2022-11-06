@@ -84,7 +84,7 @@ export default function App() {
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log('response', response);
+      console.log("response", response);
     });
 
     return () => {
@@ -198,7 +198,7 @@ export default function App() {
           handleHideTabBar: (bool) => handleHideTabBar(bool),
           handleCountryCode: (code) => handleCountryCode(code),
           handleLocationUser: () => handleLocationUser(),
-          expoPushToken: expoPushToken,
+          expoPushToken: expoPushToken
         }}
       >
         <Provider store={store}>

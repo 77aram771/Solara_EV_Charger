@@ -79,7 +79,7 @@ export const SignUpScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (auto) {
-      dispatch(GetCarModal(`${API_URL}/car-model/?page=1&per-page=${autoMaxLength}&car_make_id=${autoId}&title=${auto}&language=${countryCode}`))
+      dispatch(GetCarModal(`${API_URL}/car-model/?page=1&per-page=${autoMaxLength}&car_make_id=${autoId}&title=${auto}&language=${countryCode === "ar" ? "hy" : countryCode}`))
     }
   }, [auto])
 

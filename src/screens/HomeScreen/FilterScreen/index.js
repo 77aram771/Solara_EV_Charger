@@ -42,12 +42,12 @@ export const FilterScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       setLoader(true)
-      await axios.get(`${API_URL}/connector-types/?page=1&per-page=20&title=&language=${countryCode}`,
+      await axios.get(`${API_URL}/connector-types/?page=1&per-page=20000000&title=&language=${countryCode === "ar" ? "hy" : countryCode}`,
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
           setLoader(false)
-          setFilterData(res.data.data)
+          setFilterData(res?.data?.data)
         })
       await axios.get(`${API_URL}/data/get-min-max-kw`,
         { headers: { tokakey: Tokakey } }
@@ -116,9 +116,9 @@ export const FilterScreen = ({ navigation }) => {
 
   const handleSave = () => {
     if (checkData[0].active) {
-      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}&only_free=${1}&min=${checkMin}&max=${checkMax}&=${countryCode}`))
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100000&${customUrl.join("&")}&only_free=${1}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`))
     } else {
-      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode}`))
+      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=1000000&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`))
     }
     navigation.closeDrawer()
   }

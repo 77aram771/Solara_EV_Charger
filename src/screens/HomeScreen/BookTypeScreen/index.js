@@ -43,16 +43,16 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setLoaderGetUser(true)
     if (Token !== null) {
       await axios.get(
-        `${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode}`,
+        `${API_URL}/users/get-profile?access-token=${Token}&language=${countryCode === "ar" ? "hy" : countryCode}`,
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
-          setUser(res.data)
-          setLimit(Math.ceil(res.data.car_capacity / 100 * (checkMax)), 1)
-          setKm(res.data.car_power_reserve)
-          setPrice(Math.floor(res.data.car_capacity * sumKW))
+          setUser(res?.data)
+          setLimit(Math.ceil(res?.data?.car_capacity / 100 * (checkMax)), 1)
+          setKm(res?.data?.car_power_reserve)
+          setPrice(Math.floor(res?.data?.car_capacity * sumKW))
           setLoaderGetUser(false)
-          const newTime = Number(res.data.car_capacity / res.data?.car_max_kw).toFixed(1)
+          const newTime = Number(res?.data?.car_capacity / res?.data?.car_max_kw).toFixed(1)
           const newTime2 = String(newTime).split(".")
           setTimeH(Number(newTime2[0]))
           setTimeM(Number(newTime2[1]))
@@ -109,7 +109,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
     const Token = await AsyncStorage.getItem("token")
     if(Token !== null) {
       await axios.post(
-        `${API_URL}/charge-box/start?access-token=${Token}&language=${countryCode}`,
+        `${API_URL}/charge-box/start?access-token=${Token}&language=${countryCode === "ar" ? "hy" : countryCode}`,
         {
           connector_id: route?.params?.item?.id,
           from_percent: checkMin,
@@ -119,7 +119,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
       )
         .then(res => {
           setLoader(false)
-          AsyncStorage.setItem("transaction_id", res.data.transaction_id.toString())
+          AsyncStorage.setItem("transaction_id", res?.data?.transaction_id.toString())
           navigation.navigate("LoadCharge", {
             chargingLimit: limit,
             chargingWatt: user?.car_max_kw > route?.params?.item?.power ? Math.floor(limit / user?.car_max_kw) : Math.floor(limit / route?.params?.item?.power),
