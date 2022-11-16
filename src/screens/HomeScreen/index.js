@@ -197,6 +197,7 @@ export const HomeScreen = ({ navigation }) => {
   }
 
   const handleStart = async () => {
+    console.log("handleStart", _mapView)
     if (location === null) {
       await handleLocationUser()
     } else {

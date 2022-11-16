@@ -50,7 +50,10 @@ export const BookScreen = ({ navigation, route }) => {
     )
       .then(res => {
         setLoader(false)
-        setImage3DData(res?.data["360_url"])
+        console.log("360_url", res?.data["360_url"])
+        if (res?.data["360_url"]) {
+          setImage3DData(res?.data["360_url"])
+        }
         setImageData(res?.data?.images)
       })
       .catch(e => {

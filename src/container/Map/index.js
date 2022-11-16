@@ -78,6 +78,9 @@ export const Map = ({
   handleReset,
   handleCheckCordinate
 }) => {
+
+  console.log("_mapView", _mapView)
+
   return (
     <MapView
       initialRegion={cordinate}
@@ -139,6 +142,7 @@ export const Map = ({
     >
       <Geojson
         geojson={myPlace}
+        tappable={false}
         strokeColor={Dandelion}
         fillColor={"transparent"}
         strokeWidth={4}

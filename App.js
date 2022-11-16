@@ -5,6 +5,7 @@ import * as Location from "expo-location"
 import Geocoder from "react-native-geocoding"
 import * as Notifications from "expo-notifications"
 import { Provider } from "react-redux"
+import 'react-native-gesture-handler';
 import axios from "axios"
 import Context from "./Context"
 import RootNavigation from "./src/navigation"

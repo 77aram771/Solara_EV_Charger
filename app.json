@@ -39,7 +39,7 @@
     ],
     "name": "Solara EV Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.4.0",
+    "version": "1.4.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -72,7 +72,7 @@
         "googleMaps": { "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8" }
       },
       "package": "com.voodoo.solara.charging",
-      "versionCode": 53,
+      "versionCode": 56,
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA", "NOTIFICATIONS"],
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true
