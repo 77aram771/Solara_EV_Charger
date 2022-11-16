@@ -10,7 +10,7 @@ import { styles } from "../../screens/HomeScreen/style"
 import { MapStyle } from "../../shared/MapStyle"
 import { Dandelion, MySin, White } from "../../shared/Colors"
 
-const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady, handleItemId }) => {
+export const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady, handleItemId }) => {
   return (
     <>
       <Marker
@@ -22,7 +22,7 @@ const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleRe
       >
         <Image
           source={{ uri: data[item].pin }}
-          style={{ width: 35, height: 55 }}
+          style={{ width: 50, height: 50 }}
           resizeMode={"contain"}
         />
       </Marker>
@@ -34,7 +34,10 @@ const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleRe
               latitude: data[item].lat,
               longitude: data[item].lng
             },
-            cordinate
+            {
+              latitude: cordinate.latitude,
+              longitude: cordinate.longitude
+            },
           ]
         }
         destination={
@@ -70,17 +73,14 @@ export const Map = ({
   data,
   itemId,
   qrItem,
-  _mapView,
   getCurrentPosition,
   location,
   handleItemId,
   handleReady,
   handleReset,
-  handleCheckCordinate
+  handleCheckCordinate,
+  handleRef
 }) => {
-
-  console.log("_mapView", _mapView)
-
   return (
     <MapView
       initialRegion={cordinate}
@@ -109,7 +109,7 @@ export const Map = ({
           handleReset()
         }
       }}
-      ref={_mapView}
+      mapRef={(ref) => handleRef(ref)}
       showsScale={true}
       showsPointsOfInterest={true}
       onMapReady={getCurrentPosition}
@@ -168,6 +168,7 @@ export const Map = ({
                       width: 50,
                       height: 50
                     }}
+                    resizeMode={"contain"}
                   />
                 </Marker>
               )
@@ -182,6 +183,7 @@ export const Map = ({
                     longitude: Number(item?.lng)
                   }}
                   key={index}
+                  stopPropagation={false}
                   // image={{ uri: item?.pin }}
                 >
                   <Image
@@ -190,6 +192,7 @@ export const Map = ({
                       width: 50,
                       height: 50
                     }}
+                    resizeMode={"contain"}
                   />
                 </Marker>
               )

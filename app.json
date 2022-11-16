@@ -74,7 +74,6 @@
       "package": "com.voodoo.solara.charging",
       "versionCode": 56,
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA", "NOTIFICATIONS"],
-      "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true
     },
     "web": {

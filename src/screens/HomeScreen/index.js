@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useLayoutEffect, useState } from "react"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import {
   Alert,
   Image,
@@ -46,11 +46,10 @@ export const HomeScreen = ({ navigation }) => {
     handleLocationUser,
     userAddress,
     handleHideTabBar,
-    countryCode,
+    countryCode
   } = useContext(Context)
 
-  const _mapView = createRef()
-
+  const [mapRef, setMapRef] = useState(null);
   const [data, setData] = useState(null)
   const [itemId, setItemId] = useState(null)
   const [qrItem, setQrItem] = useState(null)
@@ -133,6 +132,8 @@ export const HomeScreen = ({ navigation }) => {
     }
   }, [chargeBoxesData, itemId, qrItem, data])
 
+  const handleRef = (ref) => setMapRef(ref)
+
   const handleCheckChargeProgress = async () => {
     const Token = await AsyncStorage.getItem("token")
     if (Token !== null) {
@@ -163,11 +164,11 @@ export const HomeScreen = ({ navigation }) => {
 
   const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60000&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`))
 
-  const getCurrentPosition = async () => {
+  const getCurrentPosition = () => {
     if (location === null) {
-      await handleLocationUser()
+      handleLocationUser()
     } else {
-      _mapView.current.animateToRegion(cordinate, 500)
+      mapRef.animateToRegion(cordinate, 1000)
     }
   }
 
@@ -189,21 +190,15 @@ export const HomeScreen = ({ navigation }) => {
     //   latitudeDelta: LATITUDE_DELTA,
     //   longitudeDelta: LONGITUDE_DELTA
     // }
-    setTimeout(() => {
-      if (_mapView.current !== null) {
-        getCurrentPosition()
-      }
-    }, 2000)
+    // setTimeout(() => {
+    //   if (mapRef !== null) {
+    //     getCurrentPosition()
+    //   }
+    // }, 2000)
   }
 
-  const handleStart = async () => {
-    console.log("handleStart", _mapView)
-    if (location === null) {
-      await handleLocationUser()
-    } else {
-      await getCurrentPosition()
-      setStart(!start)
-    }
+  const handleStart = () => {
+    setStart(!start)
     setModalVisible(false)
   }
 
@@ -216,18 +211,16 @@ export const HomeScreen = ({ navigation }) => {
   const handleReady = async (result) => {
     setKm(result.distance)
     setMin(result.duration)
-    setTimeout(() => {
-      if (_mapView.current !== null) {
-        _mapView.current.fitToCoordinates(result.coordinates, {
-          edgePadding: {
-            right: windowWidth / 3,
-            bottom: windowHeight / 3,
-            left: windowWidth / 3,
-            top: windowHeight / 3
-          }
-        })
-      }
-    }, 2000)
+    if (mapRef !== null) {
+      mapRef.fitToCoordinates(result.coordinates, {
+        edgePadding: {
+          right: windowWidth / 3,
+          bottom: windowHeight / 3,
+          left: windowWidth / 3,
+          top: windowHeight / 3
+        }
+      })
+    }
   }
 
   const handleReset = () => {
@@ -366,7 +359,7 @@ export const HomeScreen = ({ navigation }) => {
       }
       <Map
         data={data}
-        _mapView={_mapView}
+        handleRef={handleRef}
         itemId={itemId}
         qrItem={qrItem}
         start={start}
@@ -390,7 +383,7 @@ export const HomeScreen = ({ navigation }) => {
                 ? windowHeight / 17
                 : windowHeight / 20
         }]}
-        onPress={() => getCurrentPosition()}
+        onPress={getCurrentPosition}
       >
         <Image source={IconDirection} style={{ width: 25, height: 25 }} />
       </TouchableOpacity>
@@ -468,7 +461,7 @@ export const HomeScreen = ({ navigation }) => {
                           itemId,
                           isBook: true,
                           data,
-                          handleStart: () => handleStart()
+                          handleStart: handleStart
                         })}
                       />
                       <ButtonCustom
@@ -563,7 +556,7 @@ export const HomeScreen = ({ navigation }) => {
                           itemId: qrItem,
                           isBook: true,
                           data,
-                          handleStart: () => handleStart()
+                          handleStart: handleStart
                         })}
                       />
                       <ButtonCustom

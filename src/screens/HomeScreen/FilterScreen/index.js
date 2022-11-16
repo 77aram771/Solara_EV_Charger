@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, ScrollView, View } from "react-native"
 import axios from "axios"
-import Context from "../../../../Context"
 import { useDispatch } from "react-redux"
+import Context from "../../../../Context"
 import { Fiord, MySin } from "../../../shared/Colors"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { lang } from "../../../shared/Lang"
@@ -200,7 +200,7 @@ export const FilterScreen = ({ navigation }) => {
           color={MySin}
           width={"100%"}
           height={50}
-          click={() => handleSave()}
+          click={handleSave}
           fontSize={22}
           fontWeight={"700"}
           icon={IconFilter}
