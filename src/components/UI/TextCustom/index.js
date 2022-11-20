@@ -10,7 +10,6 @@ export const TextCustom = ({
   marginLeft,
   marginRight,
   textAlign = "left",
-  fontFamily,
   fontWeight,
   wrap = false
 }) => {
@@ -23,7 +22,6 @@ export const TextCustom = ({
       marginLeft,
       marginRight,
       textAlign,
-      fontFamily,
       fontWeight,
       flex: wrap ? 1 : 0,
     }}>

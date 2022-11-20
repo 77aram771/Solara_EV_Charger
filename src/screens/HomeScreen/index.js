@@ -46,7 +46,8 @@ export const HomeScreen = ({ navigation }) => {
     handleLocationUser,
     userAddress,
     handleHideTabBar,
-    countryCode
+    countryCode,
+    checkFilter
   } = useContext(Context)
 
   const [mapRef, setMapRef] = useState(null);
@@ -99,7 +100,8 @@ export const HomeScreen = ({ navigation }) => {
         longitudeDelta: LONGITUDE_DELTA
       })
     }
-  }, [location])
+    console.log('checkFilter', checkFilter)
+  }, [location, checkFilter])
 
   useEffect(() => {
     dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=500&title`))

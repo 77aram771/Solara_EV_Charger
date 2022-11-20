@@ -21,7 +21,7 @@ export const FilterScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { countryCode } = useContext(Context)
+  const { countryCode, handleCheckFilter } = useContext(Context)
 
   const [allSwitch, setAllSwitch] = useState(false)
   const [filterData, setFilterData] = useState(null)
@@ -121,6 +121,7 @@ export const FilterScreen = ({ navigation }) => {
       dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=1000000&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`))
     }
     navigation.closeDrawer()
+    handleCheckFilter()
   }
 
   return (

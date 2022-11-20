@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Alert, Button, StyleSheet, View } from "react-native"
+import { Alert, Image, Platform, StyleSheet, TouchableOpacity, View } from "react-native"
 import axios from "axios"
 import { BarCodeScanner } from "expo-barcode-scanner"
 import BarcodeMask from "react-native-barcode-mask"
 import Context from "../../../../Context"
-import { API_URL, Tokakey, windowWidth } from "../../../shared/Const"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../../shared/Const"
 import { finderHeight, finderWidth, viewMinX, viewMinY } from "../../../shared/MockData"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { Black, Dandelion, Fiord } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
+import IconClose from "../../../assets/icon/icon-close.png";
 
 export const QRScannerScreen = ({ navigation, route }) => {
 
@@ -98,8 +99,23 @@ export const QRScannerScreen = ({ navigation, route }) => {
         style={[styles.container]}
       >
         <BarcodeMask edgeColor="#62B1F6" showAnimatedLine />
-        <View style={{ flex: 1 }}>
-          {scanned && <Button title="Scan Again" onPress={() => setScanned(false)} />}
+        <View style={{ flex: 1, width: "100%" }}>
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              top: Platform.OS === "ios" ? windowHeight / 13.5 : 15,
+              right: 15,
+              zIndex: 1
+            }}
+            onPress={() => navigation.goBack()}
+            activeOpacity={0}
+          >
+            <Image
+              source={IconClose}
+              style={{ width: 25, height: 25 }}
+              resizeMode={"cover"}
+            />
+          </TouchableOpacity>
         </View>
       </BarCodeScanner>
     </View>

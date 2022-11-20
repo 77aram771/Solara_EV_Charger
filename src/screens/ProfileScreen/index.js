@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Image, ImageBackground, Platform, Modal, ActivityIndicator, Alert } from "react-native"
+import { View, Image, ImageBackground, Platform, Modal, ActivityIndicator, Alert, ScrollView } from "react-native"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -29,7 +29,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   const userLoader = useSelector(state => state?.AuthReducer.loading)
 
-  const [notificationActive, setNotificationActive] = useState(false)
+  const [notificationActive, setNotificationActive] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [login, setLogin] = useState(false)
   const [user, setUser] = useState(false)
@@ -74,7 +74,7 @@ export const ProfileScreen = ({ navigation }) => {
       console.log(`${API_URL}/users/register-device?access-token=${Token}`)
       axios.post(
         `${API_URL}/users/register-device?access-token=${Token}`,
-        { device_id: '1', is_ios: Platform.OS === "ios" ? 1 : 0 },
+        { device_id: "1", is_ios: Platform.OS === "ios" ? 1 : 0 },
         { headers: { tokakey: Tokakey } }
       )
         .then(res => {
@@ -87,7 +87,7 @@ export const ProfileScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={[styles.container, { justifyContent: login ? "space-between" : "flex-start" }]}>
+    <View style={[styles.container, { justifyContent: "flex-start" }]}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -148,138 +148,140 @@ export const ProfileScreen = ({ navigation }) => {
                         click={handleModal}
                       />
                     </ImageBackground>
-                    <View style={styles.mineBox}>
+                    <ScrollView style={{ flex: 1, width: "100%" }}>
+                      <View style={styles.mineBox}>
+                        <ButtonCustom
+                          text={lang[countryCode].personalInformation}
+                          width={"100%"}
+                          backgroundColor={White}
+                          borderColor={Mercurysolid}
+                          color={MineShaft}
+                          borderWidth={1}
+                          borderRadius={18}
+                          click={() => navigation.navigate("PersonalInformation", {
+                            user,
+                            handleLogOut: () => handleLogOut()
+                          })}
+                          fontSize={15}
+                          fontWeight={"400"}
+                          icon={IconUser}
+                          iconWidth={20}
+                          iconHeight={20}
+                          iconPositionLeft={false}
+                          justifyContent={"flex-start"}
+                          paddingLeft={20}
+                          paddingTop={Platform.OS === "ios" ? 14 : 8}
+                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                          marginBottom={10}
+                        />
+                        <ButtonCustom
+                          text={`${lang[countryCode].correspondence}`}
+                          width={"100%"}
+                          backgroundColor={White}
+                          borderColor={Mercurysolid}
+                          color={MineShaft}
+                          borderWidth={1}
+                          borderRadius={18}
+                          click={() => navigation.navigate("AskQuestion")}
+                          fontSize={15}
+                          fontWeight={"400"}
+                          icon={IconEmail}
+                          iconWidth={20}
+                          iconHeight={20}
+                          iconPositionLeft={false}
+                          justifyContent={"flex-start"}
+                          paddingLeft={20}
+                          paddingTop={Platform.OS === "ios" ? 14 : 8}
+                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                          marginBottom={10}
+                        />
+                        <ButtonCustom
+                          text={`${lang[countryCode].history}`}
+                          width={"100%"}
+                          backgroundColor={White}
+                          borderColor={Mercurysolid}
+                          color={MineShaft}
+                          borderWidth={1}
+                          borderRadius={18}
+                          click={() => navigation.navigate("History")}
+                          fontSize={15}
+                          fontWeight={"400"}
+                          icon={IconHistory}
+                          iconWidth={20}
+                          iconHeight={20}
+                          iconPositionLeft={false}
+                          justifyContent={"flex-start"}
+                          paddingLeft={20}
+                          paddingTop={Platform.OS === "ios" ? 14 : 8}
+                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                          marginBottom={10}
+                        />
+                        <ButtonCustom
+                          text={`${lang[countryCode].getNotification}`}
+                          width={"100%"}
+                          backgroundColor={White}
+                          borderColor={Mercurysolid}
+                          color={MineShaft}
+                          borderWidth={1}
+                          borderRadius={18}
+                          click={() => setNotificationActive(!notificationActive)}
+                          fontSize={15}
+                          fontWeight={"400"}
+                          icon={IconNotification}
+                          iconWidth={20}
+                          iconHeight={20}
+                          iconPositionLeft={false}
+                          justifyContent={"space-between"}
+                          paddingLeft={20}
+                          paddingRight={20}
+                          paddingTop={Platform.OS === "ios" ? 14 : 8}
+                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                          marginBottom={10}
+                          switchButton={true}
+                          switchActive={notificationActive}
+                        />
+                        <ButtonCustom
+                          text={`${lang[countryCode].settings}`}
+                          width={"100%"}
+                          backgroundColor={White}
+                          borderColor={Mercurysolid}
+                          color={MineShaft}
+                          borderWidth={1}
+                          borderRadius={18}
+                          click={() => navigation.navigate("Settings")}
+                          fontSize={15}
+                          fontWeight={"400"}
+                          icon={IconMenu}
+                          iconWidth={20}
+                          iconHeight={20}
+                          iconPositionLeft={false}
+                          justifyContent={"flex-start"}
+                          paddingLeft={20}
+                          paddingTop={Platform.OS === "ios" ? 14 : 8}
+                          paddingBottom={Platform.OS === "ios" ? 14 : 8}
+                        />
+                      </View>
                       <ButtonCustom
-                        text={lang[countryCode].personalInformation}
-                        width={"100%"}
+                        text={lang[countryCode].exit}
                         backgroundColor={White}
-                        borderColor={Mercurysolid}
-                        color={MineShaft}
-                        borderWidth={1}
-                        borderRadius={18}
-                        click={() => navigation.navigate("PersonalInformation", {
-                          user,
-                          handleLogOut: () => handleLogOut()
-                        })}
-                        fontSize={15}
-                        fontWeight={"400"}
-                        icon={IconUser}
-                        iconWidth={20}
-                        iconHeight={20}
-                        iconPositionLeft={false}
-                        justifyContent={"flex-start"}
-                        paddingLeft={20}
+                        color={Fiord}
+                        width={"100%"}
+                        marginTop={5}
+                        marginBottom={20}
                         paddingTop={Platform.OS === "ios" ? 14 : 8}
                         paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                        marginBottom={10}
-                      />
-                      <ButtonCustom
-                        text={`${lang[countryCode].correspondence}`}
-                        width={"100%"}
-                        backgroundColor={White}
-                        borderColor={Mercurysolid}
-                        color={MineShaft}
-                        borderWidth={1}
-                        borderRadius={18}
-                        click={() => navigation.navigate("AskQuestion")}
-                        fontSize={15}
-                        fontWeight={"400"}
-                        icon={IconEmail}
-                        iconWidth={20}
-                        iconHeight={20}
+                        click={handleLogOut}
+                        fontSize={18}
+                        fontWeight={"700"}
+                        icon={IconLogOut}
+                        iconWidth={18}
+                        iconHeight={18}
                         iconPositionLeft={false}
-                        justifyContent={"flex-start"}
-                        paddingLeft={20}
-                        paddingTop={Platform.OS === "ios" ? 14 : 8}
-                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                        marginBottom={10}
-                      />
-                      <ButtonCustom
-                        text={`${lang[countryCode].history}`}
-                        width={"100%"}
-                        backgroundColor={White}
-                        borderColor={Mercurysolid}
-                        color={MineShaft}
+                        borderRadius={12}
+                        borderColor={Fiord}
                         borderWidth={1}
-                        borderRadius={18}
-                        click={() => navigation.navigate("History")}
-                        fontSize={15}
-                        fontWeight={"400"}
-                        icon={IconHistory}
-                        iconWidth={20}
-                        iconHeight={20}
-                        iconPositionLeft={false}
-                        justifyContent={"flex-start"}
-                        paddingLeft={20}
-                        paddingTop={Platform.OS === "ios" ? 14 : 8}
-                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                        marginBottom={10}
                       />
-                      <ButtonCustom
-                        text={`${lang[countryCode].getNotification}`}
-                        width={"100%"}
-                        backgroundColor={White}
-                        borderColor={Mercurysolid}
-                        color={MineShaft}
-                        borderWidth={1}
-                        borderRadius={18}
-                        click={() => setNotificationActive(!notificationActive)}
-                        fontSize={15}
-                        fontWeight={"400"}
-                        icon={IconNotification}
-                        iconWidth={20}
-                        iconHeight={20}
-                        iconPositionLeft={false}
-                        justifyContent={"space-between"}
-                        paddingLeft={20}
-                        paddingRight={20}
-                        paddingTop={Platform.OS === "ios" ? 14 : 8}
-                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                        marginBottom={10}
-                        switchButton={true}
-                        switchActive={notificationActive}
-                      />
-                      <ButtonCustom
-                        text={`${lang[countryCode].settings}`}
-                        width={"100%"}
-                        backgroundColor={White}
-                        borderColor={Mercurysolid}
-                        color={MineShaft}
-                        borderWidth={1}
-                        borderRadius={18}
-                        click={() => navigation.navigate("Settings")}
-                        fontSize={15}
-                        fontWeight={"400"}
-                        icon={IconMenu}
-                        iconWidth={20}
-                        iconHeight={20}
-                        iconPositionLeft={false}
-                        justifyContent={"flex-start"}
-                        paddingLeft={20}
-                        paddingTop={Platform.OS === "ios" ? 14 : 8}
-                        paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                      />
-                    </View>
-                    <ButtonCustom
-                      text={lang[countryCode].exit}
-                      backgroundColor={White}
-                      color={Fiord}
-                      width={"100%"}
-                      marginTop={5}
-                      marginBottom={20}
-                      paddingTop={Platform.OS === "ios" ? 14 : 8}
-                      paddingBottom={Platform.OS === "ios" ? 14 : 8}
-                      click={handleLogOut}
-                      fontSize={18}
-                      fontWeight={"700"}
-                      icon={IconLogOut}
-                      iconWidth={18}
-                      iconHeight={18}
-                      iconPositionLeft={false}
-                      borderRadius={12}
-                      borderColor={Fiord}
-                      borderWidth={1}
-                    />
+                    </ScrollView>
                   </>
                 )
             )

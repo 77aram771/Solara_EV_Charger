@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native"
 import { White } from "../../../shared/Colors"
 import { paddingHorizontal } from "../../../shared/GlobalStyle"
-import { windowHeight, windowWidth } from "../../../shared/Const"
+import { windowWidth } from "../../../shared/Const"
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,6 +20,6 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginBottom: 10,
     paddingHorizontal,
-    paddingTop: windowHeight / 15
+    paddingTop: 10
   }
 })

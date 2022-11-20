@@ -16,8 +16,8 @@
         "svg"
       ]
     },
-    "notification":{
-      "icon":"./assets/icon.png",
+    "notification": {
+      "icon": "./assets/icon.png",
       "color": "#311b92",
       "androidMode": "default",
       "iosDisplayInForeground": true
@@ -39,7 +39,7 @@
     ],
     "name": "Solara EV Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -48,7 +48,8 @@
       "backgroundColor": "#fcb82e"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/83dbd8d3-68e7-4e80-84ce-25b3d5513e6b"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -69,15 +70,26 @@
         "backgroundColor": "#FFFFFF"
       },
       "config": {
-        "googleMaps": { "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8" }
+        "googleMaps": {
+          "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8"
+        }
       },
       "package": "com.voodoo.solara.charging",
       "versionCode": 56,
-      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "CAMERA", "NOTIFICATIONS"],
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.NOTIFICATIONS",
+        "android.permission.RECORD_AUDIO"
+      ],
       "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

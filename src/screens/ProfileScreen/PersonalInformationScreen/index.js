@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { View, Platform, ActivityIndicator, Alert, Modal } from "react-native"
+import { View, Platform, ActivityIndicator, Alert, Modal, ScrollView } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
@@ -158,13 +158,13 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
 
   const handleDeleteAccount = async () => {
     const Token = await AsyncStorage.getItem("token")
-    if(Token) {
+    if (Token) {
       await axios.delete(
         `${API_URL}/users/delete?access-token=${Token}`,
         { headers: { tokakey: Tokakey } }
       )
         .then(async res => {
-          if(res?.status === 200) {
+          if (res?.status === 200) {
             await route.params.handleLogOut()
             await navigation.goBack()
           }
@@ -197,128 +197,129 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
         backgroundColor={MySin}
         handleBack={() => navigation.goBack()}
       />
-      <DismissKeyboard>
-        <View style={styles.mineBox}>
-          <InputCustom
-            placeholder={`${lang[countryCode].name} ${lang[countryCode].surname}`}
-            value={name}
-            handle={value => handleName(value)}
-            placeholderTextColor={Manatee}
-            error={nameError}
-            errorText={nameErrorMessage}
-          />
-          <InputCustom
-            placeholder={lang[countryCode].phone}
-            value={route.params.user.phone_number}
-            placeholderTextColor={Manatee}
-            disable={false}
-            backgroundColor={Silver}
-          />
-          <InputCustom
-            placeholder={lang[countryCode].email}
-            value={route.params.user.email}
-            placeholderTextColor={Manatee}
-            disable={false}
-            backgroundColor={Silver}
-          />
-          <SelectCustom
-            value={auto}
-            data={autoData}
-            placeholder={{
-              label: lang[countryCode].car,
-              value: null,
-              color: Manatee
-            }}
-            placeholderTextColor={Manatee}
-            handle={value => handleAuto(value)}
-            error={autoDataError}
-            errorText={autoDataErrorMessage}
-            icon={IconArrowDown}
-            iconWidth={13}
-            iconHeight={13}
-          />
-          <SelectCustom
-            value={autoModal}
-            data={autoModalData}
-            placeholder={{
-              label: lang[countryCode].make,
-              value: null,
-              color: Manatee
-            }}
-            placeholderTextColor={Manatee}
-            handle={value => handleAutoModel(value)}
-            error={autoModalError}
-            errorText={autoModalErrorMessage}
-            icon={IconArrowDown}
-            iconWidth={13}
-            iconHeight={13}
-          />
-          {
-            loader
-              ? (
-                <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-              )
-              : null
-          }
-          <ButtonCustom
-            text={lang[countryCode].save}
-            backgroundColor={Fiord}
-            color={MySin}
-            width={"100%"}
-            marginTop={15}
-            marginBottom={20}
-            paddingTop={Platform.OS === "ios" ? 14 : 8}
-            paddingBottom={Platform.OS === "ios" ? 14 : 8}
-            click={handleSave}
-            fontSize={18}
-            fontWeight={"700"}
-            icon={IconCheck}
-            iconWidth={24}
-            iconHeight={24}
-            iconPositionLeft={false}
-            borderRadius={12}
-            disabled={loader}
-          />
-        </View>
-      </DismissKeyboard>
-      <ButtonCustom
-        text={lang[countryCode].changePassword}
-        backgroundColor={White}
-        color={Fiord}
-        width={"100%"}
-        marginTop={5}
-        marginBottom={20}
-        paddingTop={Platform.OS === "ios" ? 14 : 8}
-        paddingBottom={Platform.OS === "ios" ? 14 : 8}
-        click={() => navigation.navigate("ChangePassword")}
-        fontSize={18}
-        fontWeight={"700"}
-        icon={IconPassword}
-        iconWidth={24}
-        iconHeight={24}
-        iconPositionLeft={false}
-        borderRadius={12}
-        borderColor={Fiord}
-        borderWidth={1}
-        disabled={loader}
-      />
-      <ButtonCustom
-        text={lang[countryCode].deleteAccount}
-        backgroundColor={Amaranth}
-        color={WildSand}
-        width={"100%"}
-        marginTop={5}
-        marginBottom={20}
-        paddingTop={Platform.OS === "ios" ? 14 : 8}
-        paddingBottom={Platform.OS === "ios" ? 14 : 8}
-        click={handleOpen}
-        fontSize={18}
-        fontWeight={"700"}
-        borderRadius={12}
-        borderColor={Amaranth}
-        borderWidth={1}
-        disabled={loader}
-      />
+      <ScrollView style={{ flex: 1, width: "100%" }}>
+        <DismissKeyboard>
+          <View style={styles.mineBox}>
+            <InputCustom
+              placeholder={`${lang[countryCode].name} ${lang[countryCode].surname}`}
+              value={name}
+              handle={value => handleName(value)}
+              placeholderTextColor={Manatee}
+              error={nameError}
+              errorText={nameErrorMessage}
+            />
+            <InputCustom
+              placeholder={lang[countryCode].phone}
+              value={route.params.user.phone_number}
+              placeholderTextColor={Manatee}
+              disable={false}
+              backgroundColor={Silver}
+            />
+            <InputCustom
+              placeholder={lang[countryCode].email}
+              value={route.params.user.email}
+              placeholderTextColor={Manatee}
+              disable={false}
+              backgroundColor={Silver}
+            />
+            <SelectCustom
+              value={auto}
+              data={autoData}
+              placeholder={{
+                label: lang[countryCode].car,
+                value: null,
+                color: Manatee
+              }}
+              placeholderTextColor={Manatee}
+              handle={value => handleAuto(value)}
+              error={autoDataError}
+              errorText={autoDataErrorMessage}
+              icon={IconArrowDown}
+              iconWidth={13}
+              iconHeight={13}
+            />
+            <SelectCustom
+              value={autoModal}
+              data={autoModalData}
+              placeholder={{
+                label: lang[countryCode].make,
+                value: null,
+                color: Manatee
+              }}
+              placeholderTextColor={Manatee}
+              handle={value => handleAutoModel(value)}
+              error={autoModalError}
+              errorText={autoModalErrorMessage}
+              icon={IconArrowDown}
+              iconWidth={13}
+              iconHeight={13}
+            />
+            {
+              loader
+                ? (
+                  <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
+                )
+                : null
+            }
+            <ButtonCustom
+              text={lang[countryCode].save}
+              backgroundColor={Fiord}
+              color={MySin}
+              width={"100%"}
+              marginTop={15}
+              marginBottom={20}
+              paddingTop={Platform.OS === "ios" ? 14 : 8}
+              paddingBottom={Platform.OS === "ios" ? 14 : 8}
+              click={handleSave}
+              fontSize={18}
+              fontWeight={"700"}
+              icon={IconCheck}
+              iconWidth={24}
+              iconHeight={24}
+              iconPositionLeft={false}
+              borderRadius={12}
+              disabled={loader}
+            />
+            <ButtonCustom
+              text={lang[countryCode].changePassword}
+              backgroundColor={White}
+              color={Fiord}
+              width={"100%"}
+              marginTop={5}
+              marginBottom={20}
+              paddingTop={Platform.OS === "ios" ? 14 : 8}
+              paddingBottom={Platform.OS === "ios" ? 14 : 8}
+              click={() => navigation.navigate("ChangePassword")}
+              fontSize={18}
+              fontWeight={"700"}
+              icon={IconPassword}
+              iconWidth={24}
+              iconHeight={24}
+              iconPositionLeft={false}
+              borderRadius={12}
+              borderColor={Fiord}
+              borderWidth={1}
+              disabled={loader}
+            />
+            <ButtonCustom
+              text={lang[countryCode].deleteAccount}
+              backgroundColor={Amaranth}
+              color={WildSand}
+              width={"100%"}
+              marginTop={5}
+              paddingTop={Platform.OS === "ios" ? 14 : 8}
+              paddingBottom={Platform.OS === "ios" ? 14 : 8}
+              click={handleOpen}
+              fontSize={18}
+              fontWeight={"700"}
+              borderRadius={12}
+              borderColor={Amaranth}
+              borderWidth={1}
+              disabled={loader}
+            />
+          </View>
+        </DismissKeyboard>
+      </ScrollView>
     </View>
   )
 }

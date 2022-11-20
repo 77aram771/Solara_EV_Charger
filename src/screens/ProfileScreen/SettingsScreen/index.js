@@ -185,7 +185,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => handleLink("https://www.facebook.com/solaraArmenia/")}
+            click={() => handleLink("https://www.facebook.com/SolaraEV/")}
             fontSize={18}
             fontWeight={"400"}
             icon={IconFb}
@@ -203,7 +203,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => handleLink("https://www.instagram.com/solara.am/")}
+            click={() => handleLink("https://www.instagram.com/solaraevcharger/?igshid=YmMyMTA2M2Y%3D/")}
             fontSize={18}
             fontWeight={"400"}
             icon={IconIns}
@@ -239,7 +239,7 @@ export const SettingsScreen = ({ navigation }) => {
             color={MineShaft}
             borderWidth={1}
             borderRadius={18}
-            click={() => handleLink('https://t.me/+37444577555')}
+            click={() => handleLink('https://t.me/solaraevcharger')}
             fontSize={18}
             fontWeight={"400"}
             icon={IconTelegram}

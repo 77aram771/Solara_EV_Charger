@@ -56,7 +56,7 @@ export const FullChargeModal = ({ navigation, handleModal, loader, status, progr
           </View>
           <View style={styles.infoItem}>
             <TextCustom
-              text={`${lang[countryCode].charging}: ${sumKW * kw} ${lang[countryCode].kw}`}
+              text={`${lang[countryCode].charging}: ${sumKW * kw} ${lang[countryCode].dram}`}
               color={White}
               fontSize={24}
               fontWeight={"400"}

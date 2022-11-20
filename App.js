@@ -19,7 +19,9 @@ import ImgSplashScreenEn from "./src/assets/images/img-splashscreen-en.png"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
 
 LogBox.ignoreLogs([
-  "Non-serializable values were found in the navigation state"
+  "Non-serializable values were found in the navigation state",
+  "EventEmitter.removeListener",
+  "Overwriting fontFamily style attribute preprocessor"
 ])
 
 Geocoder.init(Google_Key, { language: "en" })
@@ -62,6 +64,7 @@ export default function App() {
   const [load, setLoad] = useState(true)
   const [countryCode, setCountryCode] = useState("en")
   const [sumKW, setSumKW] = useState("")
+  const [checkFilter, setCheckFilter] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -129,6 +132,13 @@ export default function App() {
 
   const handleCountryCode = (code) => setCountryCode(code)
 
+  const handleCheckFilter = () => {
+    setCheckFilter(true)
+    // setTimeout(() => {
+    //   setCheckFilter(false)
+    // }, 2000)
+  }
+
   useEffect(() => {
     setTimeout(() => {
       setLoad(false)
@@ -189,23 +199,25 @@ export default function App() {
     )
   } else {
     return (
-        <Context.Provider
-          value={{
-            location: location,
-            userAddress: userAddress,
-            showTabBar: showTabBar,
-            countryCode: countryCode,
-            sumKW: sumKW,
-            handleHideTabBar: (bool) => handleHideTabBar(bool),
-            handleCountryCode: (code) => handleCountryCode(code),
-            handleLocationUser: () => handleLocationUser(),
-            expoPushToken: expoPushToken
-          }}
-        >
-          <Provider store={store}>
-            <RootNavigation />
-          </Provider>
-        </Context.Provider>
+      <Context.Provider
+        value={{
+          location: location,
+          userAddress: userAddress,
+          showTabBar: showTabBar,
+          countryCode: countryCode,
+          sumKW: sumKW,
+          checkFilter: checkFilter,
+          handleHideTabBar: (bool) => handleHideTabBar(bool),
+          handleCountryCode: (code) => handleCountryCode(code),
+          handleLocationUser: () => handleLocationUser(),
+          handleCheckFilter: () => handleCheckFilter(),
+          expoPushToken: expoPushToken
+        }}
+      >
+        <Provider store={store}>
+          <RootNavigation />
+        </Provider>
+      </Context.Provider>
     )
   }
 }

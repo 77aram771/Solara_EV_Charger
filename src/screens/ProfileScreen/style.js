@@ -43,9 +43,10 @@ export const styles = StyleSheet.create({
     },
     headerBoxUser: {
         width: windowWidth,
-        height: Constants.statusBarHeight + windowHeight / 3,
+        height: Constants.statusBarHeight + windowHeight / 3.2,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingBottom: windowHeight / 30
+        paddingBottom: 20,
+        marginBottom: 30
     }
 })

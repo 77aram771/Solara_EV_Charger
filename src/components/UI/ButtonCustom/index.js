@@ -21,7 +21,6 @@ export const ButtonCustom = ({
   text,
   fontSize,
   fontWeight,
-  fontFamily,
   click,
   borderWidth,
   borderColor,
@@ -103,7 +102,6 @@ export const ButtonCustom = ({
                 text={text}
                 color={color}
                 fontSize={fontSize}
-                fontFamily={fontFamily}
                 fontWeight={fontWeight}
               />
             )
