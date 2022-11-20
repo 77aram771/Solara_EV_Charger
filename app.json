@@ -39,7 +39,7 @@
     ],
     "name": "Solara EV Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -82,14 +82,18 @@
         "android.permission.CAMERA",
         "android.permission.NOTIFICATIONS",
         "android.permission.RECORD_AUDIO"
-      ],
-      "useNextNotificationsApi": true
+      ]
     },
     "web": {
       "favicon": "./assets/icon.png"
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f19f66e3-b6a2-4180-adec-dcfb49062cba"
+      }
     }
   }
 }

@@ -55,7 +55,7 @@ export const regName = /^(([A-Za-z]+[,.]?[ ]?|[a-z]+['-]?)+)$/i
 
 export const regPassword = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})/
 
-export const regPhone = /^([+374]{4})([1-9]{2})(\d{6})/
+export const regPhone = /^([+374]{4}|[0]{1})([1-9]{2})(\d{6})$/
 
 export const finderWidth = 280
 export const finderHeight = 230

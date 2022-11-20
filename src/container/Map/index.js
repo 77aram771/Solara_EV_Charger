@@ -160,7 +160,7 @@ export const Map = ({
                     longitude: Number(item?.lng)
                   }}
                   key={index}
-                  stopPropagation={false}
+                  stopPropagation={true}
                 >
                   <Image
                     source={{ uri: item?.pin }}
@@ -173,30 +173,7 @@ export const Map = ({
                 </Marker>
               )
             })
-              : data && data.map((item, index) => {
-              // console.log("uri: item?.pin", item?.pin)
-              return (
-                <Marker
-                  onPress={(e) => handleItemId(e, index)}
-                  coordinate={{
-                    latitude: Number(item?.lat),
-                    longitude: Number(item?.lng)
-                  }}
-                  key={index}
-                  stopPropagation={false}
-                  // image={{ uri: item?.pin }}
-                >
-                  <Image
-                    source={{ uri: item?.pin }}
-                    style={{
-                      width: 50,
-                      height: 50
-                    }}
-                    resizeMode={"contain"}
-                  />
-                </Marker>
-              )
-            })
+              :  null
           )
           : null
       }

@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {
+  ActivityIndicator,
   Alert,
   Image,
   Modal,
@@ -46,8 +47,7 @@ export const HomeScreen = ({ navigation }) => {
     handleLocationUser,
     userAddress,
     handleHideTabBar,
-    countryCode,
-    checkFilter
+    countryCode
   } = useContext(Context)
 
   const [mapRef, setMapRef] = useState(null);
@@ -100,8 +100,7 @@ export const HomeScreen = ({ navigation }) => {
         longitudeDelta: LONGITUDE_DELTA
       })
     }
-    console.log('checkFilter', checkFilter)
-  }, [location, checkFilter])
+  }, [location])
 
   useEffect(() => {
     dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=500&title`))
@@ -115,7 +114,7 @@ export const HomeScreen = ({ navigation }) => {
   //   return () => clearInterval(interval)
   // }, [])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
       setData(chargeBoxesData && chargeBoxesData?.data.map(item => {
         item.active = false
@@ -359,20 +358,26 @@ export const HomeScreen = ({ navigation }) => {
             </>
           )
       }
-      <Map
-        data={data}
-        handleRef={handleRef}
-        itemId={itemId}
-        qrItem={qrItem}
-        start={start}
-        cordinate={cordinate}
-        location={location}
-        getCurrentPosition={getCurrentPosition}
-        handleItemId={handleItemId}
-        handleReady={handleReady}
-        handleReset={handleReset}
-        handleCheckCordinate={handleCheckCordinate}
-      />
+      {
+        chargeBoxesLoader
+          ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
+          : (
+            <Map
+              data={data}
+              handleRef={handleRef}
+              itemId={itemId}
+              qrItem={qrItem}
+              start={start}
+              cordinate={cordinate}
+              location={location}
+              getCurrentPosition={getCurrentPosition}
+              handleItemId={handleItemId}
+              handleReady={handleReady}
+              handleReset={handleReset}
+              handleCheckCordinate={handleCheckCordinate}
+            />
+          )
+      }
       <TouchableOpacity
         style={[styles.myLocationButtonOut, {
           bottom: start

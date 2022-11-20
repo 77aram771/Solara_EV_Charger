@@ -25,7 +25,8 @@ export const styles = StyleSheet.create({
     paddingBottom: 30,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: MySin
+    backgroundColor: MySin,
+    zIndex: 100
   },
   bookInfoBox: {
     position: "absolute",
@@ -39,7 +40,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Mercurysolid,
     backgroundColor: White,
-    zIndex: 1
+    zIndex: 20000
   },
   typeBox: {
     width: windowWidth / 1.1,

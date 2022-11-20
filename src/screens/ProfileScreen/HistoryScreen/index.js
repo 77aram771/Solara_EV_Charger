@@ -16,6 +16,9 @@ import IconVisa from "../../../assets/icon/card/visa.png"
 import IconMastercard from "../../../assets/icon/card/mastercard.png"
 import IconDiscover from "../../../assets/icon/card/discover.png"
 import ImgLight from "../../../assets/icon/priceunit.png"
+import IconTelCell from "../../../assets/icon/icon-telcell.png"
+import IconIdram from "../../../assets/icon/icon-idram.png"
+import IconEasyPay from "../../../assets/icon/icon-easy-pay.png"
 
 export const HistoryScreen = ({ navigation }) => {
 
@@ -92,7 +95,7 @@ export const HistoryScreen = ({ navigation }) => {
   }
 
   const handleItemPress = (index) => {
-    console.log('index', index)
+    console.log("index", index)
     console.log("flatListRef1", flatListRef1)
     console.log("flatListRef2", flatListRef2)
 
@@ -209,7 +212,6 @@ export const HistoryScreen = ({ navigation }) => {
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => {
                       console.log("pay_type", item?.pay_type)
-                      console.log("payment_type", item?.payment_type)
                       return (
                         <View style={styles.itemContainer}>
                           <View>
@@ -249,8 +251,11 @@ export const HistoryScreen = ({ navigation }) => {
                             <View style={{ marginBottom: 10 }}>
                               {
                                 Number(item?.card?.title[0]) === 3 &&
-                                <Image source={IconAmericanExpress} resizeMode={"cover"}
-                                       style={{ width: 70, height: 50 }} />
+                                <Image
+                                  source={IconAmericanExpress}
+                                  resizeMode={"cover"}
+                                  style={{ width: 70, height: 50 }}
+                                />
                               }
                               {
                                 Number(item?.card?.title[0]) === 4 &&
@@ -263,6 +268,18 @@ export const HistoryScreen = ({ navigation }) => {
                               {
                                 Number(item?.card?.title[0]) === 6 &&
                                 <Image source={IconDiscover} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
+                              }
+                              {
+                                Number(item?.pay_type) === 1 &&
+                                <Image source={IconTelCell} resizeMode={"cover"} style={{ width: 70, height: 50, borderWidth: 1 }} />
+                              }
+                              {
+                                Number(item?.pay_type) === 2 &&
+                                <Image source={IconIdram} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
+                              }
+                              {
+                                Number(item?.pay_type) === 3 &&
+                                <Image source={IconEasyPay} resizeMode={"cover"} style={{ width: 70, height: 50 }} />
                               }
                             </View>
                             {
