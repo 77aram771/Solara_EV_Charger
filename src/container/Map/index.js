@@ -10,7 +10,7 @@ import { styles } from "../../screens/HomeScreen/style"
 import { MapStyle } from "../../shared/MapStyle"
 import { Dandelion, MySin, White } from "../../shared/Colors"
 
-export const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady, handleItemId }) => {
+const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleReady, handleItemId }) => {
   return (
     <>
       <Marker
@@ -37,7 +37,7 @@ export const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, h
             {
               latitude: cordinate.latitude,
               longitude: cordinate.longitude
-            },
+            }
           ]
         }
         destination={
@@ -84,15 +84,11 @@ export const Map = ({
   return (
     <MapView
       initialRegion={cordinate}
-      // onMarkersChange={(props) => {
-      //   // console.log("props", props)
-      // }}
       needsOffscreenAlphaCompositing={false}
       showsIndoorLevelPicker={false}
       accessibilityElementsHidden={false}
       accessible={false}
       accessibilityViewIsModal={false}
-      animationEnabled={false}
       cacheEnabled={false}
       userLocationCalloutEnabled={false}
       followsUserLocation={false}
@@ -125,7 +121,7 @@ export const Map = ({
       customMapStyle={MapStyle}
       minZoomLevel={1}
       maxZoomLevel={20}
-      // animationEnabled={true}
+      animationEnabled={false}
       clusteringEnabled={true}
       spiralEnabled={true}
       rotateEnabled={true}
@@ -135,17 +131,16 @@ export const Map = ({
       clusterColor={MySin}
       clusterTextColor={White}
       spiderLineColor={"#000"}
-      tintColor={"red"}
       accessibilityIgnoresInvertColors={false}
       renderCluster={RenderCluster}
       extent={windowWidth / 1.5}
     >
       <Geojson
         geojson={myPlace}
-        tappable={false}
         strokeColor={Dandelion}
         fillColor={"transparent"}
-        strokeWidth={4}
+        strokeWidth={5}
+        tappable={false}
       />
       {
         !start
@@ -173,7 +168,7 @@ export const Map = ({
                 </Marker>
               )
             })
-              :  null
+              : null
           )
           : null
       }

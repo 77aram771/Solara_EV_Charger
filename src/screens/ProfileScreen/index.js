@@ -175,7 +175,7 @@ export const ProfileScreen = ({ navigation }) => {
                           marginBottom={10}
                         />
                         <ButtonCustom
-                          text={`${lang[countryCode].correspondence}`}
+                          text={`${lang[countryCode].contactUs}`}
                           width={"100%"}
                           backgroundColor={White}
                           borderColor={Mercurysolid}

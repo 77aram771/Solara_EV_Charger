@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import {
-  ActivityIndicator,
   Alert,
   Image,
   Modal,
@@ -358,26 +357,20 @@ export const HomeScreen = ({ navigation }) => {
             </>
           )
       }
-      {
-        chargeBoxesLoader
-          ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} />
-          : (
-            <Map
-              data={data}
-              handleRef={handleRef}
-              itemId={itemId}
-              qrItem={qrItem}
-              start={start}
-              cordinate={cordinate}
-              location={location}
-              getCurrentPosition={getCurrentPosition}
-              handleItemId={handleItemId}
-              handleReady={handleReady}
-              handleReset={handleReset}
-              handleCheckCordinate={handleCheckCordinate}
-            />
-          )
-      }
+      <Map
+        data={data}
+        handleRef={handleRef}
+        itemId={itemId}
+        qrItem={qrItem}
+        start={start}
+        cordinate={cordinate}
+        location={location}
+        getCurrentPosition={getCurrentPosition}
+        handleItemId={handleItemId}
+        handleReady={handleReady}
+        handleReset={handleReset}
+        handleCheckCordinate={handleCheckCordinate}
+      />
       <TouchableOpacity
         style={[styles.myLocationButtonOut, {
           bottom: start
@@ -398,11 +391,6 @@ export const HomeScreen = ({ navigation }) => {
         itemId !== null
           ? (
             <View style={styles.infoContainer}>
-              {/* { */}
-              {/*   loaderStart */}
-              {/*     ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginVertical: 20 }} /> */}
-              {/*     : null */}
-              {/* } */}
               {
                 start
                   ? null
@@ -471,22 +459,28 @@ export const HomeScreen = ({ navigation }) => {
                           handleStart: handleStart
                         })}
                       />
-                      <ButtonCustom
-                        width={windowWidth / 2.5}
-                        height={35}
-                        backgroundColor={Fiord}
-                        text={lang[countryCode].direction}
-                        fontSize={18}
-                        color={MySin}
-                        borderRadius={5}
-                        borderColor={Fiord}
-                        borderWidth={2}
-                        icon={IconDirection2}
-                        iconWidth={15}
-                        iconHeight={15}
-                        iconPositionLeft={false}
-                        click={handleStart}
-                      />
+                      {
+                        location !== null
+                          ? (
+                            <ButtonCustom
+                              width={windowWidth / 2.5}
+                              height={35}
+                              backgroundColor={Fiord}
+                              text={lang[countryCode].direction}
+                              fontSize={18}
+                              color={MySin}
+                              borderRadius={5}
+                              borderColor={Fiord}
+                              borderWidth={2}
+                              icon={IconDirection2}
+                              iconWidth={15}
+                              iconHeight={15}
+                              iconPositionLeft={false}
+                              click={handleStart}
+                            />
+                          )
+                          : null
+                      }
                     </View>
                   )
               }
@@ -566,22 +560,28 @@ export const HomeScreen = ({ navigation }) => {
                           handleStart: handleStart
                         })}
                       />
-                      <ButtonCustom
-                        width={windowWidth / 2.5}
-                        height={35}
-                        backgroundColor={Fiord}
-                        text={lang[countryCode].direction}
-                        fontSize={18}
-                        color={MySin}
-                        borderRadius={5}
-                        borderColor={Fiord}
-                        borderWidth={2}
-                        icon={IconDirection2}
-                        iconWidth={15}
-                        iconHeight={15}
-                        iconPositionLeft={false}
-                        click={handleStart}
-                      />
+                      {
+                        location !== null
+                          ? (
+                            <ButtonCustom
+                              width={windowWidth / 2.5}
+                              height={35}
+                              backgroundColor={Fiord}
+                              text={lang[countryCode].direction}
+                              fontSize={18}
+                              color={MySin}
+                              borderRadius={5}
+                              borderColor={Fiord}
+                              borderWidth={2}
+                              icon={IconDirection2}
+                              iconWidth={15}
+                              iconHeight={15}
+                              iconPositionLeft={false}
+                              click={handleStart}
+                            />
+                          )
+                          : null
+                      }
                     </View>
                   )
               }

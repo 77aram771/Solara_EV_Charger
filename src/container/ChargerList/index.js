@@ -20,8 +20,9 @@ export const ChargerList = ({
   handleStart,
   navigation
 }) => {
-
   const [chargerListData, setChargerListData] = useState(data)
+
+  // console.log("chargerListData", chargerListData)
 
   const [value, setValue] = useState("")
 

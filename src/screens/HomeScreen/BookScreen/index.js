@@ -71,7 +71,7 @@ export const BookScreen = ({ navigation, route }) => {
     if (Token === null) {
       setModalVisibleCheckUser(true)
     } else {
-      if (item?.status === "Available" || item?.status === "Preparing") {
+      if (item?.status === "Available" && item?.status === "Preparing") {
         navigation.navigate("BookType", {
           item,
           address: route?.params?.data[route?.params?.itemId].address

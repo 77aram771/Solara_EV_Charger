@@ -21,7 +21,8 @@ import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
   "EventEmitter.removeListener",
-  "Overwriting fontFamily style attribute preprocessor"
+  "Overwriting fontFamily style attribute preprocessor",
+  "ViewPropTypes will be removed from React Native. Migrate to ViewPropTypes exported from 'deprecated-react-native-prop-types'."
 ])
 
 Geocoder.init(Google_Key, { language: "en" })

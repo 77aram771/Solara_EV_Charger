@@ -99,7 +99,7 @@ export const lang = {
     topUpBalance: "Համալրել բալանսը",
     titleBalance: "Բալանսի համալրում",
     personalInformation: "Անձնական տվյալներ",
-    correspondence: "Նամակագրություն",
+    contactUs: "Կապվեք մեզ հետ",
     history: "Պատմություն",
     addNewCard: "Ավելացնել նոր քարտ",
     money: "Գումար",
@@ -148,6 +148,7 @@ export const lang = {
     thePortIsBusyOrUnavailable: "Միացման կետը զբաղված է կամ անհասանելի է",
     deleteAccount: "Ջնջել Օգտատերին",
     аreYouWantToDeleteYourAccount: "Դուք ուզում եք ջնջել ձեր հաշիվը",
+    text: "տեքստ",
   },
   ru: {
     H: "ч",
@@ -248,7 +249,7 @@ export const lang = {
     topUpBalance: "Пополнить баланс",
     titleBalance: "Пополнения баланса",
     personalInformation: "Персональная информация",
-    correspondence: "Переписка",
+    contactUs: "Свяжитесь с нами",
     history: "История",
     addNewCard: "Добавить новую карту",
     money: "Деньги",
@@ -297,6 +298,7 @@ export const lang = {
     thePortIsBusyOrUnavailable: "Порт занят или недоступен",
     deleteAccount: "Удалить аккаунт",
     аreYouWantToDeleteYourAccount: "Вы хотите удалить свой аккаунт?",
+    text: "текст"
   },
   en: {
     H: "h",
@@ -397,7 +399,7 @@ export const lang = {
     topUpBalance: "Top up balance",
     titleBalance: "Complete balance",
     personalInformation: "Personal information",
-    correspondence: "Correspondence",
+    contactUs: "Contact us",
     history: "History",
     addNewCard: "Add new card",
     money: "Money",
@@ -446,5 +448,6 @@ export const lang = {
     thePortIsBusyOrUnavailable: "The port is Busy or Unavailable",
     deleteAccount: "Delete account",
     аreYouWantToDeleteYourAccount: "Are you want to delete your account?",
+    text: "text"
   }
 }

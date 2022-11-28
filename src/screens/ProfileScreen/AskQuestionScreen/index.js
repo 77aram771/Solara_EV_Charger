@@ -160,7 +160,7 @@ export const AskQuestionScreen = ({ navigation }) => {
               errorText={emailErrorMessage}
             />
             <InputCustom
-              placeholder={lang[countryCode].mail}
+              placeholder={lang[countryCode].text}
               value={mail}
               handle={value => handleMail(value)}
               placeholderTextColor={Manatee}
