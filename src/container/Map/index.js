@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, Platform } from "react-native"
+import { Image } from "react-native"
 import MapView from "react-native-map-clustering"
 import { Geojson, Marker, PROVIDER_GOOGLE } from "react-native-maps"
 import MapViewDirections from "react-native-maps-directions"
@@ -145,8 +145,7 @@ export const Map = ({
       {
         !start
           ? (
-            Platform.OS === "ios"
-              ? data && data.map((item, index) => {
+            data && data.map((item, index) => {
               return (
                 <Marker
                   onPress={(e) => handleItemId(e, index)}
@@ -168,7 +167,6 @@ export const Map = ({
                 </Marker>
               )
             })
-              : null
           )
           : null
       }

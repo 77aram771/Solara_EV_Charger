@@ -78,12 +78,12 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (checkMax - num)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
       const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
-      setTimeH(Number(newTime[0]))
-      setTimeM(Number(newTime[1]))
+      setTimeH(Math.abs(newTime[0]))
+      setTimeM(Math.abs(newTime[1]))
     } else {
       const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
-      setTimeH(Number(newTime[0]))
-      setTimeM(Number(newTime[1]))
+      setTimeH(Math.abs(newTime[0]))
+      setTimeM(Math.abs(newTime[1]))
     }
   }
 
@@ -93,13 +93,16 @@ export const BookTypeScreen = ({ navigation, route }) => {
     setKm(Math.ceil(user?.car_power_reserve / 100 * (num - checkMin)))
     setPrice((Math.floor(Math.ceil(user?.car_capacity / 100 * (num - checkMin)), 1) * sumKW))
     if (user?.car_max_kw > route?.params?.item?.power) {
-      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
-      setTimeH(Number(newTime[0]))
-      setTimeM(Number(newTime[1]))
+      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMin - num)) / user?.car_max_kw).toFixed(1)).split(".")
+      setTimeH(Math.abs(newTime[0]))
+      setTimeM(Math.abs(newTime[1]))
     } else {
-      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMax - num)) / user?.car_max_kw).toFixed(1)).split(".")
-      setTimeH(Number(newTime[0]))
-      setTimeM(Number(newTime[1]))
+      const newTime = String(Number(Math.ceil(user?.car_capacity / 100 * (checkMin - num)) / user?.car_max_kw).toFixed(1)).split(".")
+      console.log("newTime 2", newTime)
+      console.log("Number(newTime[0])", Math.abs(newTime[0]))
+      console.log("Number(newTime[1])", Number(newTime[1]))
+      setTimeH(Math.abs(newTime[0]))
+      setTimeM(Math.abs(newTime[1]))
     }
   }
 

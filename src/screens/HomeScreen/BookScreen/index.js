@@ -50,7 +50,6 @@ export const BookScreen = ({ navigation, route }) => {
     )
       .then(res => {
         setLoader(false)
-        console.log("360_url", typeof res?.data["360_url"])
         if (res?.data["360_url"]) {
           setImage3DData(res?.data["360_url"])
         }
@@ -67,18 +66,24 @@ export const BookScreen = ({ navigation, route }) => {
   const handleModal360 = () => setImage3DModal(!image3DModal)
 
   const handlePort = async (item) => {
+    // console.log("item", item?.status)
     const Token = await AsyncStorage.getItem("token")
     if (Token === null) {
       setModalVisibleCheckUser(true)
-    } else {
-      if (item?.status === "Available" && item?.status === "Preparing") {
-        navigation.navigate("BookType", {
-          item,
-          address: route?.params?.data[route?.params?.itemId].address
-        })
-      } else {
-        alert(lang[countryCode].thePortIsBusyOrUnavailable)
-      }
+    }
+    else {
+      navigation.navigate("BookType", {
+        item,
+        address: route?.params?.data[route?.params?.itemId].address
+      })
+      // if (item?.status === "Available" || item?.status === "Preparing") {
+      //   navigation.navigate("BookType", {
+      //     item,
+      //     address: route?.params?.data[route?.params?.itemId].address
+      //   })
+      // } else {
+      //   alert(lang[countryCode].thePortIsBusyOrUnavailable)
+      // }
     }
   }
 
