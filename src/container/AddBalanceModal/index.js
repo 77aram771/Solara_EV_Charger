@@ -76,9 +76,10 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
               ...res?.data?.data
             ]
           )
-          if (res?.data?.data.length > 0) {
-            setCardId(res?.data?.data[0]?.id)
-          }
+          // if (res?.data?.data.length > 0) {
+          //   setCardId(res?.data?.data[0]?.id)
+          // }
+          console.log("cardId", cardId)
           setLoader(false)
         })
         .catch(e => console.log("e", e.response))
@@ -89,8 +90,10 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
 
   const handleAddBalance = async () => {
     const Token = await AsyncStorage.getItem("token")
+    console.log("Token", Token)
     if (price > 0) {
       setPriceError(false)
+      console.log("cardId", cardId)
       if (Token !== null) {
         if (cardId === 3) {
           setLoader(true)
@@ -126,11 +129,12 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 ]
               );
             })
-        } else if (cardId === 4) {
+        }
+        else if (cardId === 4) {
           setLoader(true)
           setShowMessage(false)
           await axios.post(
-            `${API_URL}/users/fill-wallet-telcell?access-token=${Token}}`,
+            `${API_URL}/users/fill-wallet-telcell?access-token=${Token}`,
             { amount: price },
             { headers: { tokakey: Tokakey } }
           )
@@ -160,7 +164,8 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 ]
               );
             })
-        } else {
+        }
+        else {
           setLoader(true)
           setShowMessage(false)
           await axios.post(

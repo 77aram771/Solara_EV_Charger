@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { View, Image, ImageBackground, Platform, Modal, ActivityIndicator, Alert, ScrollView } from "react-native"
 import { useSelector } from "react-redux"
 import axios from "axios"
@@ -25,11 +25,13 @@ import ImgLight from "../../assets/icon/priceunit1.png"
 
 export const ProfileScreen = ({ navigation }) => {
 
-  const { countryCode, handleHideTabBar } = useContext(Context)
+  const { countryCode, handleHideTabBar, expoPushToken, registerForPushNotificationsAsync } = useContext(Context)
+
+  console.log("expoPushToken", expoPushToken)
 
   const userLoader = useSelector(state => state?.AuthReducer.loading)
 
-  const [notificationActive, setNotificationActive] = useState(true)
+  const [notificationActive, setNotificationActive] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [login, setLogin] = useState(false)
   const [user, setUser] = useState(false)
@@ -40,6 +42,22 @@ export const ProfileScreen = ({ navigation }) => {
       await getUserProfile()
     })
   }, [navigation])
+
+  useLayoutEffect(() => {
+    (async () => {
+      const not = await AsyncStorage.getItem("notificationActive")
+      console.log("notificationActive", not)
+      if(not !== null) {
+        if(expoPushToken !== undefined) {
+          setNotificationActive(not !== "true")
+        }
+      }
+      else {
+        console.log("---------------------------")
+        setNotificationActive(true)
+      }
+    })()
+  }, [])
 
   const getUserProfile = async () => {
     const Token = await AsyncStorage.getItem("token")
@@ -84,6 +102,30 @@ export const ProfileScreen = ({ navigation }) => {
     }
     await AsyncStorage.removeItem("token")
     setLogin(false)
+  }
+
+  const handleNotificationSendBack = async (bool) => {
+    const Token = await AsyncStorage.getItem("token")
+    if(expoPushToken !== undefined) {
+      axios.post(
+        `${API_URL}/users/register-device?access-token=${Token}`,
+        { device_id: !bool ? "000" : expoPushToken, is_ios: Platform.OS === "ios" ? 1 : 0 },
+        { headers: { tokakey: Tokakey } }
+      )
+        .then(res => {
+          console.log("res =============>>>>>>>>>", res?.data)
+        })
+        .catch(e => console.log("e handleNotificationSendBack", e.response))
+    }
+  }
+
+  const handleNotification = async () => {
+    if(expoPushToken === undefined) {
+      registerForPushNotificationsAsync()
+    }
+    await handleNotificationSendBack(notificationActive)
+    setNotificationActive(!notificationActive)
+    await AsyncStorage.setItem("notificationActive", notificationActive.toString())
   }
 
   return (
@@ -224,7 +266,7 @@ export const ProfileScreen = ({ navigation }) => {
                           color={MineShaft}
                           borderWidth={1}
                           borderRadius={18}
-                          click={() => setNotificationActive(!notificationActive)}
+                          click={handleNotification}
                           fontSize={15}
                           fontWeight={"400"}
                           icon={IconNotification}

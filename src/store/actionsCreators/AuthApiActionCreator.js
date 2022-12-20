@@ -12,15 +12,17 @@ export const AuthSignIn = (url, body, expoPushToken) => (dispatch) => {
       axios
         .post(url, body)
         .then(response => {
-          axios.post(
-            `${API_URL}/users/register-device?access-token=${response?.data?.access_token}`,
-            { device_id: expoPushToken, is_ios: Platform.OS === "ios" ? 1 : 0 },
-            { headers: { tokakey: Tokakey } }
-          )
-            .then(res => {
-              console.log("res =============>>>>>>>>>", res?.data)
-            })
-            .catch(e => console.log("e", e.response))
+          if(expoPushToken !== undefined) {
+            axios.post(
+              `${API_URL}/users/register-device?access-token=${response?.data?.access_token}`,
+              { device_id: expoPushToken, is_ios: Platform.OS === "ios" ? 1 : 0 },
+              { headers: { tokakey: Tokakey } }
+            )
+              .then(res => {
+                console.log("res =============>>>>>>>>>", res?.data)
+              })
+              .catch(e => console.log("e AuthSignIn", e.response))
+          }
           AsyncStorage.setItem("token", response?.data?.access_token)
           AsyncStorage.setItem("userData", JSON.stringify(response?.data))
           dispatch(fetchSuccess(response.data))

@@ -113,7 +113,7 @@ export const ButtonCustom = ({
           ? (
             <ToggleSwitch
               onToggle={click}
-              isOn={switchActive}
+              isOn={!switchActive}
               onColor={Manatee}
               offColor={Mercurysolid}
               size="small"

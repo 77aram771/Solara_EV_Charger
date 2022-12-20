@@ -60,15 +60,10 @@ export const HomeScreen = ({ navigation }) => {
   const [check, setCheck] = useState("finish")
   const [modalRedirect, setModalRedirect] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const [cordinate, setCordinate] = useState({
-    latitude: location !== null ? location?.coords?.latitude : 40,
-    longitude: location !== null ? location?.coords?.longitude : 45,
-    latitudeDelta: 6,
-    longitudeDelta: LONGITUDE_DELTA
-  })
+  const [cordinate, setCordinate] = useState(null)
   const [options, setOptions] = useState({
-    latitude: location !== null ? location?.coords?.latitude : 40,
-    longitude: location !== null ? location?.coords?.longitude : 45,
+    latitude: location !== null ? location?.coords?.latitude : 40.177200,
+    longitude: location !== null ? location?.coords?.longitude : 44.503490,
     googleForceLatLon: false,
     alwaysIncludeGoogle: true,
     appsWhiteList: ["google-maps", "apple-maps", "waze", "yandex", "yandex-maps"],
@@ -83,6 +78,7 @@ export const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     return navigation.addListener("focus", async () => {
       handleHideTabBar(true)
+      handleLocationUser()
       const transactionId = await AsyncStorage.getItem("transaction_id")
       if (transactionId !== null) {
         await handleCheckChargeProgress()
@@ -95,6 +91,13 @@ export const HomeScreen = ({ navigation }) => {
       setCordinate({
         latitude: location?.coords?.latitude,
         longitude: location?.coords?.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
+      })
+    } else {
+      setCordinate({
+        latitude: 40.177200,
+        longitude: 44.503490,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
       })
@@ -357,20 +360,27 @@ export const HomeScreen = ({ navigation }) => {
             </>
           )
       }
-      <Map
-        data={data}
-        handleRef={handleRef}
-        itemId={itemId}
-        qrItem={qrItem}
-        start={start}
-        cordinate={cordinate}
-        location={location}
-        getCurrentPosition={getCurrentPosition}
-        handleItemId={handleItemId}
-        handleReady={handleReady}
-        handleReset={handleReset}
-        handleCheckCordinate={handleCheckCordinate}
-      />
+      {
+        cordinate
+          ? (
+            <Map
+              data={data}
+              handleRef={handleRef}
+              itemId={itemId}
+              qrItem={qrItem}
+              start={start}
+              cordinate={cordinate}
+              location={location}
+              chargeBoxesLoader={chargeBoxesLoader}
+              getCurrentPosition={getCurrentPosition}
+              handleItemId={handleItemId}
+              handleReady={handleReady}
+              handleReset={handleReset}
+              handleCheckCordinate={handleCheckCordinate}
+            />
+          )
+          : null
+      }
       <TouchableOpacity
         style={[styles.myLocationButtonOut, {
           bottom: start

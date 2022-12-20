@@ -10,7 +10,8 @@ import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { Black, Dandelion, Fiord } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
-import IconClose from "../../../assets/icon/icon-close.png";
+import IconCloseWhite from "../../../assets/icon/icon-close.png";
+import IconCloseYellow from "../../../assets/icon/icon-close-yellow.png";
 
 export const QRScannerScreen = ({ navigation, route }) => {
 
@@ -74,6 +75,22 @@ export const QRScannerScreen = ({ navigation, route }) => {
   if (hasPermission === false || hasPermission === null) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: Platform.OS === "ios" ? windowHeight / 13.5 : windowHeight / 15,
+            right: 15,
+            zIndex: 1
+          }}
+          onPress={() => navigation.goBack()}
+          activeOpacity={0}
+        >
+          <Image
+            source={IconCloseYellow}
+            style={{ width: 25, height: 25 }}
+            resizeMode={"cover"}
+          />
+        </TouchableOpacity>
         <TextCustom fontSize={16} text={"You no have Access"} marginBottom={20} />
         <ButtonCustom
           width={windowWidth / 1.4}
@@ -103,7 +120,7 @@ export const QRScannerScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={{
               position: "absolute",
-              top: Platform.OS === "ios" ? windowHeight / 13.5 : 15,
+              top: Platform.OS === "ios" ? windowHeight / 13.5 : windowHeight / 15,
               right: 15,
               zIndex: 1
             }}
@@ -111,7 +128,7 @@ export const QRScannerScreen = ({ navigation, route }) => {
             activeOpacity={0}
           >
             <Image
-              source={IconClose}
+              source={IconCloseWhite}
               style={{ width: 25, height: 25 }}
               resizeMode={"cover"}
             />

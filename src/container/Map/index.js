@@ -67,6 +67,17 @@ const RenderDirection = ({ item, data, cordinate, handleCheckCordinate, handleRe
   )
 }
 
+const RenderGeoJson = () => {
+  return (
+    <Geojson
+      geojson={myPlace}
+      strokeColor={Dandelion}
+      fillColor={"transparent"}
+      strokeWidth={5} tappable={true}
+    />
+  )
+}
+
 export const Map = ({
   start,
   cordinate,
@@ -79,7 +90,7 @@ export const Map = ({
   handleReady,
   handleReset,
   handleCheckCordinate,
-  handleRef
+  handleRef,
 }) => {
   return (
     <MapView
@@ -135,13 +146,7 @@ export const Map = ({
       renderCluster={RenderCluster}
       extent={windowWidth / 1.5}
     >
-      <Geojson
-        geojson={myPlace}
-        strokeColor={Dandelion}
-        fillColor={"transparent"}
-        strokeWidth={5}
-        tappable={false}
-      />
+      <RenderGeoJson/>
       {
         !start
           ? (

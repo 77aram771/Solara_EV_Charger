@@ -57,7 +57,7 @@ export const LangScreen = ({ navigation }) => {
     })()
   }, [])
 
-  const handleActive = (id) => {
+  const handleActive = async (id) => {
     setData(data.map(item => {
       item.active = false
       if (item.id === id) {

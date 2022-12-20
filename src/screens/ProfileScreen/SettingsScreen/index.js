@@ -11,7 +11,6 @@ import Context from "../../../../Context"
 import IconNotification from "../../../assets/icon/notification.png"
 import IconLanguage from "../../../assets/icon/language.png"
 import IconFaq from "../../../assets/icon/faq.png"
-import IconEmail from "../../../assets/icon/email2.png"
 import IconAbout from "../../../assets/icon/about.png"
 import IconLike from "../../../assets/icon/partner.png"
 import IconFb from "../../../assets/icon/facebook.png"
@@ -102,26 +101,6 @@ export const SettingsScreen = ({ navigation }) => {
           fontSize={18}
           fontWeight={"400"}
           icon={IconFaq}
-          iconWidth={20}
-          iconHeight={20}
-          marginBottom={20}
-          iconPositionLeft={false}
-          justifyContent={"flex-start"}
-          paddingLeft={20}
-        />
-        <ButtonCustom
-          text={`${lang[countryCode].Ask}`}
-          width={"100%"}
-          height={50}
-          backgroundColor={White}
-          borderColor={Mercurysolid}
-          color={MineShaft}
-          borderWidth={1}
-          borderRadius={18}
-          click={() => navigation.navigate("AskQuestion")}
-          fontSize={18}
-          fontWeight={"400"}
-          icon={IconEmail}
           iconWidth={20}
           iconHeight={20}
           marginBottom={20}

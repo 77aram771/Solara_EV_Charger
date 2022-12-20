@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react"
-import { ImageBackground, Platform, LogBox, View } from "react-native"
+import { ImageBackground, Platform, View } from "react-native"
 import Constants from "expo-constants"
 import * as Location from "expo-location"
 import Geocoder from "react-native-geocoding"
@@ -7,6 +7,7 @@ import * as Notifications from "expo-notifications"
 import { Provider } from "react-redux"
 import "react-native-gesture-handler"
 import axios from "axios"
+import "./ignoreWarnings";
 import Context from "./Context"
 import RootNavigation from "./src/navigation"
 import { store } from "./src/store"
@@ -17,13 +18,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import ImgSplashScreenRu from "./src/assets/images/img-splashscreen-ru.png"
 import ImgSplashScreenEn from "./src/assets/images/img-splashscreen-en.png"
 import ImgSplashScreenArm from "./src/assets/images/img-splashscreen-arm.png"
-
-LogBox.ignoreLogs([
-  "Non-serializable values were found in the navigation state",
-  "EventEmitter.removeListener",
-  "Overwriting fontFamily style attribute preprocessor",
-  "ViewPropTypes will be removed from React Native. Migrate to ViewPropTypes exported from 'deprecated-react-native-prop-types'."
-])
 
 Geocoder.init(Google_Key, { language: "en" })
 
@@ -100,32 +94,33 @@ export default function App() {
 
   async function registerForPushNotificationsAsync() {
     let token;
+
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
     if (Device.isDevice) {
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
+      if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      if (finalStatus !== "granted") {
-        console.log("Failed to get push token for push notification!");
+      if (finalStatus !== 'granted') {
+        console.log('Failed to get push token for push notification!');
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      // console.log("Notification token", token);
+      console.log(token);
     } else {
-      console.log("Must use physical device for Push Notifications");
+      alert('Must use physical device for Push Notifications');
     }
 
-    if (Platform.OS === "android") {
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C"
-      });
-    }
-    // console.log('token', token)
     return token;
   }
 
@@ -164,6 +159,7 @@ export default function App() {
     }
     let { status } = await Location.requestForegroundPermissionsAsync()
     Location.installWebGeolocationPolyfill()
+    console.log("status", status)
     if (status !== "granted") {
       alert(lang[countryCode].permissionToAccessLocationWasDenied)
       return
@@ -212,6 +208,7 @@ export default function App() {
           handleCountryCode: (code) => handleCountryCode(code),
           handleLocationUser: () => handleLocationUser(),
           handleCheckFilter: () => handleCheckFilter(),
+          registerForPushNotificationsAsync: () => registerForPushNotificationsAsync(),
           expoPushToken: expoPushToken
         }}
       >

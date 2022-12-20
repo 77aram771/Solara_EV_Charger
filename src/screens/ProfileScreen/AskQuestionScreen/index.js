@@ -2,18 +2,25 @@ import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, Alert, ScrollView, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
+import call from "react-native-phone-call"
 import { styles } from "./style"
-import { Fiord, Green, Manatee, MySin, White } from "../../../shared/Colors"
+import { Fiord, Green, Manatee, Mantis, MySin, White } from "../../../shared/Colors"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { lang } from "../../../shared/Lang"
 import Context from "../../../../Context"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { InputCustom } from "../../../components/UI/InputCustom"
-import IconDirection1 from "../../../assets/icon/direction1.png"
 import { DismissKeyboard } from "../../../components/DismissKeyboard"
 import { API_URL, Tokakey } from "../../../shared/Const"
 import { TextCustom } from "../../../components/UI/TextCustom"
 import { regEmail, regName, regPhone } from "../../../shared/MockData"
+import IconDirection1 from "../../../assets/icon/direction1.png"
+import IconPhone from "../../../assets/icon/icon-phone.png"
+
+const args = {
+  number: "+37444301111",
+  prompt: false
+}
 
 export const AskQuestionScreen = ({ navigation }) => {
 
@@ -30,7 +37,7 @@ export const AskQuestionScreen = ({ navigation }) => {
   const [emailErrorMessage] = useState(lang[countryCode].wrongЕmail)
   const [mail, setMail] = useState("")
   const [mailError, setMailError] = useState(false)
-  const [mailErrorMessage] = useState(lang[countryCode].wrongЕmail)
+  const [mailErrorMessage] = useState(lang[countryCode].wrongМail)
   const [loader, setLoader] = useState(false)
   const [message, setMessage] = useState("")
 
@@ -205,6 +212,24 @@ export const AskQuestionScreen = ({ navigation }) => {
               iconPositionLeft={false}
               click={handleSend}
               marginTop={40}
+              disabled={loader}
+            />
+            <ButtonCustom
+              width={"100%"}
+              height={35}
+              backgroundColor={Mantis}
+              text={lang[countryCode].orJustCallUs}
+              fontSize={18}
+              color={White}
+              borderRadius={5}
+              borderColor={Mantis}
+              borderWidth={2}
+              icon={IconPhone}
+              iconWidth={17}
+              iconHeight={17}
+              iconPositionLeft={false}
+              click={() => call(args).catch(console.error)}
+              marginTop={20}
               disabled={loader}
             />
           </View>

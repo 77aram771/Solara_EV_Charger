@@ -39,7 +39,7 @@ export const lang = {
     selectChargingPercent: "Ընտրել լիցքավորման տոկոսը",
     charge: "Լիցքավորել",
     yourCarConnecting: "Ձեր մեքենան միանում է",
-    yourCarCharged: "Ձեր մեքենան լիցքավորում է",
+    yourCarCharged: "Ձեր մեքենան լիցքավորվում է",
     electricity: "էլ. հոսանք",
     voltage: "Լարում",
     chargingWatt: "Լիցքավորման Վտ",
@@ -87,6 +87,7 @@ export const lang = {
     changePasswordTitle: "Գաղտնաբառի փոփոխում",
     registration: "Գրանցվել",
     wrongName: "Սխալ անուն",
+    wrongМail: "Նամակ գրեք",
     wrongЕmail: "Սխալ էլ.փոստ",
     wrongPassword: "Սխալ գաղտնաբառ",
     wrongNewPassword: "Սխալ նոր գաղտնաբառը",
@@ -149,6 +150,7 @@ export const lang = {
     deleteAccount: "Ջնջել Օգտատերին",
     аreYouWantToDeleteYourAccount: "Դուք ուզում եք ջնջել ձեր հաշիվը",
     text: "տեքստ",
+    orJustCallUs: "Կամ պարզապես զանգահարեք մեզ",
   },
   ru: {
     H: "ч",
@@ -236,6 +238,7 @@ export const lang = {
     code: "Код",
     changePasswordTitle: "Изменить пароль",
     registration: "Регистрация",
+    wrongМail: "Напишите письмо",
     wrongЕmail: "Неверный адрес эл. почты",
     wrongName: "Неверный имя",
     wrongPassword: "Неправильный пароль",
@@ -298,7 +301,8 @@ export const lang = {
     thePortIsBusyOrUnavailable: "Порт занят или недоступен",
     deleteAccount: "Удалить аккаунт",
     аreYouWantToDeleteYourAccount: "Вы хотите удалить свой аккаунт?",
-    text: "текст"
+    text: "текст",
+    orJustCallUs: "Или просто позвоните нам",
   },
   en: {
     H: "h",
@@ -387,6 +391,7 @@ export const lang = {
     changePasswordTitle: "Change Password",
     registration: "Registration",
     wrongЕmail: "Wrong email address",
+    wrongМail: "Write a letter",
     wrongName: "Wrong name",
     wrongPassword: "Wrong password",
     wrongNewPassword: "Wrong new password",
@@ -448,6 +453,7 @@ export const lang = {
     thePortIsBusyOrUnavailable: "The port is Busy or Unavailable",
     deleteAccount: "Delete account",
     аreYouWantToDeleteYourAccount: "Are you want to delete your account?",
-    text: "text"
+    text: "text",
+    orJustCallUs: "Or just call us",
   }
 }
