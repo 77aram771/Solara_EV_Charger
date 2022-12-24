@@ -74,7 +74,7 @@ export const ProfileScreen = ({ navigation }) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
           if (e?.response?.data?.status === 401) {
             handleLogOut()
           }

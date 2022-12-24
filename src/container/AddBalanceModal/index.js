@@ -27,7 +27,7 @@ import { TextCustom } from "../../components/UI/TextCustom"
 import { DismissKeyboard } from "../../components/DismissKeyboard"
 import ImgLight from "../../assets/icon/priceunit.png"
 import IconCard from "../../assets/icon/icon-card.png"
-import IconClose from "../../assets/icon/icon-close.png";
+import IconClose from "../../assets/icon/icon-close.png"
 
 export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
 
@@ -127,7 +127,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 [
                   { text: "OK", onPress: () => console.log("OK Pressed") }
                 ]
-              );
+              )
             })
         }
         else if (cardId === 4) {
@@ -162,7 +162,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 [
                   { text: "OK", onPress: () => console.log("OK Pressed") }
                 ]
-              );
+              )
             })
         }
         else {
@@ -199,7 +199,7 @@ export const AddBalanceModal = ({ getUserProfile, handleModal }) => {
                 [
                   { text: "OK", onPress: () => console.log("OK Pressed") }
                 ]
-              );
+              )
             })
         }
       }

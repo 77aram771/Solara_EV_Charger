@@ -1,8 +1,9 @@
-import React, { useState } from "react"
-import { FlatList, Image, TouchableOpacity, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { ActivityIndicator, Alert, FlatList, Image, TouchableOpacity, View } from "react-native"
 import Constants from "expo-constants"
-import { windowHeight, windowWidth } from "../../shared/Const"
-import { BrightGray, Fiord, Manatee, White } from "../../shared/Colors"
+import axios from "axios"
+import { API_URL, Tokakey, windowHeight, windowWidth } from "../../shared/Const"
+import { BrightGray, Fiord, Manatee, MySin, White } from "../../shared/Colors"
 import { InputCustom } from "../../components/UI/InputCustom"
 import { TitleCustom } from "../../components/UI/TitleCustom"
 import { lang } from "../../shared/Lang"
@@ -13,29 +14,47 @@ import IconDirection2 from "../../assets/icon/direction2.png"
 import IconBook from "../../assets/icon/reserve.png"
 
 export const ChargerList = ({
-  data,
   countryCode,
   handleModal,
   handleItemId,
   handleStart,
   navigation
 }) => {
-  const [chargerListData, setChargerListData] = useState(data)
-
-  // console.log("chargerListData", chargerListData)
-
+  const [loader, setLoader] = useState(null)
+  const [listData, setListData] = useState(null)
+  const [chargerListData, setChargerListData] = useState(null)
   const [value, setValue] = useState("")
+
+  useEffect(() => {
+    setLoader(true)
+    axios
+      .get(`${API_URL}/charge-box/index?page=1&per-page=60000&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`, { headers: { tokakey: Tokakey } })
+      .then(response => {
+        setLoader(false)
+        setListData(response.data?.data)
+      })
+      .catch(e => {
+        setLoader(false)
+        Alert.alert(
+          `${e?.response?.data?.name} ${e?.response?.data?.status}`,
+          `${e?.response?.data?.message}`,
+          [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]
+        )
+      })
+  }, [])
 
   const handleFilter = (value) => {
     if (value) {
-      const newDataTitle = data.filter(function(item) {
+      const newDataTitle = listData && listData.filter(function(item) {
         const itemData = item?.title
           ? item?.title.toUpperCase()
           : "".toUpperCase()
         const textData = value.toUpperCase()
         return itemData.indexOf(textData) > -1
       })
-      const newDataAddress = data.filter(function(item) {
+      const newDataAddress = listData && listData.filter(function(item) {
         const itemData = item?.address
           ? item?.address.toUpperCase()
           : "".toUpperCase()
@@ -45,14 +64,14 @@ export const ChargerList = ({
       setChargerListData([...newDataTitle, ...newDataAddress])
       setValue(value)
     } else {
-      setChargerListData(data)
+      setChargerListData(listData && listData)
       setValue(value)
     }
   }
 
   const handleResetInput = () => {
     setValue("")
-    setChargerListData(data)
+    setChargerListData(listData && listData)
   }
 
   const RenderChargerItem = ({ title, address, pin, connectors, index }) => {
@@ -163,7 +182,7 @@ export const ChargerList = ({
         backgroundColor: White,
         paddingTop: Constants.statusBarHeight,
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center"
       }}
     >
@@ -192,28 +211,34 @@ export const ChargerList = ({
           iconHeight={25}
         />
       </View>
-      <FlatList
-        keyExtractor={(item, index) => index}
-        data={chargerListData}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <RenderChargerItem
-            address={item?.address}
-            connectors={item?.connectors}
-            title={item?.title}
-            pin={item?.pin}
-            index={index}
-          />
-        )}
-        style={{ width: "90%" }}
-        contentContainerStyle={{
-          marginTop: 30,
-          paddingBottom: 60,
-          justifyContent: "flex-start",
-          alignItems: "flex-start"
-        }}
-      />
+      {
+        loader
+          ? <ActivityIndicator size="large" color={MySin} animating={true} style={{ marginTop: 30 }} />
+          : (
+            <FlatList
+              keyExtractor={(item, index) => index}
+              data={chargerListData ? chargerListData : listData}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => (
+                <RenderChargerItem
+                  address={item?.address}
+                  connectors={item?.connectors}
+                  title={item?.title}
+                  pin={item?.pin}
+                  index={index}
+                />
+              )}
+              style={{ width: "90%" }}
+              contentContainerStyle={{
+                marginTop: 30,
+                paddingBottom: 60,
+                justifyContent: "flex-start",
+                alignItems: "flex-start"
+              }}
+            />
+          )
+      }
     </View>
   )
 }

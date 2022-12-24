@@ -64,7 +64,7 @@ export const HistoryScreen = ({ navigation }) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
         })
     }
   }
@@ -89,7 +89,7 @@ export const HistoryScreen = ({ navigation }) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
         })
     }
   }

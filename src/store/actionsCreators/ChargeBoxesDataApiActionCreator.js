@@ -20,7 +20,7 @@ export const GetChargeBoxesData = (url) => (dispatch) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
         })
     })
   } else {

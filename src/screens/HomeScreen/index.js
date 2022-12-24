@@ -49,7 +49,7 @@ export const HomeScreen = ({ navigation }) => {
     countryCode
   } = useContext(Context)
 
-  const [mapRef, setMapRef] = useState(null);
+  const [mapRef, setMapRef] = useState(null)
   const [data, setData] = useState(null)
   const [itemId, setItemId] = useState(null)
   const [qrItem, setQrItem] = useState(null)
@@ -97,9 +97,9 @@ export const HomeScreen = ({ navigation }) => {
     } else {
       setCordinate({
         latitude: 40.177200,
-        longitude: 44.503490,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
+        longitude: 45,
+        latitudeDelta: 6,
+        longitudeDelta: 3
       })
     }
   }, [location])
@@ -109,12 +109,12 @@ export const HomeScreen = ({ navigation }) => {
     handleChargeBoxesData()
   }, [countryCode])
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     handleChargeBoxesData()
-  //   }, 10000)
-  //   return () => clearInterval(interval)
-  // }, [])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleChargeBoxesData()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
@@ -346,10 +346,16 @@ export const HomeScreen = ({ navigation }) => {
                   <Image source={IconFilter} style={{ width: 22, height: 22, marginRight: 10 }} />
                   <TextCustom text={lang[countryCode].filter} color={Fiord} fontSize={16} fontWeight={"700"} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleModal} style={styles.chargeListBox}>
-                  <Image source={IconList} style={{ width: 22, height: 22, marginRight: 10 }} />
-                  <TextCustom text={lang[countryCode].list} color={Fiord} fontSize={16} fontWeight={"700"} />
-                </TouchableOpacity>
+                {
+                  chargeBoxesData
+                    ? (
+                      <TouchableOpacity onPress={handleModal} style={styles.chargeListBox}>
+                        <Image source={IconList} style={{ width: 22, height: 22, marginRight: 10 }} />
+                        <TextCustom text={lang[countryCode].list} color={Fiord} fontSize={16} fontWeight={"700"} />
+                      </TouchableOpacity>
+                    )
+                    : null
+                }
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate("QRScanner", { handleQRData: (id) => handleQRData(id) })}

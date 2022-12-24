@@ -5,6 +5,7 @@ import { MyDrawer } from "./DrawerStack"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 // import { TabNavigator } from "./TabNavigator"
 
+
 function RootNavigation() {
 
   return (

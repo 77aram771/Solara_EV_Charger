@@ -66,7 +66,7 @@ export const BookTypeScreen = ({ navigation, route }) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
         })
     }
   }

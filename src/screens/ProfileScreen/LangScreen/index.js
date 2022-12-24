@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Image, TouchableOpacity, View } from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
 import { MineShaft, MySin } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
@@ -8,7 +9,6 @@ import { TextCustom } from "../../../components/UI/TextCustom"
 import { langData } from "../../../shared/MockData"
 import Context from "../../../../Context"
 import IconCheck from "../../../assets/icon/icon-check.png"
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RenderLangItem = ({ icon, title, active, handle }) => {
   return (

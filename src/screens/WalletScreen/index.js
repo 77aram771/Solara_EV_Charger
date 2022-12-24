@@ -66,7 +66,7 @@ export const WalletScreen = ({ navigation }) => {
             [
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
-          );
+          )
           setLoader(false)
           console.log("e", e)
         })

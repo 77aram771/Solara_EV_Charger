@@ -59,7 +59,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
           //   [
           //     { text: "OK", onPress: () => console.log("OK Pressed") }
           //   ]
-          // );
+          // )
         })
     }
   }
@@ -94,7 +94,7 @@ export const LoadChargeScreen = ({ navigation, route }) => {
           //   [
           //     { text: "OK", onPress: () => console.log("OK Pressed") }
           //   ]
-          // );
+          // )
         })
     }
   }

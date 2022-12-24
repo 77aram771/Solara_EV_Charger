@@ -7,7 +7,7 @@ import * as Notifications from "expo-notifications"
 import { Provider } from "react-redux"
 import "react-native-gesture-handler"
 import axios from "axios"
-import "./ignoreWarnings";
+import "./ignoreWarnings"
 import Context from "./Context"
 import RootNavigation from "./src/navigation"
 import { store } from "./src/store"
@@ -27,7 +27,7 @@ Notifications.setNotificationHandler({
     shouldPlaySound: true,
     shouldSetBadge: true
   })
-});
+})
 
 Notifications.requestPermissionsAsync({
   ios: {
@@ -36,11 +36,11 @@ Notifications.requestPermissionsAsync({
     allowSound: true,
     allowAnnouncements: true
   }
-});
+})
 
 // axios.interceptors.response.use(response => {
 //   console.log('response', response.data)
-//   return response;
+//   return response
 // }, error => {
 //   console.log('error', error)
 //   if (error.response.status === 401) {
@@ -48,8 +48,8 @@ Notifications.requestPermissionsAsync({
 //       await AsyncStorage.removeItem("token")
 //     })()
 //   }
-//   return error;
-// });
+//   return error
+// })
 
 export default function App() {
 
@@ -70,30 +70,30 @@ export default function App() {
     })()
   }, [countryCode])
 
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+  const [expoPushToken, setExpoPushToken] = useState("")
+  const [notification, setNotification] = useState(false)
+  const notificationListener = useRef()
+  const responseListener = useRef()
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+      setNotification(notification)
+    })
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log("response", response);
-    });
+      console.log("response", response)
+    })
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
+      Notifications.removeNotificationSubscription(notificationListener.current)
+      Notifications.removeNotificationSubscription(responseListener.current)
+    }
+  }, [])
 
   async function registerForPushNotificationsAsync() {
-    let token;
+    let token
 
     if (Platform.OS === 'android') {
       await Notifications.setNotificationChannelAsync('default', {
@@ -101,27 +101,27 @@ export default function App() {
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: '#FF231F7C',
-      });
+      })
     }
 
     if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
+      const { status: existingStatus } = await Notifications.getPermissionsAsync()
+      let finalStatus = existingStatus
       if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
+        const { status } = await Notifications.requestPermissionsAsync()
+        finalStatus = status
       }
       if (finalStatus !== 'granted') {
-        console.log('Failed to get push token for push notification!');
-        return;
+        console.log('Failed to get push token for push notification!')
+        return
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+      token = (await Notifications.getExpoPushTokenAsync()).data
+      console.log(token)
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert('Must use physical device for Push Notifications')
     }
 
-    return token;
+    return token
   }
 
   const handleHideTabBar = (bool) => setShowTabBar(bool)

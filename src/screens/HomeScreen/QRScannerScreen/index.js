@@ -10,8 +10,8 @@ import { TextCustom } from "../../../components/UI/TextCustom"
 import { ButtonCustom } from "../../../components/UI/ButtonCustom"
 import { Black, Dandelion, Fiord } from "../../../shared/Colors"
 import { lang } from "../../../shared/Lang"
-import IconCloseWhite from "../../../assets/icon/icon-close.png";
-import IconCloseYellow from "../../../assets/icon/icon-close-yellow.png";
+import IconCloseWhite from "../../../assets/icon/icon-close.png"
+import IconCloseYellow from "../../../assets/icon/icon-close-yellow.png"
 
 export const QRScannerScreen = ({ navigation, route }) => {
 
@@ -68,7 +68,7 @@ export const QRScannerScreen = ({ navigation, route }) => {
           [
             { text: "OK", onPress: () => console.log("OK Pressed") }
           ]
-        );
+        )
       })
   }
 

@@ -23,6 +23,8 @@ import ImgDefault from "../../../assets/images/img-book-slide1.jpeg"
 
 export const BookScreen = ({ navigation, route }) => {
 
+  const { data } = route?.params
+
   const { handleHideTabBar, location, countryCode, sumKW } = useContext(Context)
 
   const [imageData, setImageData] = useState(null)
@@ -31,6 +33,7 @@ export const BookScreen = ({ navigation, route }) => {
   const [image3DModal, setImage3DModal] = useState(false)
   const [modalVisibleCheckUser, setModalVisibleCheckUser] = useState(false)
   const [loader, setLoader] = useState(true)
+  const [ports, setPorts] = useState(null)
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
@@ -41,11 +44,18 @@ export const BookScreen = ({ navigation, route }) => {
     })
   }, [navigation])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getPorts()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   const getDetails = () => {
     setLoader(true)
     axios.post(
       `${API_URL}/charge-box/details`,
-      { id: route?.params?.data[route?.params.itemId].id },
+      { id: data[route?.params.itemId].id },
       { headers: { tokakey: Tokakey } }
     )
       .then(res => {
@@ -54,12 +64,29 @@ export const BookScreen = ({ navigation, route }) => {
           setImage3DData(res?.data["360_url"])
         }
         setImageData(res?.data?.images)
+        setPorts(res?.data?.connectors)
       })
       .catch(e => {
         setLoader(false)
         console.log("e", e.response)
       })
   }
+
+  const getPorts = () => {
+    axios.post(
+      `${API_URL}/charge-box/details`,
+      { id: data[route?.params.itemId].id },
+      { headers: { tokakey: Tokakey } }
+    )
+      .then(res => {
+        console.log("res getPorts", res?.data?.connectors)
+        setPorts(res?.data?.connectors)
+      })
+      .catch(e => {
+        console.log("e", e.response)
+      })
+  }
+
 
   const handleModal = () => setImageModal(!imageModal)
 
@@ -69,16 +96,15 @@ export const BookScreen = ({ navigation, route }) => {
     const Token = await AsyncStorage.getItem("token")
     if (Token === null) {
       setModalVisibleCheckUser(true)
-    }
-    else {
+    } else {
       // navigation.navigate("BookType", {
       //   item,
-      //   address: route?.params?.data[route?.params?.itemId].address
+      //   address: data[route?.params?.itemId].address
       // })
       if (item?.status === "Available" || item?.status === "Preparing") {
         navigation.navigate("BookType", {
           item,
-          address: route?.params?.data[route?.params?.itemId].address
+          address: data[route?.params?.itemId].address
         })
       } else {
         alert(lang[countryCode].thePortIsBusyOrUnavailable)
@@ -267,7 +293,7 @@ export const BookScreen = ({ navigation, route }) => {
       <HeaderCustom
         handleBack={() => navigation.goBack()}
         backgroundColor={MySin}
-        text={route?.params?.data[route?.params?.itemId]?.title}
+        text={data[route?.params?.itemId]?.title}
       />
       <ScrollView
         style={{ marginBottom: 60, top: -10, flex: 1 }}
@@ -329,7 +355,7 @@ export const BookScreen = ({ navigation, route }) => {
           <InfoBoxCustom
             itemId={route?.params?.itemId}
             isBook={route?.params?.isBook}
-            data={route?.params?.data}
+            data={data}
             image3DData={image3DData}
             handleModal360={handleModal360}
           />
@@ -364,20 +390,23 @@ export const BookScreen = ({ navigation, route }) => {
               </View>
             </View>
             {
-              route?.params?.data[route?.params?.itemId]?.connectors.map((item, index) => {
-                // console.log('item', item)
-                if (item?.status === "Available") {
-                  return <RenderSection item={item} key={index} index={index} color={Fiord} />
-                } else if (item?.status === "Charging") {
-                  return <RenderSection item={item} key={index} index={index} color={Mantis} />
-                } else if (item?.status === "Preparing") {
-                  return <RenderSection item={item} key={index} index={index} color={MySin2} />
-                } else if (item?.status === "Unavailable") {
-                  return <RenderSection item={item} key={index} index={index} color={Amaranth} />
-                } else {
-                  return <RenderSection item={item} key={index} index={index} color={Amaranth} />
-                }
-              })
+              ports
+                ? (
+                  ports.map((item, index) => {
+                    if (item?.status === "Available") {
+                      return <RenderSection item={item} key={index} index={index} color={Fiord} />
+                    } else if (item?.status === "Charging") {
+                      return <RenderSection item={item} key={index} index={index} color={Mantis} />
+                    } else if (item?.status === "Preparing") {
+                      return <RenderSection item={item} key={index} index={index} color={MySin2} />
+                    } else if (item?.status === "Unavailable") {
+                      return <RenderSection item={item} key={index} index={index} color={Amaranth} />
+                    } else {
+                      return <RenderSection item={item} key={index} index={index} color={Amaranth} />
+                    }
+                  })
+                )
+                : null
             }
           </View>
         </View>

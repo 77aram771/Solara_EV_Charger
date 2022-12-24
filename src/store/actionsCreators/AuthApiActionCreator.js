@@ -1,8 +1,8 @@
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Platform } from "react-native"
 import { fetchData, fetchSuccess, fetchError } from "../actions/AuthApiAction"
-import { API_URL, Tokakey } from "../../shared/Const";
-import { Platform } from "react-native";
+import { API_URL, Tokakey } from "../../shared/Const"
 
 export const AuthSignIn = (url, body, expoPushToken) => (dispatch) => {
 

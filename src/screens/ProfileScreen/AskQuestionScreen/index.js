@@ -110,7 +110,7 @@ export const AskQuestionScreen = ({ navigation }) => {
                   [
                     { text: "OK", onPress: () => console.log("OK Pressed") }
                   ]
-                );
+                )
               })
           } else {
             setMailError(true)
