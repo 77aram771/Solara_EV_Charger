@@ -60,6 +60,10 @@ export default function App() {
   const [countryCode, setCountryCode] = useState("en")
   const [sumKW, setSumKW] = useState("")
   const [checkFilter, setCheckFilter] = useState(false)
+  const [creatUrl, setCreatUrl] = useState("")
+
+  const handleCreatUrl = (url) => setCreatUrl(url)
+  const handleResetUrl = () => setCreatUrl("")
 
   useEffect(() => {
     (async () => {
@@ -204,11 +208,14 @@ export default function App() {
           countryCode: countryCode,
           sumKW: sumKW,
           checkFilter: checkFilter,
+          creatUrl: creatUrl,
           handleHideTabBar: (bool) => handleHideTabBar(bool),
           handleCountryCode: (code) => handleCountryCode(code),
           handleLocationUser: () => handleLocationUser(),
           handleCheckFilter: () => handleCheckFilter(),
           registerForPushNotificationsAsync: () => registerForPushNotificationsAsync(),
+          handleCreatUrl: (url) => handleCreatUrl(url),
+          handleResetUrl: () => handleResetUrl(),
           expoPushToken: expoPushToken
         }}
       >

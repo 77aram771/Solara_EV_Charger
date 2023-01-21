@@ -151,6 +151,7 @@ export const lang = {
     аreYouWantToDeleteYourAccount: "Դուք ուզում եք ջնջել ձեր հաշիվը",
     text: "տեքստ",
     orJustCallUs: "Կամ պարզապես զանգահարեք մեզ",
+    reset: "Վերականգնել",
   },
   ru: {
     H: "ч",
@@ -303,6 +304,7 @@ export const lang = {
     аreYouWantToDeleteYourAccount: "Вы хотите удалить свой аккаунт?",
     text: "текст",
     orJustCallUs: "Или просто позвоните нам",
+    reset: "Сброс настроек",
   },
   en: {
     H: "h",
@@ -455,5 +457,6 @@ export const lang = {
     аreYouWantToDeleteYourAccount: "Are you want to delete your account?",
     text: "text",
     orJustCallUs: "Or just call us",
+    reset: "Reset",
   }
 }

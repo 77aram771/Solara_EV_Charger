@@ -46,7 +46,8 @@ export const HomeScreen = ({ navigation }) => {
     handleLocationUser,
     userAddress,
     handleHideTabBar,
-    countryCode
+    countryCode,
+    creatUrl
   } = useContext(Context)
 
   const [mapRef, setMapRef] = useState(null)
@@ -106,15 +107,23 @@ export const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(GetCarMake(`${API_URL}/car-make/?page=1&per-page=500&title`))
-    handleChargeBoxesData()
-  }, [countryCode])
+    if (creatUrl.length > 0) {
+      handleChargeBoxesData(creatUrl)
+    } else {
+      handleChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60000&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`)
+    }
+  }, [countryCode, creatUrl])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      handleChargeBoxesData()
-    }, 5000)
+      if (creatUrl.length > 0) {
+        handleChargeBoxesData(creatUrl)
+      } else {
+        handleChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60000&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`)
+      }
+    }, 10000)
     return () => clearInterval(interval)
-  }, [])
+  }, [creatUrl])
 
   useEffect(() => {
     if (chargeBoxesData !== null && chargeBoxesData !== undefined) {
@@ -165,7 +174,9 @@ export const HomeScreen = ({ navigation }) => {
     }
   }
 
-  const handleChargeBoxesData = () => dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=60000&min=7&max=60&language=${countryCode === "ar" ? "hy" : countryCode}`))
+  const handleChargeBoxesData = (url) => {
+    dispatch(GetChargeBoxesData(url))
+  }
 
   const getCurrentPosition = () => {
     if (location === null) {

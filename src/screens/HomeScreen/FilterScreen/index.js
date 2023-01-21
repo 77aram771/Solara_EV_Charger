@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ActivityIndicator, ScrollView, View } from "react-native"
 import axios from "axios"
-import { useDispatch } from "react-redux"
 import Context from "../../../../Context"
 import { Fiord, MySin } from "../../../shared/Colors"
 import { HeaderCustom } from "../../../components/UI/HeaderCustom"
@@ -14,14 +13,12 @@ import { FilterItem } from "../../../components/UI/FilterItem"
 import { RangeLineCustom } from "../../../components/UI/RangeLineCustom"
 import { CheckItem } from "../../../components/UI/CheckItem"
 import { API_URL, Tokakey } from "../../../shared/Const"
-import { GetChargeBoxesData } from "../../../store/actionsCreators/ChargeBoxesDataApiActionCreator"
 import IconFilter from "../../../assets/icon/filtr2.png"
+import IconReset from "../../../assets/icon/icon-reset.png"
 
 export const FilterScreen = ({ navigation }) => {
 
-  const dispatch = useDispatch()
-
-  const { countryCode, handleCheckFilter } = useContext(Context)
+  const { countryCode, handleCheckFilter, handleCreatUrl, handleResetUrl } = useContext(Context)
 
   const [allSwitch, setAllSwitch] = useState(false)
   const [filterData, setFilterData] = useState(null)
@@ -41,23 +38,7 @@ export const FilterScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      setLoader(true)
-      await axios.get(`${API_URL}/connector-types/?page=1&per-page=20000000&title=&language=${countryCode === "ar" ? "hy" : countryCode}`,
-        { headers: { tokakey: Tokakey } }
-      )
-        .then(res => {
-          setLoader(false)
-          setFilterData(res?.data?.data)
-        })
-      await axios.get(`${API_URL}/data/get-min-max-kw`,
-        { headers: { tokakey: Tokakey } }
-      )
-        .then(res => {
-          setMin(res?.data?.min)
-          setMax(res?.data?.max)
-          setCheckMin(res?.data?.min)
-          setCheckMax(res?.data?.max)
-        })
+      await handleGetData()
     })()
   }, [])
 
@@ -68,6 +49,26 @@ export const FilterScreen = ({ navigation }) => {
     })
     setCustomUrl(newUrl)
   }, [filterItems])
+
+  const handleGetData = async () => {
+    setLoader(true)
+    await axios.get(`${API_URL}/connector-types/?page=1&per-page=20000000&title=&language=${countryCode === "ar" ? "hy" : countryCode}`,
+      { headers: { tokakey: Tokakey } }
+    )
+      .then(res => {
+        setLoader(false)
+        setFilterData(res?.data?.data)
+      })
+    await axios.get(`${API_URL}/data/get-min-max-kw`,
+      { headers: { tokakey: Tokakey } }
+    )
+      .then(res => {
+        setMin(res?.data?.min)
+        setMax(res?.data?.max)
+        setCheckMin(res?.data?.min)
+        setCheckMax(res?.data?.max)
+      })
+  }
 
   const handleSwitch = (id) => {
     setFilterData(filterData.map((item) => {
@@ -116,12 +117,23 @@ export const FilterScreen = ({ navigation }) => {
 
   const handleSave = () => {
     if (checkData[0].active) {
-      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=100000&${customUrl.join("&")}&only_free=${1}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`))
+      handleCreatUrl(`${API_URL}/charge-box/index?page=1&per-page=100000&${customUrl.join("&")}&only_free=${1}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`)
     } else {
-      dispatch(GetChargeBoxesData(`${API_URL}/charge-box/index?page=1&per-page=1000000&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`))
+      handleCreatUrl(`${API_URL}/charge-box/index?page=1&per-page=1000000&${customUrl.join("&")}&min=${checkMin}&max=${checkMax}&language=${countryCode === "ar" ? "hy" : countryCode}`)
     }
     navigation.closeDrawer()
     handleCheckFilter()
+  }
+
+  const handleReset = async () => {
+    handleResetUrl()
+    setAllSwitch(false)
+    setCheckData(checkData.map(item => {
+      item.active = false
+      return item
+    }))
+    navigation.closeDrawer()
+    await handleGetData()
   }
 
   return (
@@ -135,7 +147,7 @@ export const FilterScreen = ({ navigation }) => {
         text={lang[countryCode].filter}
       />
       <ScrollView
-        style={{ paddingHorizontal, marginTop: 10, marginBottom: 60 }}
+        style={{ paddingHorizontal, marginTop: 10 }}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -146,7 +158,6 @@ export const FilterScreen = ({ navigation }) => {
             )
             : (
               <>
-                <TitleCustom text={lang[countryCode].portTypeTitle} fontSize={18} color={Fiord} marginBottom={15} />
                 <View style={styles.portsBox}>
                   <FilterItem text={"All"} active={allSwitch} handleSwitch={handleAllSwitch} borderShow={true} />
                   {
@@ -205,6 +216,23 @@ export const FilterScreen = ({ navigation }) => {
           fontSize={22}
           fontWeight={"700"}
           icon={IconFilter}
+          iconWidth={22}
+          iconHeight={22}
+          iconPositionLeft={false}
+          borderRadius={10}
+          marginBottom={20}
+          disabled={loader}
+        />
+        <ButtonCustom
+          text={lang[countryCode].reset.toUpperCase()}
+          backgroundColor={Fiord}
+          color={MySin}
+          width={"100%"}
+          height={50}
+          click={handleReset}
+          fontSize={22}
+          fontWeight={"700"}
+          icon={IconReset}
           iconWidth={22}
           iconHeight={22}
           iconPositionLeft={false}

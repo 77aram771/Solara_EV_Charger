@@ -129,13 +129,14 @@ export const ChargerList = ({
         >
           <TouchableOpacity
             onPress={(e) => {
+              console.log("index", index)
               handleModal()
               handleItemId(e, index)
               setTimeout(() => {
                 navigation.navigate("Book", {
                   itemId: index,
                   isBook: true,
-                  data: chargerListData,
+                  data: listData,
                   handleStart: () => handleStart()
                 })
               }, 100)
