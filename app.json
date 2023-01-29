@@ -34,7 +34,7 @@
     ],
     "name": "Solara EV Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.5.1",
+    "version": "1.5.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -69,18 +69,22 @@
         }
       },
       "package": "com.voodoo.solara.charging",
-      "versionCode": 62,
+      "versionCode": 64,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.CAMERA",
         "android.permission.NOTIFICATIONS",
         "android.permission.RECORD_AUDIO"
-      ],
-      "useNextNotificationsApi": true
+      ]
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f19f66e3-b6a2-4180-adec-dcfb49062cba"
+      }
     }
   }
 }
