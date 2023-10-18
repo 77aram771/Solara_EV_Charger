@@ -201,45 +201,45 @@ export const FilterScreen = ({ navigation }) => {
                     )
                   })
                 }
+                <View style={styles.buttonContainer}>
+                  <ButtonCustom
+                      text={lang[countryCode].filter.toUpperCase()}
+                      backgroundColor={Fiord}
+                      color={MySin}
+                      width={"100%"}
+                      height={50}
+                      click={handleSave}
+                      fontSize={22}
+                      fontWeight={"700"}
+                      icon={IconFilter}
+                      iconWidth={22}
+                      iconHeight={22}
+                      iconPositionLeft={false}
+                      borderRadius={10}
+                      marginBottom={20}
+                      disabled={loader}
+                  />
+                  <ButtonCustom
+                      text={lang[countryCode].reset.toUpperCase()}
+                      backgroundColor={Fiord}
+                      color={MySin}
+                      width={"100%"}
+                      height={50}
+                      click={handleReset}
+                      fontSize={22}
+                      fontWeight={"700"}
+                      icon={IconReset}
+                      iconWidth={22}
+                      iconHeight={22}
+                      iconPositionLeft={false}
+                      borderRadius={10}
+                      disabled={loader}
+                  />
+                </View>
               </>
             )
         }
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <ButtonCustom
-          text={lang[countryCode].filter.toUpperCase()}
-          backgroundColor={Fiord}
-          color={MySin}
-          width={"100%"}
-          height={50}
-          click={handleSave}
-          fontSize={22}
-          fontWeight={"700"}
-          icon={IconFilter}
-          iconWidth={22}
-          iconHeight={22}
-          iconPositionLeft={false}
-          borderRadius={10}
-          marginBottom={20}
-          disabled={loader}
-        />
-        <ButtonCustom
-          text={lang[countryCode].reset.toUpperCase()}
-          backgroundColor={Fiord}
-          color={MySin}
-          width={"100%"}
-          height={50}
-          click={handleReset}
-          fontSize={22}
-          fontWeight={"700"}
-          icon={IconReset}
-          iconWidth={22}
-          iconHeight={22}
-          iconPositionLeft={false}
-          borderRadius={10}
-          disabled={loader}
-        />
-      </View>
     </View>
   )
 }

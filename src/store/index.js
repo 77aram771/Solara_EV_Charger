@@ -20,6 +20,4 @@ const appReducers = combineReducers({
 
 const rootReducer = (state, action) => appReducers(state, action)
 
-// const logger = createLogger()
-
 export const store = createStore(rootReducer, applyMiddleware(thunk))

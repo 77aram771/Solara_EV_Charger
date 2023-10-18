@@ -10,13 +10,12 @@ export const styles = StyleSheet.create({
         backgroundColor: White
     },
     buttonContainer: {
-        position: 'absolute',
-        bottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal,
         width: windowWidth,
-        alignSelf:'flex-end'
+        alignSelf:'center',
+        marginTop: 20
     },
     portsBox: {
         width: '100%',

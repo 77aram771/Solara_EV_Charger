@@ -22,7 +22,7 @@ export const SelectCustom = ({
       <View style={[styles.container, { borderColor: error ? SunsetOrange : BrightGray }]}>
         <RNPickerSelect
           placeholder={placeholder}
-          items={data}
+          items={data ? data : []}
           onValueChange={value => handle(value)}
           style={{
             inputIOS: {

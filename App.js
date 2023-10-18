@@ -198,7 +198,8 @@ export default function App() {
         }
       </View>
     )
-  } else {
+  }
+  else {
     return (
       <Context.Provider
         value={{

@@ -1,5 +1,6 @@
 import {StyleSheet} from "react-native"
 import {BrightGray} from "../../../shared/Colors"
+import { windowHeight } from "../../../shared/Const";
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,7 +8,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingBottom: 15,
+        paddingBottom: windowHeight / 60,
         marginBottom: 15,
         borderBottomWidth: 1,
         borderBottomColor: BrightGray

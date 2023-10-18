@@ -224,7 +224,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
             />
             <SelectCustom
               value={auto}
-              data={autoData}
+              data={autoData && autoData}
               placeholder={{
                 label: lang[countryCode].car,
                 value: null,
@@ -240,7 +240,7 @@ export const PersonalInformationScreen = ({ navigation, route }) => {
             />
             <SelectCustom
               value={autoModal}
-              data={autoModalData}
+              data={autoModalData && autoModalData}
               placeholder={{
                 label: lang[countryCode].make,
                 value: null,

@@ -34,7 +34,7 @@
     ],
     "name": "Solara EV Charger",
     "slug": "Solara_EV_Charger",
-    "version": "1.5.4",
+    "version": "1.5.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -43,7 +43,8 @@
       "backgroundColor": "#fcb82e"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/f19f66e3-b6a2-4180-adec-dcfb49062cba"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -51,9 +52,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "pro.voodoo.solara",
-      "config": {
-        "googleMapsApiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8"
-      },
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan QR for find charger device.",
         "NSLocationWhenInUseUsageDescription": "This app use location for check user position in map to find near EvCharge Station."
@@ -63,13 +61,8 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       },
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyAjr8ZR76mf-pCVQMOQc-bCXmSskXFLPd8"
-        }
-      },
       "package": "com.voodoo.solara.charging",
-      "versionCode": 64,
+      "versionCode": 65,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
