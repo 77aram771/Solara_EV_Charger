@@ -38,7 +38,6 @@ import IconClock from "../../assets/icon/clock.png"
 import IconClose from "../../assets/icon/cancel.png"
 
 export const HomeScreen = ({navigation}) => {
-
     const dispatch = useDispatch()
 
     const {
@@ -62,7 +61,12 @@ export const HomeScreen = ({navigation}) => {
     const [check, setCheck] = useState("finish")
     const [modalRedirect, setModalRedirect] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
-    const [cordinate, setCordinate] = useState(null)
+    const [cordinate, setCordinate] = useState({
+        latitude: 40.177200,
+        longitude: 45,
+        latitudeDelta: 6,
+        longitudeDelta: 3
+    })
     const [options, setOptions] = useState({
         latitude: location !== null ? location?.coords?.latitude : 40.177200,
         longitude: location !== null ? location?.coords?.longitude : 44.503490,
@@ -89,6 +93,7 @@ export const HomeScreen = ({navigation}) => {
     }, [navigation])
 
     useEffect(() => {
+        console.log("location", location?.coords)
         if (location !== null) {
             setCordinate({
                 latitude: location?.coords?.latitude,
@@ -175,9 +180,7 @@ export const HomeScreen = ({navigation}) => {
         }
     }
 
-    const handleChargeBoxesData = (url) => {
-        dispatch(GetChargeBoxesData(url))
-    }
+    const handleChargeBoxesData = (url) => dispatch(GetChargeBoxesData(url))
 
     const getCurrentPosition = () => {
         if (location === null) {
@@ -234,8 +237,6 @@ export const HomeScreen = ({navigation}) => {
         setQrItem(null)
     }
 
-    const handleModal = () => setModalVisible(!modalVisible)
-
     const handleCheckCordinate = (latitude, longitude) => {
         setOptions(prev => {
             return (
@@ -289,10 +290,10 @@ export const HomeScreen = ({navigation}) => {
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
-                onRequestClose={handleModal}
+                onRequestClose={() => setModalVisible(!modalVisible)}
             >
                 <ChargerList
-                    handleModal={handleModal}
+                    handleModal={() => setModalVisible(!modalVisible)}
                     data={data}
                     loader={chargeBoxesLoader}
                     handleData={handleChargeBoxesData}
@@ -353,7 +354,7 @@ export const HomeScreen = ({navigation}) => {
                                 {
                                     chargeBoxesData
                                         ? (
-                                            <TouchableOpacity onPress={handleModal} style={styles.chargeListBox}>
+                                            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.chargeListBox}>
                                                 <Image source={IconList} style={{width: 22, height: 22, marginRight: 10}}/>
                                                 <TextCustom text={lang[countryCode].list} color={Fiord} fontSize={16}
                                                             fontWeight={"700"}/>
@@ -371,26 +372,22 @@ export const HomeScreen = ({navigation}) => {
                         </>
                     )
             }
-            {
-                cordinate && (
-                    <Map
-                        data={data}
-                        handleRef={handleRef}
-                        itemId={itemId}
-                        itemIndex={itemIndex}
-                        qrItem={qrItem}
-                        start={start}
-                        cordinate={cordinate}
-                        location={location}
-                        chargeBoxesLoader={chargeBoxesLoader}
-                        getCurrentPosition={getCurrentPosition}
-                        handleItemId={handleItemId}
-                        handleReady={handleReady}
-                        handleReset={handleReset}
-                        handleCheckCordinate={handleCheckCordinate}
-                    />
-                )
-            }
+            <Map
+                data={data}
+                handleRef={handleRef}
+                itemId={itemId}
+                itemIndex={itemIndex}
+                qrItem={qrItem}
+                start={start}
+                cordinate={cordinate && cordinate}
+                location={location}
+                chargeBoxesLoader={chargeBoxesLoader}
+                getCurrentPosition={getCurrentPosition}
+                handleItemId={handleItemId}
+                handleReady={handleReady}
+                handleReset={handleReset}
+                handleCheckCordinate={handleCheckCordinate}
+            />
             <TouchableOpacity
                 style={[styles.myLocationButtonOut, {
                     bottom: start
