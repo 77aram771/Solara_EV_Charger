@@ -70,7 +70,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.voodoo.solara.charging",
-      "versionCode": 68,
+      "versionCode": 69,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
